@@ -894,17 +894,14 @@ const API={base:localStorage.getItem('aria_api_base')||'/api',token:localStorage
 
 // ─── AI CALL ─────────────────────────────────────────────
 async function ai(messages,systemOverride){
-  if(API.base){
-    try{
-      const r=await API.ai(S.provider,messages,systemOverride||'');
-      if(r.success&&r.text)return r.text;
-      // Backend retornou erro (ex: chave não configurada) — NÃO tenta local
-      throw new Error(r.error||'Sem resposta do servidor');
-    }catch(e){
-      console.warn('Backend:',e.message);
-      // Só tenta local se for erro de conexão (não de configuração)
-      if(e.message!=='Failed to fetch'&&e.message!=='NetworkError')throw e;
-    }
+  // Tenta backend se disponível (opcional)
+  if(API.base&&API.token){
+    try{const r=await API.ai(S.provider,messages,systemOverride||'');if(r.success&&r.text)return r.text;}
+    catch(e){console.warn('Backend:',e.message);}
+  }
+  // Fallback: chama direto (suas chaves do ⚙️)
+  return PROVIDERS[S.provider].call(messages,systemOverride);
+}
   }
   return PROVIDERS[S.provider].call(messages,systemOverride);
 }
