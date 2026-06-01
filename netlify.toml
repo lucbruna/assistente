@@ -25,3 +25,9 @@
   to = "/.netlify/functions/api"
   status = 200
   force = true
+
+# SPA: todas as rotas servem index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
