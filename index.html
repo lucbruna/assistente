@@ -955,7 +955,10 @@ function openKeyModal(){
     <div>
       <div style="color:${v.color};font-weight:700;font-size:13px;margin-bottom:5px;">${v.icon} ${v.name}</div>
       <div style="color:var(--text3);font-size:11px;margin-bottom:6px;">${v.desc} · <a href="${k==='grok'?'https://console.x.ai':k==='gemini'?'https://aistudio.google.com/apikey':'https://dashscope.aliyuncs.com'}" target="_blank" style="color:var(--cyan);">Obter chave ↗</a></div>
-      <input type="password" id="key-${k}" placeholder="Cole sua API Key aqui..." value="${KEYS[k]||''}"/>
+      <div style="display:flex;gap:6px;">
+        <input type="text" id="key-${k}" placeholder="Cole sua API Key aqui..." value="${KEYS[k]||''}" style="flex:1;" autocomplete="off"/>
+        <button class="btn-ghost btn-sm" onclick="pasteKey('${k}')" title="Colar">📋</button>
+      </div>
     </div>`).join('<div class="sep" style="margin:10px 0;"></div>');
   f.innerHTML+=`<div style="background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--r);padding:12px;margin-top:4px;">
     <div style="color:var(--text3);font-size:12px;">
@@ -967,6 +970,11 @@ function openKeyModal(){
   </div>`;
 }
 function closeKeyModal(){document.getElementById('key-modal').classList.remove('open');}
+function pasteKey(k){
+  navigator.clipboard.readText().then(t=>{
+    const el=document.getElementById('key-'+k);if(el){el.value=t;el.focus();toast('📋 Chave colada!','var(--green)');}
+  }).catch(()=>toast('⚠️ Clique no campo e use Ctrl+V','var(--orange)'));
+}
 function saveKeys(){
   Object.keys(PROVIDERS).filter(k=>PROVIDERS[k].keyNeeded).forEach(k=>{
     const el=document.getElementById('key-'+k);if(el&&el.value.trim())KEYS[k]=el.value.trim();
