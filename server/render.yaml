@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: aria-ultra-backend
+    env: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GROK_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: QWEN_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false

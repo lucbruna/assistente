@@ -1,9 +1,15 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
   command = "echo 'Static deploy only'"
 
 [build.processing]
   skip_processing = true
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["server/**"]
+  external_node_modules = ["express", "cors", "helmet", "morgan", "dotenv", "jsonwebtoken", "bcryptjs", "express-rate-limit", "multer", "pdf-parse", "openai", "node-fetch", "express-validator"]
 
 [[headers]]
   for = "/*"
@@ -13,7 +19,15 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# API routes → Netlify Function
 [[redirects]]
   from = "/api/*"
-  to = "https://seu-backend.render.com/api/:splat"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# SPA fallback (opcional)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200

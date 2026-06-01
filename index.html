@@ -867,7 +867,7 @@ save=async(key,value)=>{
 // ═══════════════════════════════════════════════════════════
 // 🔌 API CLIENT (Backend Proxy)
 // ═══════════════════════════════════════════════════════════
-const API={base:'http://localhost:3000/api',token:localStorage.getItem('aria_token')||null,user:JSON.parse(localStorage.getItem('aria_user')||'null'),
+const API={base:localStorage.getItem('aria_api_base')||'/api',token:localStorage.getItem('aria_token')||null,user:JSON.parse(localStorage.getItem('aria_user')||'null'),
   async request(path,opts={}){
     const headers={'Content-Type':'application/json'};
     if(this.token)headers['Authorization']='Bearer '+this.token;
