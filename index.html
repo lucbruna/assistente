@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,user-scalable=no"/>
+<meta name="theme-color" content="#050d14"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="ARIA Ultra"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<title>ARIA Admin Ultra</title>
+<link rel="manifest" href="manifest.json" id="mlink"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%2302080f'/><text x='96' y='128' font-size='110' text-anchor='middle'>🧠</text></svg>"/>
+<meta name="apple-mobile-web-app-title" content="ARIA Ultra"/>
+<style>
+/* ═══════════════════════════════════════════
+   ARIA ULTRA — DESIGN SYSTEM
+═══════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root{
+  /* Cores base — escuro rico com profundidade */
+  --bg0:#02080f;
+  --bg1:#050d16;
+  --bg2:#081526;
+  --bg3:#0c1e35;
+  --bg4:#112440;
+  --border:#1a3450;
+  --border2:#224466;
+
+  /* Textos — MUITO MAIS FORTES agora */
+  --text:#f0f8ff;        /* quase branco puro */
+  --text2:#c8e0f4;       /* azul claro */
+  --text3:#8ab8d8;       /* médio */
+  --muted:#5080a0;       /* muted mas visível */
+
+  /* Cores de destaque vibrantes */
+  --cyan:#00e5ff;
+  --cyan2:#00bcd4;
+  --blue:#2979ff;
+  --blue2:#448aff;
+  --purple:#d500f9;
+  --purple2:#aa00ff;
+  --green:#00e676;
+  --green2:#69f0ae;
+  --orange:#ff9100;
+  --orange2:#ffab40;
+  --pink:#f50057;
+  --pink2:#ff4081;
+  --yellow:#ffd740;
+  --red:#ff1744;
+  --teal:#1de9b6;
+
+  /* Gradientes */
+  --grad-main:linear-gradient(135deg,#00e5ff22,#2979ff11,#d500f922);
+  --grad-cyan:linear-gradient(135deg,#00e5ff,#2979ff);
+  --grad-purple:linear-gradient(135deg,#d500f9,#aa00ff);
+  --grad-green:linear-gradient(135deg,#00e676,#1de9b6);
+  --grad-orange:linear-gradient(135deg,#ff9100,#ffd740);
+
+  /* Sombras */
+  --shadow-cyan:0 0 20px #00e5ff33;
+  --shadow-blue:0 0 20px #2979ff33;
+  --shadow-card:0 4px 24px #00000066;
+
+  /* Spacing */
+  --r:10px;
+  --r2:14px;
+
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;background:var(--bg0);color:var(--text);font-family:'Inter',system-ui,sans-serif;}
+
+/* Scrollbar premium */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--bg1);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+
+/* ─── INPUTS ─── */
+input,textarea,select{
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:400;
+  background:var(--bg3);border:1.5px solid var(--border2);
+  border-radius:var(--r);color:var(--text);padding:10px 14px;
+  width:100%;outline:none;transition:border-color .2s,box-shadow .2s;
+  caret-color:var(--cyan);
+}
+input::placeholder,textarea::placeholder{color:var(--muted);}
+input:focus,textarea:focus,select:focus{
+  border-color:var(--cyan);box-shadow:0 0 0 3px #00e5ff18;
+}
+select option{background:var(--bg2);color:var(--text);}
+textarea{resize:vertical;min-height:72px;line-height:1.6;}
+
+/* ─── BUTTONS ─── */
+button{
+  font-family:'Inter',sans-serif;cursor:pointer;border:none;
+  border-radius:var(--r);font-weight:700;font-size:13px;
+  transition:all .15s;white-space:nowrap;letter-spacing:.2px;
+}
+button:hover{filter:brightness(1.1);transform:translateY(-1px);}
+button:active{transform:scale(.97) translateY(0);}
+button:disabled{opacity:.3;cursor:not-allowed;transform:none;filter:none;}
+
+/* Button variants */
+.btn-cyan{background:var(--grad-cyan);color:#001a26;box-shadow:0 2px 12px #00e5ff40;}
+.btn-purple{background:var(--grad-purple);color:#fff;box-shadow:0 2px 12px #d500f940;}
+.btn-green{background:var(--grad-green);color:#001a0e;box-shadow:0 2px 12px #00e67640;}
+.btn-orange{background:var(--grad-orange);color:#1a0d00;box-shadow:0 2px 12px #ff910040;}
+.btn-pink{background:linear-gradient(135deg,#f50057,#ff4081);color:#fff;box-shadow:0 2px 12px #f5005740;}
+.btn-ghost{background:var(--bg4);color:var(--text2);border:1.5px solid var(--border2);}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);}
+.btn-danger{background:#1a0508;color:#ff4081;border:1.5px solid #f5005744;}
+.btn-sm{padding:6px 12px;font-size:12px;}
+.btn-xs{padding:4px 9px;font-size:11px;}
+.btn-icon{padding:9px 14px;font-size:17px;line-height:1;}
+
+/* ─── LAYOUT ─── */
+#app{display:flex;flex-direction:column;height:100%;padding-top:var(--safe-top);background:var(--bg0);}
+
+/* HEADER */
+#header{
+  background:linear-gradient(90deg,var(--bg1),var(--bg2),var(--bg1));
+  border-bottom:1.5px solid var(--border);
+  padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  flex-shrink:0;position:relative;overflow:hidden;
+}
+#header::before{
+  content:'';position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+  width:300px;height:60px;
+  background:radial-gradient(ellipse,#00e5ff18 0%,transparent 70%);
+  pointer-events:none;
+}
+#logo-wrap{display:flex;align-items:center;gap:10px;}
+#logo-icon{font-size:28px;animation:floatGlow 3s ease-in-out infinite;}
+#logo-name{
+  font-size:19px;font-weight:900;letter-spacing:.5px;
+  background:var(--grad-cyan);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+#logo-sub{color:var(--text3);font-size:10px;font-weight:400;margin-top:1px;}
+
+/* TABS */
+#tabs{
+  background:var(--bg1);border-bottom:1.5px solid var(--border);
+  display:flex;overflow-x:auto;flex-shrink:0;padding:0 6px;
+  scrollbar-width:none;gap:2px;
+}
+#tabs::-webkit-scrollbar{display:none;}
+.tab-btn{
+  background:none;border:none;border-bottom:2.5px solid transparent;
+  color:var(--text3);padding:11px 14px;font-size:12px;font-weight:500;
+  white-space:nowrap;border-radius:0;transition:all .2s;letter-spacing:.1px;
+}
+.tab-btn:hover{color:var(--text2);transform:none;}
+.tab-btn.active{
+  color:var(--cyan);border-bottom-color:var(--cyan);font-weight:700;
+  text-shadow:0 0 12px #00e5ff66;
+}
+
+/* CONTENT */
+#content{flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;}
+
+/* STATUSBAR */
+#statusbar{
+  background:var(--bg1);border-top:1.5px solid var(--border);
+  padding:6px 16px;padding-bottom:calc(6px + var(--safe-bottom));
+  display:flex;gap:14px;align-items:center;font-size:11px;flex-shrink:0;
+}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;box-shadow:0 0 6px var(--green);animation:pulse 2s infinite;}
+
+/* ─── CARDS ─── */
+.card{
+  background:var(--bg2);border:1.5px solid var(--border);
+  border-radius:var(--r2);padding:14px;
+}
+.card-glow{border-color:var(--cyan);box-shadow:0 0 16px #00e5ff18;}
+.card-dashed{
+  background:var(--bg2);border:2px dashed var(--border2);
+  border-radius:var(--r2);padding:24px;text-align:center;cursor:pointer;
+  transition:border-color .2s,background .2s;
+}
+.card-dashed:hover{border-color:var(--cyan);background:var(--bg3);}
+
+/* ─── CHAT ─── */
+#chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 190px);}
+#chat-messages{flex:1;overflow-y:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch;}
+.msg-user{display:flex;justify-content:flex-end;margin-bottom:12px;}
+.msg-ai{display:flex;align-items:flex-start;gap:9px;margin-bottom:12px;}
+.bubble{
+  max-width:83%;padding:11px 15px;font-size:14px;
+  line-height:1.75;white-space:pre-wrap;word-break:break-word;
+}
+.bubble-user{
+  background:linear-gradient(135deg,#0c2545,#112e52);
+  border:1.5px solid #2979ff44;border-radius:16px 16px 4px 16px;
+  color:var(--text);
+}
+.bubble-ai{
+  background:var(--bg2);border:1.5px solid var(--border2);
+  border-radius:4px 16px 16px 16px;color:var(--text);
+}
+.ai-ava{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--grad-cyan);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;margin-top:2px;
+  box-shadow:0 0 10px #00e5ff44;
+}
+
+/* Typing */
+.tdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--cyan);margin:0 2px;animation:tdot .9s infinite;}
+.tdot:nth-child(2){animation-delay:.18s;}
+.tdot:nth-child(3){animation-delay:.36s;}
+@keyframes tdot{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+
+/* ─── OCR ─── */
+#ocr-output{
+  background:var(--bg1);border:1.5px solid var(--border2);border-radius:var(--r2);
+  padding:14px;font-family:'JetBrains Mono',monospace;font-size:13px;
+  color:var(--text);white-space:pre-wrap;min-height:180px;line-height:1.8;
+  cursor:text;user-select:text;-webkit-user-select:text;
+}
+
+/* ─── SHEET ─── */
+#sheet-wrap{overflow:auto;border-radius:var(--r);border:1.5px solid var(--border);}
+table{border-collapse:collapse;font-size:13px;width:100%;}
+th{
+  background:var(--bg3);color:var(--cyan);padding:8px 10px;
+  border:1px solid var(--border);font-weight:700;font-size:11px;
+  white-space:nowrap;text-transform:uppercase;letter-spacing:.5px;
+}
+td{border:1px solid var(--border);padding:4px 6px;}
+td input{
+  background:transparent;border:none;color:var(--text);
+  min-width:80px;font-size:13px;padding:3px 4px;width:100%;
+}
+td:first-child{
+  color:var(--cyan);font-size:10px;text-align:center;
+  background:var(--bg2);font-weight:600;font-family:'JetBrains Mono',monospace;
+}
+
+/* ─── AGENDA ─── */
+.ag-item{border-left:3px solid;border-radius:var(--r);padding:11px 14px;margin-bottom:9px;position:relative;}
+.ag-badge{display:inline-block;font-size:10px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.3px;}
+.ag-urgent{animation:urgentPulse 1.5s infinite;}
+@keyframes urgentPulse{0%,100%{box-shadow:0 0 0 0 #ff910044;}50%{box-shadow:0 0 0 6px transparent;}}
+
+/* ─── DOC RESULT ─── */
+.doc-result-box{
+  background:var(--bg1);border:1.5px solid var(--border2);
+  border-radius:var(--r2);padding:16px;
+  font-family:'Georgia',serif;font-size:14px;color:var(--text);
+  white-space:pre-wrap;max-height:380px;overflow-y:auto;line-height:1.9;
+}
+
+/* ─── TOAST ─── */
+#toasts{position:fixed;top:16px;right:12px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+.toast{
+  background:var(--bg3);border-radius:12px;
+  padding:10px 16px;font-size:13px;font-weight:600;
+  animation:toastIn .3s cubic-bezier(.175,.885,.32,1.275);
+  box-shadow:var(--shadow-card);max-width:280px;
+}
+@keyframes toastIn{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ─── AI KEY MODAL ─── */
+#key-modal{
+  display:none;position:fixed;inset:0;background:#000000cc;
+  z-index:9998;align-items:center;justify-content:center;padding:20px;
+  backdrop-filter:blur(6px);
+}
+#key-modal.open{display:flex;}
+.modal-box{
+  background:var(--bg2);border:1.5px solid var(--cyan);
+  border-radius:20px;padding:24px;width:100%;max-width:420px;
+  box-shadow:0 0 40px #00e5ff22;
+}
+
+/* ─── HELPERS ─── */
+.row{display:flex;gap:8px;align-items:center;}
+.row-wrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.col{display:flex;flex-direction:column;gap:10px;}
+.flex1{flex:1;}
+.sep{height:1px;background:var(--border);margin:4px 0;}
+.chip{background:var(--bg4);border:1.5px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--text2);font-weight:600;}
+.chip-file{background:var(--bg3);border:1.5px solid var(--border2);border-radius:8px;padding:5px 11px;display:flex;gap:6px;align-items:center;font-size:12px;color:var(--text2);}
+
+/* SCORE/STAT CARDS */
+.stat-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r2);padding:14px 16px;text-align:center;}
+.stat-val{font-size:24px;font-weight:900;line-height:1;}
+.stat-lbl{font-size:11px;color:var(--text3);margin-top:4px;font-weight:500;}
+
+/* SECTION TITLE */
+.sec-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:8px;}
+
+/* AI PROVIDER CARDS */
+.ai-card{
+  background:var(--bg3);border:1.5px solid var(--border2);
+  border-radius:var(--r2);padding:10px 14px;cursor:pointer;
+  transition:all .2s;display:flex;align-items:center;gap:10px;
+}
+.ai-card:hover{border-color:var(--cyan);}
+.ai-card.active{box-shadow:0 0 0 2px currentColor;}
+.ai-dot{width:10px;height:10px;border-radius:50%;}
+
+/* PROGRESS BAR */
+.prog-bar{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;transition:width .5s;}
+
+/* TEXTAREA bigger on desktop */
+@media(min-width:768px){
+  textarea{min-height:90px;}
+  #chat-wrap{height:calc(100vh - 180px);}
+}
+
+/* ANIMATIONS */
+@keyframes floatGlow{
+  0%,100%{transform:translateY(0);filter:drop-shadow(0 0 8px #00e5ff88);}
+  50%{transform:translateY(-3px);filter:drop-shadow(0 0 16px #00e5ffcc);}
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+.fade-in{animation:fadeIn .3s ease;}
+
+/* GRADIENT TEXT HELPERS */
+.text-cyan{background:var(--grad-cyan);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.text-purple{background:var(--grad-purple);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.text-green{background:var(--grad-green);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+@media(max-width:600px){
+  #header{padding:8px 12px;}
+  #content{padding:10px;}
+  .tab-btn{padding:11px 10px;font-size:11px;}
+  .bubble{max-width:90%;font-size:13px;}
+  .stat-val{font-size:20px;}
+}
+
+/* ─── RICH TEXT TOOLBAR ─── */
+.rt-toolbar{display:flex;gap:4px;padding:6px 8px;background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--r) var(--r) 0 0;flex-wrap:wrap;}
+.rt-toolbar button{background:var(--bg4);border:1px solid var(--border2);border-radius:6px;padding:4px 9px;font-size:13px;color:var(--text2);cursor:pointer;font-weight:600;}
+.rt-toolbar button:hover{border-color:var(--cyan);color:var(--cyan);}
+.rt-toolbar button.active{background:var(--cyan);color:var(--bg0);border-color:var(--cyan);}
+.rt-editor{background:var(--bg3);border:1.5px solid var(--border2);border-top:none;border-radius:0 0 var(--r) var(--r);padding:12px 14px;min-height:120px;color:var(--text);font-size:14px;line-height:1.8;outline:none;overflow-y:auto;max-height:400px;}
+.rt-editor:focus{border-color:var(--cyan);}
+
+/* ─── SIGNATURE PAD ─── */
+#sig-canvas{background:#fff;border-radius:var(--r);border:2px solid var(--border2);cursor:crosshair;display:block;width:100%;height:180px;touch-action:none;}
+#sig-canvas.drawing{border-color:var(--cyan);box-shadow:0 0 12px #00e5ff44;}
+.sig-card{background:var(--bg3);border:2px dashed var(--green2);border-radius:var(--r2);padding:14px;margin-top:10px;}
+.sig-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green2)+'22';color:var(--green2);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;}
+
+/* ─── DASHBOARD ─── */
+.db-chart{background:var(--bg3);border-radius:var(--r);padding:12px;margin-bottom:8px;}
+.db-bar{height:24px;border-radius:4px;background:var(--bg4);overflow:hidden;margin-bottom:3px;}
+.db-fill{height:100%;border-radius:4px;transition:width .6s ease;min-width:2px;}
+
+/* ─── TEMPLATE CARDS ─── */
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
+.tpl-card{background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--r2);padding:14px;text-align:center;cursor:pointer;transition:all .2s;}
+.tpl-card:hover{border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 4px 16px #00e5ff22;}
+.tpl-card .icon{font-size:32px;margin-bottom:6px;}
+.tpl-card .name{font-size:13px;font-weight:700;color:var(--text2);}
+.tpl-card .desc{font-size:10px;color:var(--muted);margin-top:3px;}
+
+/* ─── SHARE MODAL ─── */
+.share-box{background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--r2);padding:16px;word-break:break-all;font-size:12px;color:var(--text2);}
+
+/* ─── SPELL CHECK ─── */
+.spell-warn{background:#ff910033;border-bottom:2px wavy var(--orange);cursor:pointer;}
+.spell-suggest{position:absolute;background:var(--bg4);border:1.5px solid var(--border2);border-radius:8px;padding:6px;z-index:100;box-shadow:0 4px 20px #000;}
+.spell-suggest div{padding:4px 10px;font-size:12px;cursor:pointer;border-radius:4px;}
+.spell-suggest div:hover{background:var(--cyan);color:var(--bg0);}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- ═══ HEADER ═══ -->
+  <div id="header">
+    <div id="logo-wrap">
+      <div id="logo-icon">🧠</div>
+      <div>
+        <div id="logo-name">ARIA Admin Ultra</div>
+        <div id="logo-sub">Assistente Administrativa de Elite · IA Multi-Modelo</div>
+      </div>
+    </div>
+    <div class="flex1"></div>
+    <div id="ai-selector-wrap"></div>
+    <button class="btn-ghost btn-sm" onclick="openFirebaseModal()" title="Cloud Sync (Firebase)" style="font-size:16px;padding:8px 10px;">☁️</button>
+    <button class="btn-ghost btn-sm" onclick="openKeyModal()" title="Configurar chaves de API" style="font-size:16px;padding:8px 10px;">⚙️</button>
+    <div id="hclock" style="color:var(--text3);font-size:11px;font-weight:500;"></div>
+  </div>
+
+  <!-- ═══ TABS ═══ -->
+  <div id="tabs">
+    <button class="tab-btn" data-tab="dashboard">📊 Dashboard</button>
+    <button class="tab-btn active" data-tab="chat">💬 Chat IA</button>
+    <button class="tab-btn" data-tab="docs">📋 Documentos</button>
+    <button class="tab-btn" data-tab="ocr">🔍 OCR</button>
+    <button class="tab-btn" data-tab="sheet">📊 Planilha</button>
+    <button class="tab-btn" data-tab="agenda">📅 Agenda<span id="agenda-badge"></span></button>
+    <button class="tab-btn" data-tab="notes">📝 Notas</button>
+    <button class="tab-btn" data-tab="fusion">🔀 Fusão IA</button>
+    <button class="tab-btn" data-tab="translator">🌐 Tradutor</button>
+    <button class="tab-btn" data-tab="currency">💱 Moedas</button>
+    <button class="tab-btn" data-tab="summarizer">📝 Resumidor</button>
+    <button class="tab-btn" data-tab="files">📁 Arquivos<span id="files-badge"></span></button>
+  </div>
+
+  <!-- ═══ CONTENT ═══ -->
+  <div id="content" class="fade-in"></div>
+
+  <!-- ═══ STATUS BAR ═══ -->
+  <div id="statusbar">
+    <span><span class="status-dot"></span><span style="color:var(--green);font-weight:600;">Online</span></span>
+    <span id="sb-ai" style="color:var(--cyan);font-weight:600;"></span>
+    <span id="sb-docs" style="color:var(--text3);">📄 0 docs</span>
+    <span id="sb-clip" style="color:var(--orange);font-weight:600;display:none;">📋 Clipboard ativo</span>
+    <div class="flex1"></div>
+    <span style="color:var(--text3);font-size:10px;">ARIA Ultra v3.0</span>
+  </div>
+</div>
+
+<!-- ═══ MODAL CHAVES IA ═══ -->
+<div id="key-modal">
+  <div class="modal-box">
+    <div style="font-size:22px;font-weight:900;margin-bottom:4px;" class="text-cyan">⚙️ Configurar IAs</div>
+    <div style="color:var(--text3);font-size:13px;margin-bottom:20px;">Insira suas chaves para ativar as IAs gratuitas (Gemini e Qwen).</div>
+    <div class="col" id="key-fields"></div>
+    <div style="margin-top:16px;" class="row">
+      <button class="btn-cyan flex1" onclick="saveKeys()">💾 Salvar Chaves</button>
+      <button class="btn-ghost" onclick="closeKeyModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FIREBASE CONFIG MODAL ═══ -->
+<div id="firebase-modal">
+  <div class="modal-box" style="max-width:480px;">
+    <div style="font-size:22px;font-weight:900;margin-bottom:4px;" class="text-cyan">☁️ Firebase Cloud Sync</div>
+    <div style="color:var(--text3);font-size:13px;margin-bottom:16px;">Configure o Firebase Firestore para sincronizar dados entre dispositivos.</div>
+    <div class="col" style="gap:8px;">
+      <input id="fb-user" placeholder="Seu ID de usuário (ex: email ou nome)" style="font-weight:700;"/>
+      <div class="sep"></div>
+      <input id="fb-apiKey" placeholder="API Key"/>
+      <input id="fb-authDomain" placeholder="Auth Domain (ex: projeto.firebaseapp.com)"/>
+      <input id="fb-projectId" placeholder="Project ID"/>
+      <input id="fb-storageBucket" placeholder="Storage Bucket"/>
+      <input id="fb-messagingSenderId" placeholder="Messaging Sender ID"/>
+      <input id="fb-appId" placeholder="App ID"/>
+    </div>
+    <div style="color:var(--muted);font-size:11px;margin-top:10px;line-height:1.5;">💡 As configurações estão no console do Firebase > Configurações do projeto > Seus apps > Configuração do Firebase.</div>
+    <div style="margin-top:14px;" class="row">
+      <button class="btn-cyan flex1" onclick="saveFirebaseConfig()">💾 Salvar Configuração</button>
+      <button class="btn-ghost btn-sm" onclick="syncCloud()">☁️ Sincronizar Agora</button>
+      <button class="btn-ghost btn-sm" onclick="loadCloud()">📥 Carregar</button>
+      <button class="btn-ghost" onclick="closeFirebaseModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SIGNATURE MODAL ═══ -->
+<div id="sig-modal">
+  <div class="modal-box" style="max-width:500px;">
+    <div style="font-size:22px;font-weight:900;margin-bottom:4px;" class="text-cyan">✍️ Assinar Documento</div>
+    <div style="color:var(--text3);font-size:13px;margin-bottom:16px;">Desenhe sua assinatura abaixo para digitalizar o documento.</div>
+    <div class="col" style="gap:10px;">
+      <div class="row"><input id="sig-name" placeholder="Nome do Signatário" style="flex:1;"/><input id="sig-cpf" placeholder="CPF (opcional)" style="width:180px;"/></div>
+      <canvas id="sig-canvas" width="400" height="180"></canvas>
+      <div class="row">
+        <button class="btn-ghost btn-sm" onclick="clearSigCanvas()">🧹 Limpar</button>
+        <div class="flex1"></div>
+        <button class="btn-ghost" onclick="closeSigModal()">Cancelar</button>
+        <button class="btn-green" onclick="confirmSignature()">✅ Confirmar Assinatura</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHARE VIEWER MODAL ═══ -->
+<div id="share-modal">
+  <div class="modal-box" style="max-width:600px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div style="font-size:20px;font-weight:900;" class="text-cyan">📄 Documento Compartilhado via ARIA Ultra</div>
+      <button class="btn-ghost btn-sm" onclick="closeSharedModal()">✕ Fechar</button>
+    </div>
+    <div id="share-view-content" class="share-box" style="max-height:500px;overflow-y:auto;"></div>
+  </div>
+</div>
+
+<!-- ═══ TOASTS ═══ -->
+<div id="toasts"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script>
+'use strict';
+/* ═══════════════════════════════════════════════════════════
+   ARIA ADMIN ULTRA — CORE ENGINE v3.0
+   Paleta vibrante · Multi-IA Grátis (Gemini+Qwen)
+   OCR · Docs · Planilha · Agenda · Tradutor · Resumidor
+   Fusão · Arquivos · Voz · PWA
+═══════════════════════════════════════════════════════════ */
+
+// ─── AI PROVIDERS ────────────────────────────────────────
+const PROVIDERS = {
+  grok: {
+    name:'Grok 2', icon:'🔵', color:'#29b6f6',
+    desc:'xAI – chave própria', free:true, keyNeeded:true,
+    call: async (msgs,sys)=>{
+      const key=KEYS.grok; if(!key) throw new Error('Configure sua chave Grok em ⚙️');
+      const r=await fetch('https://api.x.ai/v1/chat/completions',{
+        method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+        body:JSON.stringify({model:'grok-2-20241218',max_tokens:2000,messages:[{role:'system',content:sys||SYS_PROMPT},...msgs]})
+      });
+      const d=await r.json();
+      if(!r.ok){const m=d.error?.message||d.error?.code||(typeof d.error==='string'?d.error:'')||r.statusText;throw new Error('Grok: '+m+(d.error?.code?' ('+d.error?.code+')':''));}
+      return d.choices?.[0]?.message?.content||'';
+    }
+  },
+  gemini: {
+    name:'Gemini 2.0 Flash', icon:'🔷', color:'#4fc3f7',
+    desc:'Google – chave própria', free:true, keyNeeded:true,
+    call: async (msgs,sys)=>{
+      const key=KEYS.gemini; if(!key) throw new Error('Configure sua chave Gemini em ⚙️');
+      const parts=msgs.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
+      const sysText=sys||SYS_PROMPT;
+      const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({systemInstruction:{parts:[{text:sysText}]},contents:parts})
+      });
+      const d=await r.json();
+      if(!r.ok){const msg=d.error?.message||d.error?.status||r.statusText;throw new Error(msg+(r.status===429?' (limite de requisições excedido, aguarde e tente novamente)':''));}
+      return d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    }
+  },
+  qwen: {
+    name:'Qwen Max', icon:'🟡', color:'#ffca28',
+    desc:'Alibaba – chave própria', free:true, keyNeeded:true,
+    call: async (msgs,sys)=>{
+      const key=KEYS.qwen; if(!key) throw new Error('Configure sua chave Qwen em ⚙️');
+      const r=await fetch('https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions',{
+        method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+        body:JSON.stringify({model:'qwen-max',messages:[{role:'system',content:sys||SYS_PROMPT},...msgs]})
+      });
+      const d=await r.json();
+      if(d.error) throw new Error(d.error.message||'Erro Qwen');
+      return d.choices?.[0]?.message?.content||'';
+    }
+  },
+};
+
+const SYS_PROMPT=`Você é ARIA, assistente administrativa ultra-inteligente e especialista em administração brasileira.
+Responde sempre em português do Brasil, de forma precisa, profissional e detalhada.
+Pode ajudar com qualquer assunto: documentos, direito, finanças, tecnologia, ciência, história, cultura.
+Seja direta, útil e elegante nas respostas.`;
+
+// ─── KEYS & STATE ────────────────────────────────────────
+let KEYS=JSON.parse(localStorage.getItem('aria_keys')||'{}');
+const S={
+  tab:'chat', provider:'gemini',
+  clipboard:'', clipSource:'',
+  chatHistory:[],
+  savedFiles:JSON.parse(localStorage.getItem('aria_files')||'[]'),
+  sheetData:Array.from({length:8},(_,r)=>Array.from({length:6},(_,c)=>r===0?['Item','Qtd','Valor Unit.','Total','Status','Obs.'][c]:'')),
+  sheetRows:8, sheetCols:6,
+  agenda:JSON.parse(localStorage.getItem('aria_agenda')||JSON.stringify([
+    {id:'e1',title:'Reunião de Planejamento',date:new Date(Date.now()+86400000).toISOString().slice(0,16),color:'#00e5ff',type:'reunião',notes:'Pauta: metas Q3'},
+    {id:'e2',title:'Entrega do Relatório Mensal',date:new Date(Date.now()+3*86400000).toISOString().slice(0,16),color:'#69f0ae',type:'prazo',notes:''},
+    {id:'e3',title:'Apresentação à Diretoria',date:new Date(Date.now()+7*86400000).toISOString().slice(0,16),color:'#d500f9',type:'compromisso',notes:'Sala de reuniões 3'},
+  ])),
+  ocrText:'', ocrImg:'', ocrSel:'', ocrMode:'auto',
+  fusFiles:[], fusResult:'',
+  docResult:'', docType:'oficio', docDesc:'', docCustom:'',
+  transResult:'', transFrom:'auto', transTo:'pt',
+  sumResult:'', sumText:'',
+  listening:false, recognition:null,
+  agForm:false, agColor:'#00e5ff',
+  fileSearch:'', fileView:null,
+  docLoading:false, chatLoading:false, fusLoading:false,
+  transLoading:false, sumLoading:false, ocrLoading:false,
+  activity:JSON.parse(localStorage.getItem('aria_activity')||'[]'),
+  firebaseConfig:JSON.parse(localStorage.getItem('aria_firebase')||'{}'),
+  cloudUser:localStorage.getItem('aria_cloud_user')||'',
+  cloudEnabled:localStorage.getItem('aria_cloud_enabled')==='true',
+  docSignature:null,
+  currencyRates:JSON.parse(localStorage.getItem('aria_currency_rates')||'{}'),
+  currencyFrom:'USD', currencyTo:'BRL',
+  versionHistory:JSON.parse(localStorage.getItem('aria_version_history')||'{}'),
+  notepad:localStorage.getItem('aria_notepad')||'',
+  notes:JSON.parse(localStorage.getItem('aria_notes')||'[]'),
+  notesView:null,
+};
+
+// ─── UTILITIES ───────────────────────────────────────────
+const uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const fmt=d=>new Date(d).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+const fmtT=d=>new Date(d).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const colLetter=i=>String.fromCharCode(65+i);
+
+function toast(msg,color='var(--cyan)',duration=3000){
+  const d=document.createElement('div');
+  d.className='toast';d.textContent=msg;
+  d.style.cssText=`border:1.5px solid ${color};color:${color};`;
+  document.getElementById('toasts').appendChild(d);
+  setTimeout(()=>{d.style.animation='toastIn .3s ease reverse';setTimeout(()=>d.remove(),300);},duration);
+}
+function setClip(text,source=''){
+  S.clipboard=text;S.clipSource=source;
+  navigator.clipboard.writeText(text).catch(()=>{});
+  document.getElementById('sb-clip').style.display='';
+  toast(`✂️ ${text.length} chars copiados!`,'var(--cyan)');
+}
+function updateStatus(){
+  const p=PROVIDERS[S.provider];
+  document.getElementById('sb-ai').textContent=p.icon+' '+p.name;
+  document.getElementById('sb-docs').textContent=`📄 ${S.savedFiles.length} docs`;
+  const b=document.getElementById('files-badge');
+  if(S.savedFiles.length>0){b.textContent=' '+S.savedFiles.length;b.style.cssText='background:var(--cyan);color:var(--bg0);border-radius:10px;font-size:9px;padding:1px 5px;font-weight:800;';}
+  else b.textContent='';
+  const now=Date.now();
+  const urgentCount=S.agenda.filter(e=>{const ms=new Date(e.date)-now;return ms>0&&ms<3600000;}).length;
+  const ab=document.getElementById('agenda-badge');
+  if(urgentCount>0){ab.textContent=' '+urgentCount;ab.style.cssText='background:var(--orange);color:#fff;border-radius:10px;font-size:9px;padding:1px 5px;font-weight:800;animation:urgentPulse 1.5s infinite;';}
+  else ab.textContent='';
+}
+
+// ─── AI CALL ─────────────────────────────────────────────
+async function ai(messages,systemOverride){
+  return PROVIDERS[S.provider].call(messages,systemOverride);
+}
+
+// ─── CLOCK ───────────────────────────────────────────────
+function tickClock(){
+  const el=document.getElementById('hclock');if(!el)return;
+  el.textContent=new Date().toLocaleString('pt-BR',{weekday:'short',day:'2-digit',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+}
+setInterval(tickClock,15000);tickClock();
+
+// ─── AI SELECTOR ─────────────────────────────────────────
+function renderAISelector(){
+  const c=document.getElementById('ai-selector-wrap');if(!c)return;
+  c.innerHTML=`<div class="row-wrap" style="gap:6px;">
+    ${Object.entries(PROVIDERS).map(([k,v])=>`
+    <button onclick="setProvider('${k}')" style="
+      background:${S.provider===k?v.color+'33':'var(--bg3)'};
+      border:1.5px solid ${S.provider===k?v.color:'var(--border)'};
+      color:${S.provider===k?v.color:'var(--text3)'};
+      border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;
+    ">${v.icon} ${v.name.split(' ')[0]}</button>`).join('')}
+  </div>`;
+  document.getElementById('sb-ai').style.color=PROVIDERS[S.provider].color;
+  document.getElementById('sb-ai').textContent=PROVIDERS[S.provider].icon+' '+PROVIDERS[S.provider].name;
+}
+function setProvider(k){
+  S.provider=k;renderAISelector();
+  toast(`IA: ${PROVIDERS[k].name}`,PROVIDERS[k].color);
+  if(PROVIDERS[k].keyNeeded&&!KEYS[k]) toast(`⚙️ Configure a chave ${PROVIDERS[k].name} em ⚙️`,'var(--orange)',5000);
+}
+
+function saveNotepad(v){S.notepad=v;localStorage.setItem('aria_notepad',v);}
+
+// ─── KEY MODAL ───────────────────────────────────────────
+function openKeyModal(){
+  const m=document.getElementById('key-modal');m.classList.add('open');
+  const f=document.getElementById('key-fields');
+  f.innerHTML=Object.entries(PROVIDERS).filter(([,v])=>v.keyNeeded).map(([k,v])=>`
+    <div>
+      <div style="color:${v.color};font-weight:700;font-size:13px;margin-bottom:5px;">${v.icon} ${v.name}</div>
+      <div style="color:var(--text3);font-size:11px;margin-bottom:6px;">${v.desc} · <a href="${k==='grok'?'https://console.x.ai':k==='gemini'?'https://aistudio.google.com/apikey':'https://dashscope.aliyuncs.com'}" target="_blank" style="color:var(--cyan);">Obter chave ↗</a></div>
+      <input type="password" id="key-${k}" placeholder="Cole sua API Key aqui..." value="${KEYS[k]||''}"/>
+    </div>`).join('<div class="sep" style="margin:10px 0;"></div>');
+  f.innerHTML+=`<div style="background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--r);padding:12px;margin-top:4px;">
+    <div style="color:var(--text3);font-size:12px;">
+      <strong style="color:var(--text2);">📌 Onde obter as chaves grátis:</strong><br>
+      • <strong style="color:#29b6f6;">Grok:</strong> console.x.ai (xAI)<br>
+      • <strong style="color:#4fc3f7;">Gemini:</strong> aistudio.google.com/apikey<br>
+      • <strong style="color:#ffca28;">Qwen:</strong> dashscope.aliyuncs.com
+    </div>
+  </div>`;
+}
+function closeKeyModal(){document.getElementById('key-modal').classList.remove('open');}
+function saveKeys(){
+  Object.keys(PROVIDERS).filter(k=>PROVIDERS[k].keyNeeded).forEach(k=>{
+    const el=document.getElementById('key-'+k);if(el&&el.value.trim())KEYS[k]=el.value.trim();
+  });
+  save('aria_keys',KEYS);closeKeyModal();toast('🔑 Chaves salvas com segurança!','var(--green)');
+}
+
+// ─── TABS ────────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    S.tab=btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const c=document.getElementById('content');
+    c.classList.remove('fade-in');void c.offsetWidth;c.classList.add('fade-in');
+    render();
+  });
+});
+
+// ═══════════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════════
+function render(){
+  const c=document.getElementById('content');
+  const t=S.tab;
+  if(t==='dashboard') c.innerHTML=renderDashboard();
+  else if(t==='chat') c.innerHTML=renderChat();
+  else if(t==='docs') c.innerHTML=renderDocs();
+  else if(t==='ocr') c.innerHTML=renderOCR();
+  else if(t==='sheet') c.innerHTML=renderSheet();
+  else if(t==='agenda') c.innerHTML=renderAgenda();
+  else if(t==='notes') c.innerHTML=renderNotes();
+  else if(t==='fusion') c.innerHTML=renderFusion();
+  else if(t==='translator') c.innerHTML=renderTranslator();
+  else if(t==='currency') c.innerHTML=renderCurrency();
+  else if(t==='summarizer') c.innerHTML=renderSummarizer();
+  else if(t==='files') c.innerHTML=renderFiles();
+  bindEvents();
+  updateStatus();
+  if(t==='chat'){const cm=document.getElementById('chat-messages');if(cm)cm.scrollTop=cm.scrollHeight;}
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: CHAT
+// ═══════════════════════════════════════════════════════
+function renderChat(){
+  const welcome=`<div class="msg-ai">
+    <div class="ai-ava">🧠</div>
+    <div class="bubble bubble-ai">
+      <strong style="color:var(--cyan);font-size:15px;">Olá! Sou ARIA Ultra 🚀</strong>\n\nSou sua assistente administrativa de elite. Posso ajudar com:\n• 📋 Redação de documentos e ofícios\n• 📊 Análise de dados e planilhas\n• ⚖️ Questões jurídicas e administrativas\n• 🌍 Qualquer assunto do mundo\n• 💡 Brainstorming e criatividade\n\nComo posso ajudar hoje?
+    </div>
+  </div>`;
+  const msgs=S.chatHistory.map(m=>{
+    if(m.role==='user') return `<div class="msg-user"><div class="bubble bubble-user">${esc(m.content)}</div></div>`;
+    return `<div class="msg-ai"><div class="ai-ava">🧠</div><div class="bubble bubble-ai">${esc(m.content)}</div></div>`;
+  }).join('');
+  const typing=S.chatLoading?`<div class="msg-ai"><div class="ai-ava">🧠</div><div class="bubble bubble-ai"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div></div>`:'';
+
+  // Quick prompts
+  const quickPrompts=[
+    {label:'📋 Redigir ofício',p:'Preciso de ajuda para redigir um ofício'},
+    {label:'⚖️ Consulta jurídica',p:'Tenho uma dúvida sobre direito administrativo'},
+    {label:'📊 Analisar dados',p:'Pode me ajudar a analisar dados da planilha?'},
+    {label:'✍️ Melhorar texto',p:'Pode melhorar e formalizar este texto: '},
+    {label:'📅 Organizar agenda',p:'Como posso organizar melhor minha agenda de trabalho?'},
+    {label:'💰 Calcular verba',p:'Me ajude a calcular verbas rescisórias'},
+  ];
+  const qpHTML=S.chatHistory.length===0?`
+    <div style="margin-bottom:14px;">
+      <div class="sec-title">Sugestões rápidas</div>
+      <div class="row-wrap">${quickPrompts.map(q=>`<button class="btn-ghost btn-sm" onclick="sendChat(${JSON.stringify(q.p)})">${q.label}</button>`).join('')}</div>
+    </div>`:'';
+
+  return `
+  <div id="chat-wrap">
+    <div id="chat-messages">
+      ${S.chatHistory.length===0?welcome:''}
+      ${msgs}${typing}
+      <div id="cb"></div>
+    </div>
+    ${qpHTML}
+    <div class="col" style="gap:8px;">
+      <div class="row" style="gap:6px;">
+        <button id="btn-voice" class="btn-icon ${S.listening?'btn-danger':' btn-ghost'}" style="${S.listening?'animation:urgentPulse 1s infinite;':''}">${S.listening?'🔴 Parar':'🎤'}</button>
+        ${S.clipboard?`<button class="btn-icon btn-ghost" onclick="pasteToChat()" title="Colar OCR/Texto copiado" style="font-size:14px;padding:9px 10px;">📋 Colar</button>`:''}
+        <textarea id="chat-in" placeholder="Digite ou fale qualquer coisa... (Enter = enviar, Shift+Enter = nova linha)" style="min-height:44px;max-height:140px;flex:1;border-radius:12px;resize:none;" rows="1"></textarea>
+        <button id="btn-send" class="btn-cyan btn-icon" ${S.chatLoading?'disabled':''}>➤</button>
+      </div>
+      ${S.chatHistory.length>0?`<div class="row"><button class="btn-ghost btn-xs" onclick="clearChat()">🗑 Limpar conversa</button><button class="btn-ghost btn-xs" onclick="exportChat()">💾 Exportar chat</button></div>`:''}
+    </div>
+  </div>`;
+}
+
+async function sendChat(text){
+  const inp=document.getElementById('chat-in');
+  const t=(text||inp?.value||'').trim();if(!t||S.chatLoading)return;
+  if(inp)inp.value='';
+  S.chatHistory.push({role:'user',content:t});
+  S.chatLoading=true;render();logActivity('chat','Nova pergunta no chat: '+t.slice(0,60));
+  try{
+    const resp=await ai(S.chatHistory.map(m=>({role:m.role,content:m.content})));
+    S.chatHistory.push({role:'assistant',content:resp});
+  }catch(e){
+    S.chatHistory.push({role:'assistant',content:`❌ Erro: ${e.message}\n\nVerifique sua conexão ou configure a chave da IA em ⚙️`});
+  }
+  S.chatLoading=false;render();
+}
+function clearChat(){S.chatHistory=[];render();}
+function exportChat(){
+  const txt=S.chatHistory.map(m=>`[${m.role.toUpperCase()}]\n${m.content}`).join('\n\n---\n\n');
+  const b=new Blob([txt],{type:'text/plain'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`chat_aria_${Date.now()}.txt`;a.click();
+  toast('💾 Chat exportado!','var(--green)');
+}
+function pasteToChat(){
+  const i=document.getElementById('chat-in');if(i){i.value+='\n'+S.clipboard;i.focus();}
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: DOCUMENTOS
+// ═══════════════════════════════════════════════════════
+const DOC_TYPES={
+  oficio:{label:'Ofício',icon:'📋',color:'var(--cyan)'},
+  ata:{label:'Ata de Reunião',icon:'📝',color:'var(--green)'},
+  memorando:{label:'Memorando',icon:'📨',color:'var(--blue2)'},
+  recibo:{label:'Recibo',icon:'🧾',color:'var(--orange)'},
+  contrato:{label:'Contrato',icon:'📜',color:'var(--purple)'},
+  declaracao:{label:'Declaração',icon:'✍️',color:'var(--pink2)'},
+  relatorio:{label:'Relatório',icon:'📊',color:'var(--teal)'},
+  requerimento:{label:'Requerimento',icon:'🗂️',color:'var(--yellow)'},
+  edital:{label:'Edital',icon:'📣',color:'var(--orange2)'},
+  parecer:{label:'Parecer',icon:'⚖️',color:'var(--blue)'},
+  personalizado:{label:'Personalizado',icon:'✨',color:'var(--text2)'},
+};
+
+function docPrompt(type,desc,custom){
+  const base={
+    oficio:`Redija um OFÍCIO administrativo formal e completo. Use linguagem culta e formal. Inclua: numeração, data, destinatário completo, assunto, corpo bem desenvolvido, fecho e assinatura. Descrição: "${desc}"`,
+    ata:`Redija uma ATA DE REUNIÃO formal e completa. Inclua: data/hora/local, participantes, pauta, desenvolvimento das discussões, decisões tomadas, votações se houver, encerramento com assinatura dos presentes. Descrição: "${desc}"`,
+    memorando:`Redija um MEMORANDO interno formal. Inclua: número, data, de/para/assunto, corpo objetivo e direto, assinatura. Descrição: "${desc}"`,
+    recibo:`Redija um RECIBO formal completo. Inclua: valor em algarismos e por extenso, identificação completa de quem paga e recebe, descrição do serviço/produto, forma de pagamento, data, local e assinatura. Descrição: "${desc}"`,
+    contrato:`Redija um CONTRATO administrativo completo com cláusulas numeradas. Inclua: qualificação das partes, objeto, obrigações de cada parte, valor e forma de pagamento, vigência, penalidades, rescisão e assinaturas com testemunhas. Descrição: "${desc}"`,
+    declaracao:`Redija uma DECLARAÇÃO formal completa. Inclua: identificação do declarante com dados completos, objeto claro da declaração, finalidade, veracidade e responsabilidade, local/data e assinatura. Descrição: "${desc}"`,
+    relatorio:`Redija um RELATÓRIO técnico-administrativo completo e bem estruturado. Inclua: sumário executivo, introdução, metodologia, desenvolvimento com dados, análise crítica, conclusões e recomendações. Descrição: "${desc}"`,
+    requerimento:`Redija um REQUERIMENTO formal e completo. Inclua: identificação completa do requerente, autoridade destinatária, pedido claro e específico, fundamentação legal ou fática, requerimento final e assinatura com data. Descrição: "${desc}"`,
+    edital:`Redija um EDITAL formal e completo seguindo normas administrativas. Inclua: objeto, participantes habilitados, condições, prazos, critérios de seleção, disposições gerais. Descrição: "${desc}"`,
+    parecer:`Redija um PARECER técnico-jurídico formal. Inclua: ementa, relatório dos fatos, fundamentação legal e doutrinária, análise técnica, conclusão e recomendação. Descrição: "${desc}"`,
+    personalizado:`Redija um documento do tipo "${custom}" completo e formal com todos os elementos necessários. Baseado em: "${desc}"`,
+  };
+  return base[type]||base.personalizado;
+}
+
+function renderDocs(){
+  const pills=Object.entries(DOC_TYPES).map(([k,v])=>`
+    <button onclick="S.docType='${k}';render()" style="
+      background:${S.docType===k?v.color+'22':'var(--bg3)'};
+      border:1.5px solid ${S.docType===k?v.color:'var(--border)'};
+      color:${S.docType===k?v.color:'var(--text2)'};
+      border-radius:20px;padding:6px 13px;font-size:12px;font-weight:700;
+    ">${v.icon} ${v.label}</button>`).join('');
+
+  const tplCards=TEMPLATES.map(t=>`
+    <div class="tpl-card" onclick="S.docType='${t.setType}';S.docDesc='${esc(t.setDesc)}';render();setTimeout(()=>generateDoc(),150);">
+      <div class="icon">${t.icon}</div>
+      <div class="name">${t.label}</div>
+      <div class="desc">${t.desc}</div>
+    </div>`).join('');
+
+  const sigHTML=S.docSignature?`
+    <div class="sig-card fade-in">
+      <div class="sig-badge" style="color:var(--green2);">✅ Assinado digitalmente por <strong>${esc(S.docSignature.name)}</strong> em ${fmt(S.docSignature.date)} às ${fmtT(S.docSignature.date)}</div>
+      <div style="margin-top:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <img src="${S.docSignature.data}" style="max-height:60px;background:#fff;border-radius:6px;border:1px solid var(--border);padding:4px;"/>
+        <div style="font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;">SHA256: ${S.docSignature.hash256}</div>
+        <button class="btn-danger btn-xs" onclick="S.docSignature=null;render()" title="Remover assinatura">✕</button>
+      </div>
+    </div>`:'';
+
+  return `<div class="col">
+    <div><div class="sec-title">Tipo de Documento</div>
+    <div class="row-wrap">${pills}</div></div>
+    ${S.docType==='personalizado'?`<input id="doc-custom" placeholder="Nome do documento (ex: Procuração, Edital de Licitação...)" value="${esc(S.docCustom)}"/>`:''}
+    <div class="row" style="align-items:flex-start;">
+      <textarea id="doc-desc" placeholder="Descreva em linguagem natural o que precisa... Exemplo: 'Ofício para o Secretário Municipal de Educação solicitando reforma urgente da quadra esportiva da Escola Estadual Santos Dumont, processo nº 2026/045, assinado pelo Diretor Prof. Carlos Lima'" style="flex:1;">${esc(S.docDesc)}</textarea>
+      ${S.clipboard?`<button class="btn-ghost btn-icon" onclick="insertClipDoc()" title="Colar texto do OCR" style="font-size:16px;">📋</button>`:''}
+    </div>
+    <div>
+      <div class="sec-title">📌 Modelos Prontos</div>
+      <div class="tpl-grid">${tplCards}</div>
+    </div>
+    <div class="row-wrap">
+      <button class="btn-cyan" onclick="generateDoc()" ${S.docLoading?'disabled':''}>
+        ${S.docLoading?'<span class="spin">⚙️</span> Gerando...':'✨ Gerar com IA'}
+      </button>
+      ${S.docResult?`
+        <button class="btn-ghost btn-sm" onclick="copyDoc()">📋 Copiar</button>
+        <button class="btn-green btn-sm" onclick="saveDoc()">💾 Salvar</button>
+        <button class="btn-ghost btn-sm" onclick="exportDocTxt()">📥 .txt</button>
+        <button class="btn-ghost btn-sm" onclick="exportDocPDF()">📥 PDF</button>
+        <button class="btn-ghost btn-sm" onclick="exportDocDOCX()">📥 DOCX</button>
+        <button class="btn-ghost btn-sm" onclick="openSigModal()">✍️ Assinar</button>
+        <button class="btn-ghost btn-sm" onclick="shareDoc()">🔗 Compartilhar</button>
+        <button class="btn-ghost btn-sm" onclick="shareWhatsApp()">📱 WhatsApp</button>
+        <button class="btn-ghost btn-sm" onclick="highlightSpelling()">🔍 Verificar Ortografia</button>
+        <button class="btn-danger btn-sm" onclick="S.docResult='';S.docSignature=null;render()">✕ Limpar</button>`:''}
+    </div>
+    ${S.docResult?`
+      <div class="rt-toolbar">
+        <button onclick="document.execCommand('bold')" title="Negrito"><b>B</b></button>
+        <button onclick="document.execCommand('italic')" title="Itálico"><i>I</i></button>
+        <button onclick="document.execCommand('underline')" title="Sublinhado"><u>U</u></button>
+        <button onclick="document.execCommand('insertOrderedList')" title="Lista Ordenada">1.</button>
+        <button onclick="document.execCommand('insertUnorderedList')" title="Lista Não Ordenada">•</button>
+        <button onclick="document.execCommand('justifyLeft')" title="Alinhar à Esquerda">⬅</button>
+        <button onclick="document.execCommand('justifyCenter')" title="Centralizar">⬇</button>
+        <button onclick="document.execCommand('justifyRight')" title="Alinhar à Direita">➡</button>
+      </div>
+      <div class="rt-editor doc-result-box" id="doc-editor" contenteditable="true">${esc(S.docResult).replace(/\n/g,'<br>')}</div>
+      ${sigHTML}`:''}
+  </div>`;
+}
+
+function insertClipDoc(){S.docDesc=(document.getElementById('doc-desc')?.value||'')+'\n'+S.clipboard;render();}
+function copyDoc(){
+  const editor=document.getElementById('doc-editor');
+  const text=editor?editor.innerText:S.docResult;
+  navigator.clipboard.writeText(text);toast('📋 Copiado!','var(--green)');
+}
+function exportDocTxt(){
+  const editor=document.getElementById('doc-editor');
+  const text=editor?editor.innerText:S.docResult;
+  const b=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download=`${S.docType}_${Date.now()}.txt`;a.click();toast('📥 Exportado!','var(--green)');
+}
+function saveDoc(){
+  const editor=document.getElementById('doc-editor');
+  const richHTML=editor?editor.innerHTML:esc(S.docResult).replace(/\n/g,'<br>');
+  const icon=DOC_TYPES[S.docType]?.icon||'📄';
+  const newId=uid();
+  // Auto-version: if the latest saved file has same type and different content, save version
+  if(S.savedFiles.length>0){
+    const lastFile=S.savedFiles[0];
+    if(lastFile.type===S.docType&&lastFile.content!==S.docResult){
+      saveVersion(lastFile.id);
+    }
+  }
+  S.savedFiles.unshift({id:newId,title:`${DOC_TYPES[S.docType]?.label||S.docCustom} — ${new Date().toLocaleString('pt-BR')}`,content:S.docResult,html:richHTML,type:S.docType,icon,signature:S.docSignature||null});
+  save('aria_files',S.savedFiles);updateStatus();
+  toast('💾 Documento salvo!','var(--green)');
+  logActivity('doc','Documento salvo: '+(DOC_TYPES[S.docType]?.label||S.docCustom));
+  S.docSignature=null;
+}
+async function generateDoc(){
+  const d=document.getElementById('doc-desc');S.docDesc=d?.value||'';
+  const c=document.getElementById('doc-custom');S.docCustom=c?.value||'';
+  if(!S.docDesc.trim()){toast('Descreva o documento primeiro.','var(--orange)');return;}
+  S.docResult='';S.docLoading=true;render();
+  const sys='Você é um especialista em redação oficial brasileira e direito administrativo. Crie documentos formais, completos, bem estruturados e corretos gramaticalmente. Use linguagem culta e formatação clara.';
+  try{S.docResult=await ai([{role:'user',content:docPrompt(S.docType,S.docDesc,S.docCustom)}],sys);}
+  catch(e){S.docResult=`❌ Erro: ${e.message}`;}
+  S.docLoading=false;render();
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: OCR
+// ═══════════════════════════════════════════════════════
+function renderOCR(){
+  const modes=[
+    {k:'auto',label:'📄 Automático',desc:'Detecta formato automaticamente',color:'#00e5ff'},
+    {k:'doc',label:'📋 Documento',desc:'Impresso, carta, livro',color:'#69f0ae'},
+    {k:'table',label:'📊 Tabela',desc:'Planilhas, listas, números',color:'#ff9100'},
+    {k:'screen',label:'🖥️ Captura',desc:'Print de tela, digitalizado',color:'#d500f9'},
+  ];
+  return `<div class="col">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="stat-card">
+        <div class="stat-val text-cyan">${S.ocrText?S.ocrText.split(/\s+/).filter(Boolean).length:0}</div>
+        <div class="stat-lbl">Palavras extraídas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val text-green">${S.ocrText.length}</div>
+        <div class="stat-lbl">Caracteres</div>
+      </div>
+    </div>
+    <div class="row-wrap">
+      <button class="btn-cyan" onclick="document.getElementById('ocr-file').click()">📷 Escanear Imagem</button>
+      <button class="btn-ghost" onclick="captureScreen()" title="Disponível no Chrome/Edge desktop">📸 Capturar Tela</button>
+      ${S.ocrSel?`<button class="btn-green btn-sm" onclick="copyOCRSel()">✂️ Copiar Seleção (${S.ocrSel.length} chars)</button>`:''}
+      ${S.ocrText?`
+        <button class="btn-ghost btn-sm" onclick="copyAllOCR()">📋 Copiar Tudo</button>
+        <button class="btn-ghost btn-sm" onclick="aiFixOCR()">🤖 IA Corrigir</button>
+        <button class="btn-ghost btn-sm" onclick="document.getElementById('ocr-file').click()">🔄 Re-extrair</button>
+        <button class="btn-ghost btn-sm" onclick="exportOCR()">📥 Exportar</button>
+      `:''}
+      <input id="ocr-file" type="file" accept="image/*" style="display:none"/>
+      ${S.ocrLoading?`<span style="color:var(--cyan);font-size:13px;font-weight:600;"><span class="spin">⚙️</span> <span id="ocr-progress">Processando OCR...</span></span>`:''}
+    </div>
+    <div class="row-wrap" style="gap:4px;">
+      <span style="color:var(--text3);font-size:11px;font-weight:600;margin-right:4px;">Modo:</span>
+      ${modes.map(m=>`
+        <button onclick="S.ocrMode='${m.k}';render()" style="
+          background:${S.ocrMode===m.k?m.color+'33':'var(--bg3)'};
+          border:1.5px solid ${S.ocrMode===m.k?'var(--cyan)':'var(--border)'};
+          color:${S.ocrMode===m.k?'var(--cyan)':'var(--text3)'};
+          border-radius:20px;padding:4px 11px;font-size:11px;font-weight:700;
+        " title="${m.desc}">${m.label}</button>`).join('')}
+    </div>
+    ${S.ocrImg?`<img src="${S.ocrImg}" style="max-height:160px;object-fit:contain;border-radius:var(--r);border:1.5px solid var(--border2);"/>`:''}
+    <div>
+      <div class="sec-title">Texto Extraído <span style="color:var(--muted);font-weight:400;">(selecione trechos com o dedo/mouse)</span></div>
+      <div id="ocr-output" onmouseup="handleOCRSel()" ontouchend="handleOCRSel()">${S.ocrText||'<span style="color:var(--muted);font-style:italic;">Importe uma imagem para extrair o texto com OCR inteligente.</span>'}</div>
+    </div>
+    ${S.ocrSel?`<div class="card" style="border-color:var(--cyan);">
+      <div style="color:var(--cyan);font-weight:700;font-size:12px;margin-bottom:4px;">✂️ Selecionado (${S.ocrSel.length} chars)</div>
+      <div style="color:var(--text2);font-size:13px;">${esc(S.ocrSel.slice(0,200))}${S.ocrSel.length>200?'...':''}</div>
+    </div>`:''}
+    <div style="color:var(--text3);font-size:12px;">💡 Após a extração, selecione qualquer trecho → clique "Copiar Seleção" → cole em qualquer outra aba</div>
+    <div style="color:var(--muted);font-size:11px;">📸 Captura de tela disponível no Chrome/Edge desktop</div>
+  </div>`;
+}
+
+function handleOCRSel(){const s=window.getSelection?.().toString();if(s&&s.trim()){S.ocrSel=s.trim();render();}}
+function copyOCRSel(){setClip(S.ocrSel,'OCR');S.ocrSel='';render();}
+function copyAllOCR(){setClip(S.ocrText,'OCR');toast('📋 Texto completo copiado!','var(--cyan)');}
+function exportOCR(){
+  const b=new Blob([S.ocrText],{type:'text/plain'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`ocr_${Date.now()}.txt`;a.click();
+}
+async function aiFixOCR(){
+  if(!S.ocrText)return;
+  S.ocrLoading=true;render();
+  try{
+    const r=await ai([{role:'user',content:`Corrija erros de OCR, pontuação e formatação deste texto extraído de imagem. Mantenha o conteúdo original. Retorne apenas o texto corrigido:\n\n${S.ocrText}`}]);
+    S.ocrText=r;toast('✅ Texto corrigido pela IA!','var(--green)');
+  }catch(e){toast('❌ '+e.message,'var(--red)');}
+  S.ocrLoading=false;render();
+}
+async function processOCR(file){
+  const allowed=['image/jpeg','image/jpg','image/png','image/gif','image/webp'];
+  if(!allowed.includes(file.type)){
+    S.ocrText='❌ Formato não suportado. Use JPG, PNG, GIF ou WEBP.';
+    S.ocrLoading=false;render();return;
+  }
+  S.ocrImg=URL.createObjectURL(file);S.ocrLoading=true;S.ocrText='';render();
+  try{
+    const img=new Image();
+    img.src=S.ocrImg;
+    await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;});
+
+    const canvas=document.createElement('canvas');
+    const maxDim=2000;
+    let w=img.width,h=img.height;
+    if(w>maxDim||h>maxDim){const ratio=Math.min(maxDim/w,maxDim/h);w*=ratio;h*=ratio;}
+    canvas.width=Math.round(w);canvas.height=Math.round(h);
+    const ctx=canvas.getContext('2d');
+    ctx.drawImage(img,0,0,canvas.width,canvas.height);
+
+    const imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
+    const data=imageData.data;
+
+    // 1. Grayscale + contrast stretch
+    let min=255,max=0;
+    for(let i=0;i<data.length;i+=4){
+      const gray=0.299*data[i]+0.587*data[i+1]+0.114*data[i+2];
+      data[i]=data[i+1]=data[i+2]=gray;
+      if(gray<min)min=gray;if(gray>max)max=gray;
+    }
+    const range=max-min;
+    if(range>10){
+      for(let i=0;i<data.length;i+=4){
+        data[i]=((data[i]-min)/range)*255;
+        data[i+1]=data[i];data[i+2]=data[i];
+      }
+    }
+
+    // 2. Adaptive threshold (Otsu-inspired)
+    const hist=new Array(256).fill(0);
+    for(let i=0;i<data.length;i+=4)hist[Math.round(data[i])]++;
+    let total=data.length/4,sum=0;
+    for(let i=0;i<256;i++)sum+=i*hist[i];
+    let sumB=0,wB=0,wF=0,best=0,maxVariance=0;
+    for(let i=0;i<256;i++){
+      wB+=hist[i];if(wB===0)continue;
+      wF=total-wB;if(wF===0)break;
+      sumB+=i*hist[i];
+      const mB=sumB/wB,mF=(sum-sumB)/wF;
+      const diff=mB-mF;
+      const variance=diff*diff*wB*wF;
+      if(variance>maxVariance){maxVariance=variance;best=i;}
+    }
+
+    // 3. Denoise (median filter - simplified 3x3)
+    const orig=new Uint8ClampedArray(data);
+    for(let y=1;y<canvas.height-1;y++){
+      for(let x=1;x<canvas.width-1;x++){
+        const neighbors=[];
+        for(let dy=-1;dy<=1;dy++)
+          for(let dx=-1;dx<=1;dx++)
+            neighbors.push(orig[((y+dy)*canvas.width+(x+dx))*4]);
+        neighbors.sort((a,b)=>a-b);
+        data[(y*canvas.width+x)*4]=neighbors[4];
+        data[(y*canvas.width+x)*4+1]=neighbors[4];
+        data[(y*canvas.width+x)*4+2]=neighbors[4];
+      }
+    }
+
+    // 4. Sharpen
+    const sharp=new Float32Array(data);
+    for(let y=1;y<canvas.height-1;y++){
+      for(let x=1;x<canvas.width-1;x++){
+        const idx=(y*canvas.width+x)*4;
+        const v=sharp[idx];
+        const blurred=(sharp[((y-1)*canvas.width+x)*4]+sharp[((y+1)*canvas.width+x)*4]+sharp[(y*canvas.width+(x-1))*4]+sharp[(y*canvas.width+(x+1))*4])/4;
+        data[idx]=Math.min(255,Math.max(0,v+(v-blurred)*0.5));
+        data[idx+1]=data[idx+2]=data[idx];
+      }
+    }
+
+    ctx.putImageData(imageData,0,0);
+
+    // Convert canvas to blob
+    const blob=await new Promise(resolve=>canvas.toBlob(b=>resolve(b),'image/png'));
+
+    // Choose PSM based on mode
+    const psmMap={auto:'3',doc:'3',table:'6',screen:'4'};
+    const psm=psmMap[S.ocrMode]||'3';
+
+    const {data:{text}}=await Tesseract.recognize(blob,'por',{
+      logger: m=>{if(m.status==='recognizing text'){const p=document.getElementById('ocr-progress');if(p)p.textContent=`OCR: ${Math.round(m.progress*100)}%`;}}
+    });
+    S.ocrText=text.trim()||'Nenhum texto encontrado na imagem.';
+    logActivity('ocr','OCR realizado: '+S.ocrText.split(/\s+/).filter(Boolean).length+' palavras extraídas');
+  }catch(e){
+    S.ocrText='❌ Erro no OCR: '+e.message+'\n\nDica: verifique se a imagem é válida e legível.';
+  }
+  S.ocrLoading=false;render();
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: PLANILHA
+// ═══════════════════════════════════════════════════════
+function renderSheet(){
+  const headers=`<tr><th style="width:30px;">#</th>${Array.from({length:S.sheetCols},(_,c)=>`<th>${colLetter(c)}</th>`).join('')}</tr>`;
+  const rows=S.sheetData.map((row,r)=>`<tr><td>${r+1}</td>${row.map((cell,c)=>`<td><input value="${esc(cell)}" onchange="S.sheetData[${r}][${c}]=this.value" style="${r===0?'font-weight:800;color:var(--cyan);':c===3?'color:var(--green);':''}" /></td>`).join('')}</tr>`).join('');
+  return `<div class="col">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+      <div class="stat-card">
+        <div class="stat-val text-cyan">${S.sheetRows}</div><div class="stat-lbl">Linhas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val text-green">${S.sheetCols}</div><div class="stat-lbl">Colunas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val text-purple">${S.sheetRows*S.sheetCols}</div><div class="stat-lbl">Células</div>
+      </div>
+    </div>
+    <div class="row-wrap">
+      <button class="btn-ghost btn-sm" onclick="sheetAddRow()">+ Linha</button>
+      <button class="btn-ghost btn-sm" onclick="sheetAddCol()">+ Coluna</button>
+      <button class="btn-ghost btn-sm" onclick="sheetDelRow()" style="color:var(--red);">− Linha</button>
+      <button class="btn-cyan btn-sm" onclick="exportCSV()">💾 CSV</button>
+      <button class="btn-ghost btn-sm" onclick="document.getElementById('csv-in').click()">📂 Importar CSV</button>
+      <button class="btn-ghost btn-sm" onclick="clearSheet()" style="color:var(--red);">🗑 Limpar</button>
+      <input id="csv-in" type="file" accept=".csv,.txt" style="display:none"/>
+    </div>
+    <div id="sheet-wrap">${S.sheetRows>0?`<table><thead>${headers}</thead><tbody>${rows}</tbody></table>`:''}</div>
+    <div class="sep"></div>
+    <div class="sec-title">🤖 Análise Inteligente com IA</div>
+    <div class="row">
+      <input id="sheet-ai-q" placeholder="Peça para a IA analisar: totalize a coluna B, encontre o maior valor, crie um resumo..." style="flex:1;"/>
+      <button class="btn-cyan btn-sm" onclick="sheetAI()">Analisar</button>
+    </div>
+    <div id="sheet-ai-result"></div>
+  </div>`;
+}
+function sheetAddRow(){S.sheetRows++;S.sheetData.push(Array(S.sheetCols).fill(''));render();}
+function sheetAddCol(){S.sheetCols++;S.sheetData=S.sheetData.map(r=>[...r,'']);render();}
+function sheetDelRow(){if(S.sheetRows>2){S.sheetRows--;S.sheetData.pop();render();}}
+function clearSheet(){S.sheetData=Array.from({length:8},(_,r)=>Array.from({length:6},(_,c)=>r===0?['Item','Qtd','Valor Unit.','Total','Status','Obs.'][c]:''));S.sheetRows=8;S.sheetCols=6;render();}
+function exportCSV(){
+  const csv=S.sheetData.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`planilha_aria_${Date.now()}.csv`;a.click();
+  toast('💾 CSV exportado!','var(--green)');
+}
+function importCSV(file){
+  const r=new FileReader();r.onload=ev=>{
+    const lines=ev.target.result.split('\n').filter(l=>l.trim()).map(l=>l.split(',').map(c=>c.replace(/^"|"$/g,'').replace(/""/g,'"')));
+    S.sheetRows=lines.length;S.sheetCols=Math.max(...lines.map(l=>l.length));S.sheetData=lines;render();
+    toast('📂 CSV importado!','var(--cyan)');
+  };r.readAsText(file,'utf-8');
+}
+async function sheetAI(){
+  const q=document.getElementById('sheet-ai-q')?.value.trim();if(!q)return;
+  const csv=S.sheetData.map(r=>r.join(' | ')).join('\n');
+  const res=document.getElementById('sheet-ai-result');
+  if(res)res.innerHTML=`<div style="color:var(--cyan);"><span class="spin">⚙️</span> Analisando...</div>`;
+  try{
+    const r=await ai([{role:'user',content:`Planilha:\n${csv}\n\nTarefa: ${q}\n\nResponda de forma clara e estruturada.`}]);
+    if(res)res.innerHTML=`<div class="card" style="border-color:var(--cyan);margin-top:4px;"><div style="color:var(--text);font-size:13px;line-height:1.7;white-space:pre-wrap;">${esc(r)}</div></div>`;
+  }catch(e){if(res)res.innerHTML=`<div style="color:var(--red);">Erro: ${e.message}</div>`;}
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: AGENDA
+// ═══════════════════════════════════════════════════════
+const AG_COLORS=['#00e5ff','#69f0ae','#d500f9','#ff9100','#f50057','#ffd740','#29b6f6','#1de9b6'];
+
+function renderAgenda(){
+  const now=Date.now();
+  const sorted=[...S.agenda].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const upcoming=sorted.filter(e=>new Date(e.date)>now);
+  const past=sorted.filter(e=>new Date(e.date)<=now);
+
+  const evHTML=ev=>{
+    const ms=new Date(ev.date)-now;
+    const urgent=ms>0&&ms<3600000;
+    const soon=ms>0&&ms<86400000;
+    return `<div class="ag-item ${urgent?'ag-urgent':''}" style="background:${urgent?'#1a0d00':soon?'#0a1a0a':'var(--bg2)'};border-color:${ev.color};border-left-color:${ev.color};">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="flex:1;">
+          <div style="color:${ev.color};font-weight:700;font-size:14px;">${esc(ev.title)}</div>
+          <div style="color:var(--text3);font-size:12px;margin-top:2px;">📅 ${fmt(ev.date)} às ${fmtT(ev.date)}</div>
+          ${ev.notes?`<div style="color:var(--text3);font-size:12px;margin-top:3px;">📌 ${esc(ev.notes)}</div>`:''}
+          ${urgent?`<div style="color:var(--orange);font-size:12px;font-weight:700;margin-top:4px;">⚠️ URGENTE — em ${Math.round(ms/60000)} min!</div>`:''}
+          ${soon&&!urgent?`<div style="color:var(--yellow);font-size:11px;margin-top:3px;">⏰ Hoje</div>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+          <span class="ag-badge" style="background:${ev.color}22;color:${ev.color};">${ev.type}</span>
+          <button class="btn-danger btn-xs" onclick="delAgenda('${ev.id}')">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  };
+
+  const colorBtns=AG_COLORS.map(c=>`<div onclick="S.agColor='${c}';renderAgColors()" style="width:24px;height:24px;border-radius:50%;background:${c};cursor:pointer;border:2.5px solid ${S.agColor===c?'white':'transparent'};flex-shrink:0;transition:transform .15s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform=''"></div>`).join('');
+
+  return `<div class="col">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="color:var(--cyan);font-weight:800;font-size:18px;">${upcoming.length} eventos</div>
+        <div style="color:var(--text3);font-size:12px;">próximos compromissos</div>
+      </div>
+      <button class="btn-cyan" onclick="S.agForm=!S.agForm;render()">+ Novo Evento</button>
+    </div>
+    ${S.agForm?`
+    <div class="card card-glow fade-in">
+      <div style="color:var(--cyan);font-weight:700;margin-bottom:10px;">📅 Novo Evento</div>
+      <div class="col">
+        <input id="ag-t" placeholder="Título do evento"/>
+        <div class="row">
+          <input id="ag-d" type="datetime-local" style="flex:1;color-scheme:dark;"/>
+          <select id="ag-y" style="width:140px;">
+            <option>reunião</option><option>prazo</option><option>compromisso</option>
+            <option>lembrete</option><option>audiência</option><option>viagem</option>
+          </select>
+        </div>
+        <div class="row" id="ag-colors" style="gap:6px;">${colorBtns}</div>
+        <textarea id="ag-n" placeholder="Notas, local, link da reunião..." style="min-height:50px;"></textarea>
+        <div class="row">
+          <button class="btn-cyan flex1" onclick="addAgenda()">✅ Salvar Evento</button>
+          <button class="btn-ghost" onclick="S.agForm=false;render()">Cancelar</button>
+        </div>
+      </div>
+    </div>`:''}
+    <div style="flex:1;overflow-y:auto;">
+      ${upcoming.length?`<div class="sec-title">Próximos</div>${upcoming.map(evHTML).join('')}`:'<div style="color:var(--muted);text-align:center;padding:20px 0;font-size:13px;">Nenhum evento futuro cadastrado.</div>'}
+      ${past.length?`<div class="sec-title" style="margin-top:12px;">Encerrados</div>${past.slice(-4).map(ev=>`
+        <div style="background:var(--bg1);border:1px solid var(--border);border-radius:var(--r);padding:9px 13px;margin-bottom:7px;opacity:.6;display:flex;justify-content:space-between;">
+          <div><div style="color:var(--text2);font-size:13px;">${esc(ev.title)}</div><div style="color:var(--muted);font-size:11px;">${fmt(ev.date)}</div></div>
+          <button class="btn-danger btn-xs" onclick="delAgenda('${ev.id}')">×</button>
+        </div>`).join('')}`:''}
+    </div>
+  </div>`;
+}
+function renderAgColors(){
+  const AG_COLORS=['#00e5ff','#69f0ae','#d500f9','#ff9100','#f50057','#ffd740','#29b6f6','#1de9b6'];
+  document.querySelectorAll('#ag-colors div').forEach((el,i)=>{
+    el.style.border=`2.5px solid ${AG_COLORS[i]===S.agColor?'white':'transparent'}`;
+  });
+}
+function addAgenda(){
+  const title=document.getElementById('ag-t')?.value.trim();
+  const date=document.getElementById('ag-d')?.value;
+  if(!title||!date){toast('Preencha título e data.','var(--orange)');return;}
+  const type=document.getElementById('ag-y')?.value||'reunião';
+  const notes=document.getElementById('ag-n')?.value||'';
+  S.agenda.push({id:uid(),title,date,color:S.agColor,type,notes});
+  save('aria_agenda',S.agenda);S.agForm=false;render();
+  toast('📅 Evento criado!','var(--green)');
+  logActivity('agenda','Evento criado: '+title);
+}
+function delAgenda(id){S.agenda=S.agenda.filter(e=>e.id!==id);save('aria_agenda',S.agenda);render();}
+
+// ═══════════════════════════════════════════════════════
+// TAB: NOTAS
+// ═══════════════════════════════════════════════════════
+function renderNotes(){
+  const notes=S.notes;
+  if(S.notesView){
+    const n=notes.find(x=>x.id===S.notesView);
+    if(!n){S.notesView=null;return renderNotes();}
+    return `<div class="col" style="height:100%;">
+      <div class="row-wrap">
+        <button class="btn-ghost btn-sm" onclick="S.notesView=null;render()">← Voltar</button>
+        <button class="btn-danger btn-sm" onclick="delNote('${n.id}')">🗑 Excluir</button>
+        <div class="flex1"></div>
+        <span style="color:var(--text3);font-size:11px;">📅 ${fmt(n.date)} às ${fmtT(n.date)}</span>
+        ${n.updated?`<span style="color:var(--muted);font-size:10px;">✏️ Editado: ${fmt(n.updated)}</span>`:''}
+      </div>
+      <input id="note-title" value="${esc(n.title)}" placeholder="Título da nota..." onchange="updateNoteTitle('${n.id}',this.value)" style="font-size:20px;font-weight:800;border:none;background:transparent;color:var(--text);padding:4px 0;"/>
+      <textarea id="note-content" placeholder="Escreva o que quiser aqui... (datas, ideias, textos, listas)" oninput="updateNoteContent('${n.id}',this.value)" style="flex:1;min-height:300px;font-size:15px;line-height:1.8;resize:none;border-radius:var(--r2);">${esc(n.content)}</textarea>
+      <div style="color:var(--muted);font-size:11px;">💡 As notas salvam automaticamente enquanto você digita</div>
+    </div>`;
+  }
+  const sorted=[...notes].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  return `<div class="col" style="height:100%;">
+    <div class="row-wrap" style="justify-content:space-between;">
+      <div><span style="font-size:22px;font-weight:900;" class="text-cyan">📝 Notas</span><span style="color:var(--text3);font-size:13px;margin-left:8px;">${notes.length} notas</span></div>
+      <button class="btn-cyan" onclick="newNote()">+ Nova Nota</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;">
+      ${sorted.length===0?`<div style="text-align:center;padding:40px 0;color:var(--muted);font-size:14px;">Nenhuma nota ainda.<br><button class="btn-cyan btn-sm" style="margin-top:10px;" onclick="newNote()">+ Criar primeira nota</button></div>`:
+      sorted.map(n=>`
+        <div class="card" style="margin-bottom:8px;cursor:pointer;${S.notesView===n.id?'border-color:var(--cyan);':''}" onclick="S.notesView='${n.id}';render()">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+            <div style="flex:1;min-width:0;">
+              <div style="color:var(--cyan);font-weight:700;font-size:15px;">${esc(n.title||'Sem título')}</div>
+              <div style="color:var(--text3);font-size:12px;margin-top:3px;word-break:break-word;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${esc(n.content)}</div>
+              <div style="color:var(--muted);font-size:10px;margin-top:4px;">📅 ${fmt(n.date)} às ${fmtT(n.date)}</div>
+            </div>
+            <button class="btn-danger btn-xs" onclick="event.stopPropagation();delNote('${n.id}')">🗑</button>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function newNote(){
+  const id=uid();
+  S.notes.unshift({id,title:'Nova Nota '+S.notes.length,content:'',date:new Date().toISOString()});
+  S.notesView=id;
+  save('aria_notes',S.notes);render();
+}
+function delNote(id){
+  S.notes=S.notes.filter(n=>n.id!==id);
+  if(S.notesView===id)S.notesView=null;
+  save('aria_notes',S.notes);render();
+}
+function updateNoteTitle(id,v){
+  const n=S.notes.find(x=>x.id===id);
+  if(n){n.title=v||'Sem título';n.updated=new Date().toISOString();save('aria_notes',S.notes);}
+}
+function updateNoteContent(id,v){
+  const n=S.notes.find(x=>x.id===id);
+  if(n){n.content=v;n.updated=new Date().toISOString();save('aria_notes',S.notes);}
+}
+// ═══════════════════════════════════════════════════════
+// TAB: FUSÃO
+// ═══════════════════════════════════════════════════════
+function renderFusion(){
+  const chips=S.fusFiles.map((f,i)=>`<div class="chip-file">📄 ${esc(f.name)} <button style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;" onclick="S.fusFiles.splice(${i},1);render()">×</button></div>`).join('');
+  const docPills=Object.entries(DOC_TYPES).filter(([k])=>k!=='personalizado').map(([k,v])=>`
+    <button onclick="S.docType='${k}';render()" style="
+      background:${S.docType===k?v.color+'22':'var(--bg3)'};
+      border:1.5px solid ${S.docType===k?v.color:'var(--border)'};
+      color:${S.docType===k?v.color:'var(--text2)'};
+      border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;
+    ">${v.icon} ${v.label}</button>`).join('');
+  return `<div class="col">
+    <div>
+      <div class="sec-title">Como funciona</div>
+      <div style="color:var(--text2);font-size:13px;line-height:1.6;">Envie múltiplos arquivos TXT/CSV → Escolha o tipo de documento → A IA processa tudo e monta um único documento coeso e completo.</div>
+    </div>
+    <div class="card-dashed" onclick="document.getElementById('fus-files').click()">
+      <div style="font-size:36px;">📁</div>
+      <div style="color:var(--cyan);font-weight:700;font-size:15px;margin:6px 0;">Clique para selecionar arquivos</div>
+      <div style="color:var(--text3);font-size:12px;">TXT, CSV — múltiplos arquivos suportados</div>
+      <input id="fus-files" type="file" multiple accept=".txt,.csv,.doc,.docx,.md" style="display:none"/>
+    </div>
+    ${S.fusFiles.length?`<div class="row-wrap">${chips}</div>`:''}
+    <div><div class="sec-title">Tipo do documento final</div><div class="row-wrap">${docPills}</div></div>
+    <textarea id="fus-ctx" placeholder="Contexto adicional para a IA (opcional): ex. 'reunião mensal de outubro', 'relatório do setor financeiro'..." style="min-height:60px;"></textarea>
+    <button class="btn-cyan" onclick="runFusion()" ${S.fusFiles.length===0||S.fusLoading?'disabled':''}>
+      ${S.fusLoading?`<span class="spin">⚙️</span> Fundindo ${S.fusFiles.length} arquivo(s)...`:`🔀 Fundir e Gerar ${DOC_TYPES[S.docType]?.label||'Documento'}`}
+    </button>
+    ${S.fusResult?`
+      <div class="doc-result-box fade-in">${esc(S.fusResult)}</div>
+      <div class="row-wrap">
+        <button class="btn-ghost btn-sm" onclick="navigator.clipboard.writeText(S.fusResult);toast('📋 Copiado!','var(--green)')">📋 Copiar</button>
+        <button class="btn-cyan btn-sm" onclick="saveFus()">💾 Salvar</button>
+        <button class="btn-ghost btn-sm" onclick="exportFus()">📥 Exportar</button>
+      </div>`:''}
+  </div>`;
+}
+async function runFusion(){
+  const ctx=document.getElementById('fus-ctx')?.value||'';
+  if(!S.fusFiles.length)return;
+  S.fusResult='';S.fusLoading=true;render();
+  const content=S.fusFiles.map((f,i)=>`=== ARQUIVO ${i+1}: ${f.name} ===\n${f.content}`).join('\n\n');
+  try{
+    S.fusResult=await ai([{role:'user',content:`Com base nos ${S.fusFiles.length} arquivos fornecidos, crie um(a) ${DOC_TYPES[S.docType]?.label||'documento'} COMPLETO, COESO e FORMAL.${ctx?'\nContexto: '+ctx:''}\n\nARQUIVOS:\n${content.slice(0,9000)}`}]);
+  }catch(e){S.fusResult='Erro: '+e.message;}
+  S.fusLoading=false;render();
+}
+function saveFus(){
+  S.savedFiles.unshift({id:uid(),title:`Fusão IA — ${new Date().toLocaleString('pt-BR')}`,content:S.fusResult,type:'fusão',icon:'🔀'});
+  save('aria_files',S.savedFiles);updateStatus();toast('💾 Salvo!','var(--green)');
+}
+function exportFus(){
+  const b=new Blob([S.fusResult],{type:'text/plain'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`fusao_${Date.now()}.txt`;a.click();
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: TRADUTOR
+// ═══════════════════════════════════════════════════════
+const LANGS={auto:'Detectar',pt:'Português',en:'Inglês',es:'Espanhol',fr:'Francês',de:'Alemão',it:'Italiano',zh:'Chinês',ja:'Japonês',ar:'Árabe',ru:'Russo',tr:'Turco'};
+function renderTranslator(){
+  const fromOpts=Object.entries(LANGS).map(([k,v])=>`<option value="${k}" ${S.transFrom===k?'selected':''}>${v}</option>`).join('');
+  const toOpts=Object.entries(LANGS).filter(([k])=>k!=='auto').map(([k,v])=>`<option value="${k}" ${S.transTo===k?'selected':''}>${v}</option>`).join('');
+  return `<div class="col">
+    <div style="color:var(--text2);font-size:14px;font-weight:700;">🌐 Tradutor Inteligente com IA</div>
+    <div class="row">
+      <select id="trans-from" onchange="S.transFrom=this.value" style="flex:1;">${fromOpts}</select>
+      <button class="btn-ghost btn-icon" onclick="swapLang()" style="font-size:20px;padding:8px 12px;">⇌</button>
+      <select id="trans-to" onchange="S.transTo=this.value" style="flex:1;">${toOpts}</select>
+    </div>
+    <textarea id="trans-in" placeholder="Cole aqui o texto que deseja traduzir..." style="min-height:120px;">${esc(S.sumText==='trans'?S.clipboard:'')}</textarea>
+    <div class="row">
+      <button class="btn-cyan flex1" onclick="runTranslation()" ${S.transLoading?'disabled':''}>
+        ${S.transLoading?`<span class="spin">⚙️</span> Traduzindo...`:'🌐 Traduzir com IA'}
+      </button>
+      ${S.clipboard?`<button class="btn-ghost btn-sm" onclick="document.getElementById('trans-in').value=S.clipboard">📋 Colar OCR</button>`:''}
+    </div>
+    ${S.transResult?`
+      <div class="sec-title">Tradução</div>
+      <div class="doc-result-box fade-in" style="min-height:100px;">${esc(S.transResult)}</div>
+      <div class="row-wrap">
+        <button class="btn-ghost btn-sm" onclick="navigator.clipboard.writeText(S.transResult);toast('Copiado!','var(--green)')">📋 Copiar</button>
+        <button class="btn-ghost btn-sm" onclick="S.chatHistory.push({role:'user',content:'Traduza melhor e explique as escolhas de vocabulário:\n'+S.transResult});S.tab='chat';switchTab('chat')">🤖 Refinar no Chat</button>
+      </div>`:''}
+  </div>`;
+}
+function swapLang(){
+  if(S.transFrom!=='auto'){const t=S.transFrom;S.transFrom=S.transTo;S.transTo=t;}
+  render();
+}
+async function runTranslation(){
+  const text=document.getElementById('trans-in')?.value.trim();if(!text)return;
+  const from=LANGS[S.transFrom]||'idioma detectado';
+  const to=LANGS[S.transTo];
+  S.transResult='';S.transLoading=true;render();
+  try{
+    S.transResult=await ai([{role:'user',content:`Traduza de ${from} para ${to}. Retorne APENAS a tradução, sem explicações:\n\n${text}`}]);
+  }catch(e){S.transResult='Erro: '+e.message;}
+  S.transLoading=false;render();
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: RESUMIDOR
+// ═══════════════════════════════════════════════════════
+const SUM_TYPES=[
+  {k:'resumo',label:'📝 Resumo',p:'Faça um resumo claro e objetivo'},
+  {k:'topicos',label:'📌 Tópicos',p:'Extraia os pontos principais em tópicos numerados'},
+  {k:'executivo',label:'💼 Executivo',p:'Crie um sumário executivo profissional'},
+  {k:'simplifica',label:'🧒 Simplificar',p:'Simplifique o texto para linguagem acessível'},
+  {k:'formal',label:'👔 Formalizar',p:'Reescreva em linguagem formal e profissional'},
+  {k:'juridico',label:'⚖️ Análise Jurídica',p:'Analise o texto sob aspecto jurídico e identifique pontos críticos'},
+];
+let _sumType='resumo';
+function insertTextSum(){
+  const el=document.getElementById('sum-in');
+  if(!el)return;
+  navigator.clipboard.readText().then(txt=>{
+    if(txt&&txt.trim()){el.value=txt;toast('📋 Texto inserido!','var(--purple)');}
+    else if(S.clipboard){el.value=S.clipboard;toast('📋 Texto OCR inserido!','var(--purple)');}
+    else toast('Nenhum texto disponível. Copie um texto primeiro.','var(--orange)');
+  }).catch(()=>{
+    if(S.clipboard){el.value=S.clipboard;toast('📋 Texto OCR inserido!','var(--purple)');}
+    else toast('Cole um texto no campo ou use o OCR.','var(--orange)');
+  });
+}
+function renderSummarizer(){
+  const typePills=SUM_TYPES.map(t=>`
+    <button onclick="_sumType='${t.k}';render()" style="
+      background:${_sumType===t.k?'var(--purple)':'var(--bg3)'};
+      border:1.5px solid ${_sumType===t.k?'var(--purple)':'var(--border)'};
+      color:${_sumType===t.k?'#fff':'var(--text2)'};
+      border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;
+    ">${t.label}</button>`).join('');
+  return `<div class="col">
+    <div style="color:var(--text2);font-size:14px;font-weight:700;">📝 Processamento Inteligente de Texto</div>
+    <div class="row-wrap">${typePills}</div>
+    <div>
+      <div class="sec-title" style="margin-bottom:6px;">Texto para processar</div>
+      <textarea id="sum-in" placeholder="Digite, cole ou use o botão 📋 Inserir para trazer texto do OCR... atas, contratos, artigos, e-mails, documentos..." style="min-height:140px;"></textarea>
+    </div>
+    <div class="row-wrap">
+      <button class="btn-purple flex1" onclick="runSummarizer()" ${S.sumLoading?'disabled':''}>
+        ${S.sumLoading?'<span class="spin">⚙️</span> Processando...':SUM_TYPES.find(t=>t.k===_sumType)?.label+' com IA'}
+      </button>
+      <button class="btn-ghost btn-sm" onclick="insertTextSum()" title="Inserir texto copiado ou do OCR" style="font-size:14px;white-space:nowrap;">📋 Inserir Texto</button>
+      <button class="btn-ghost btn-sm" onclick="document.getElementById('sum-in').value='';S.sumResult='';render()" style="color:var(--red);font-size:14px;" title="Limpar">✕</button>
+    </div>
+    ${S.sumResult?`
+      <div class="doc-result-box fade-in">${esc(S.sumResult)}</div>
+      <div class="row-wrap">
+        <button class="btn-ghost btn-sm" onclick="navigator.clipboard.writeText(S.sumResult);toast('Copiado!','var(--green)')">📋 Copiar</button>
+        <button class="btn-green btn-sm" onclick="saveSumResult()">💾 Salvar</button>
+        <button class="btn-ghost btn-sm" onclick="S.chatHistory.push({role:'user',content:'Analise melhor este conteúdo:\n'+S.sumResult});S.tab='chat';switchTab('chat')">🤖 Chat</button>
+      </div>`:''}
+  </div>`;
+}
+async function runSummarizer(){
+  const text=document.getElementById('sum-in')?.value.trim();if(!text)return;
+  const t=SUM_TYPES.find(x=>x.k===_sumType);
+  S.sumResult='';S.sumLoading=true;render();
+  try{S.sumResult=await ai([{role:'user',content:`${t.p} do seguinte texto:\n\n${text}`}]);}
+  catch(e){S.sumResult='Erro: '+e.message;}
+  S.sumLoading=false;render();
+}
+function saveSumResult(){
+  S.savedFiles.unshift({id:uid(),title:`${SUM_TYPES.find(t=>t.k===_sumType)?.label} — ${new Date().toLocaleString('pt-BR')}`,content:S.sumResult,type:'resumo',icon:'📝'});
+  save('aria_files',S.savedFiles);updateStatus();toast('💾 Salvo!','var(--green)');
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: ARQUIVOS
+// ═══════════════════════════════════════════════════════
+function renderFiles(){
+  const filtered=S.savedFiles.filter(f=>f.title.toLowerCase().includes(S.fileSearch.toLowerCase()));
+  const items=filtered.map(f=>`
+    <div class="card" style="margin-bottom:9px;cursor:pointer;transition:border-color .2s;${S.fileView===f.id?'border-color:var(--cyan);':''}" onclick="S.fileView=S.fileView===f.id?null:f.id;render()">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="display:flex;gap:10px;align-items:center;flex:1;min-width:0;">
+          <span style="font-size:22px;">${f.icon||'📄'}</span>
+          <div style="flex:1;min-width:0;">
+            <div style="color:var(--text);font-size:13px;font-weight:700;word-break:break-word;">${esc(f.title)}</div>
+            <div style="color:var(--muted);font-size:11px;margin-top:2px;">${esc(f.content.slice(0,65))}...</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:5px;flex-shrink:0;">
+          <button class="btn-ghost btn-xs" onclick="event.stopPropagation();navigator.clipboard.writeText(S.savedFiles.find(x=>x.id==='${f.id}').content);toast('📋 Copiado!','var(--green)')">📋</button>
+          <button class="btn-ghost btn-xs" onclick="event.stopPropagation();exportFilePDF('${f.id}')">📥 PDF</button>
+          <button class="btn-ghost btn-xs" onclick="event.stopPropagation();exportFileDOCX('${f.id}')">📥 DOCX</button>
+          <button class="btn-ghost btn-xs" onclick="event.stopPropagation();exportFile('${f.id}')">📥</button>
+          <button class="btn-danger btn-xs" onclick="event.stopPropagation();delFile('${f.id}')">🗑</button>
+        </div>
+      </div>
+      ${S.fileView===f.id?`<div style="margin-top:12px;padding:12px;background:var(--bg1);border-radius:var(--r);font-size:12px;color:var(--text2);white-space:pre-wrap;max-height:280px;overflow-y:auto;line-height:1.7;font-family:'Georgia',serif;">${esc(f.content)}</div>
+      ${f.signature?`<div class="sig-card" style="margin-top:8px;">
+        <div class="sig-badge" style="color:var(--green2);">✅ Assinado digitalmente por <strong>${esc(f.signature.name)}</strong> em ${fmt(f.signature.date)} às ${fmtT(f.signature.date)}</div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <img src="${f.signature.data}" style="max-height:50px;background:#fff;border-radius:6px;border:1px solid var(--border);padding:4px;"/>
+          <div style="font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;">ID: ${f.signature.hash}</div>
+        </div>
+      </div>`:''}
+      ${(()=>{const vh=S.versionHistory[f.id];if(!vh||vh.length===0)return '';return `<div style="margin-top:10px;border-top:1.5px solid var(--border);padding-top:10px;"><div class="sec-title">📜 Histórico (${vh.length} versões)</div>${vh.map((v,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg3);border-radius:var(--r);margin-bottom:5px;font-size:12px;"><span style="color:var(--text3);font-weight:600;">#${i+1}</span><span style="color:var(--text2);flex:1;">${new Date(v.date).toLocaleString('pt-BR')}</span><button class="btn-ghost btn-xs" onclick="event.stopPropagation();restoreVersion('${f.id}',${i})">🔄 Restaurar</button></div>`).join('')}</div>`;})()}`:''}
+    </div>`).join('');
+  return `<div class="col">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px;">
+      <div class="stat-card"><div class="stat-val text-cyan">${S.savedFiles.length}</div><div class="stat-lbl">Documentos</div></div>
+      <div class="stat-card"><div class="stat-val text-green">${S.savedFiles.reduce((a,f)=>a+f.content.length,0)}</div><div class="stat-lbl">Caracteres</div></div>
+      <div class="stat-card"><div class="stat-val text-purple">${new Set(S.savedFiles.map(f=>f.type)).size}</div><div class="stat-lbl">Tipos</div></div>
+    </div>
+    <div class="row-wrap" style="justify-content:space-between;">
+      <input placeholder="🔍 Buscar documentos..." value="${esc(S.fileSearch)}" oninput="S.fileSearch=this.value;render()" style="flex:1;"/>
+      <div class="row" style="gap:5px;flex-shrink:0;">
+        <button class="btn-ghost btn-sm" onclick="exportBackup()">💾 Backup</button>
+        <button class="btn-ghost btn-sm" onclick="importBackup()">📂 Restaurar</button>
+      </div>
+    </div>
+    ${S.savedFiles.length?`<div style="display:flex;justify-content:flex-end;"><button class="btn-danger btn-xs" onclick="if(confirm('Limpar todos os arquivos?')){S.savedFiles=[];save('aria_files',S.savedFiles);updateStatus();render();}">🗑 Limpar todos</button></div>`:''}
+    <div style="overflow-y:auto;">
+      ${filtered.length===0?`<div style="color:var(--muted);text-align:center;padding:30px 0;font-size:13px;">Nenhum documento salvo.<br><span style="font-size:11px;">Gere documentos nas outras abas e clique em 💾 Salvar</span></div>`:items}
+    </div>
+  </div>`;
+}
+function delFile(id){S.savedFiles=S.savedFiles.filter(f=>f.id!==id);save('aria_files',S.savedFiles);updateStatus();render();toast('🗑 Removido.','var(--red)');}
+function exportFile(id){
+  const f=S.savedFiles.find(x=>x.id===id);if(!f)return;
+  const b=new Blob([f.content],{type:'text/plain'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`${f.type}_${Date.now()}.txt`;a.click();
+}
+function switchTab(t){
+  S.tab=t;document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.toggle('active',b.dataset.tab===t);});render();
+}
+
+// ═══════════════════════════════════════════════════════
+// ACTIVITY LOGGER
+// ═══════════════════════════════════════════════════════
+function logActivity(type,detail){
+  const icons={doc:'📋',chat:'💬',agenda:'📅',ocr:'🔍',sheet:'📊',fusion:'🔀',trans:'🌐',sum:'📝',file:'📁',sign:'✍️',share:'🔗'};
+  S.activity.unshift({type,detail,time:new Date().toISOString(),icon:icons[type]||'📌'});
+  if(S.activity.length>20) S.activity.pop();
+  save('aria_activity',S.activity);
+}
+
+// ═══════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════
+function renderDashboard(){
+  const totalDocs=S.savedFiles.length;
+  const totalChat=S.chatHistory.length;
+  const totalAgenda=S.agenda.length;
+  const totalOcr=S.ocrText?1:0;
+  const typeCount={};
+  S.savedFiles.forEach(f=>{typeCount[f.type]=(typeCount[f.type]||0)+1;});
+  const maxType=Math.max(...Object.values(typeCount),1);
+  const now=Date.now();
+  const upcoming=[...S.agenda].filter(e=>new Date(e.date)>now).sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,5);
+  const aiStatus=Object.entries(PROVIDERS).map(([k,v])=>({...v,key:k,configured:!!KEYS[k]}));
+  return `<div class="col">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:4px;">
+      <div class="stat-card"><div class="stat-val text-cyan">${totalDocs}</div><div class="stat-lbl">Total de Documentos</div></div>
+      <div class="stat-card"><div class="stat-val text-green">${totalChat}</div><div class="stat-lbl">Mensagens no Chat</div></div>
+      <div class="stat-card"><div class="stat-val text-purple">${totalAgenda}</div><div class="stat-lbl">Eventos na Agenda</div></div>
+      <div class="stat-card"><div class="stat-val text-orange">${totalOcr}</div><div class="stat-lbl">Extrações OCR</div></div>
+    </div>
+    <div class="sec-title" style="margin-top:6px;">📌 Atividade Recente</div>
+    <div style="max-height:160px;overflow-y:auto;background:var(--bg2);border-radius:var(--r);padding:8px;">
+      ${S.activity.length===0?'<div style="color:var(--muted);font-size:12px;text-align:center;padding:10px;">Nenhuma atividade registrada ainda.</div>':
+      S.activity.slice(0,10).map(a=>`
+        <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;">
+          <span>${a.icon||'📌'}</span>
+          <span style="color:var(--text2);flex:1;">${esc(a.detail)}</span>
+          <span style="color:var(--muted);font-size:10px;white-space:nowrap;">${fmt(a.time)}</span>
+        </div>`).join('')}
+    </div>
+    <div class="sec-title">📊 Documentos por Tipo</div>
+    <div class="db-chart">
+      ${Object.keys(typeCount).length===0?'<div style="color:var(--muted);font-size:13px;text-align:center;padding:10px;">Nenhum documento salvo ainda.</div>':
+      Object.entries(typeCount).map(([t,c])=>`
+        <div style="margin-bottom:6px;">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px;">
+            <span style="color:var(--text2);">${DOC_TYPES[t]?.icon||'📄'} ${DOC_TYPES[t]?.label||t}</span>
+            <span style="color:var(--text);font-weight:700;">${c}</span>
+          </div>
+          <div class="db-bar"><div class="db-fill" style="width:${Math.round(c/maxType*100)}%;background:${DOC_TYPES[t]?.color||'var(--cyan)'};"></div></div>
+        </div>`).join('')}
+    </div>
+    <div class="sec-title">📅 Próximos Eventos</div>
+    ${upcoming.length===0?'<div style="color:var(--muted);font-size:13px;text-align:center;padding:10px;">Nenhum evento futuro.</div>':
+    upcoming.map(e=>`
+      <div style="border-left:3px solid ${e.color};padding:8px 12px;margin-bottom:6px;background:var(--bg2);border-radius:var(--r);">
+        <div style="color:${e.color};font-weight:700;font-size:13px;">${esc(e.title)}</div>
+        <div style="color:var(--text3);font-size:11px;">📅 ${fmt(e.date)} às ${fmtT(e.date)}</div>
+      </div>`).join('')}
+    <div class="sec-title">📲 Instalar App</div>
+    <div style="display:flex;gap:8px;align-items:center;background:var(--bg3);border:1.5px solid var(--cyan);border-radius:var(--r2);padding:12px 16px;">
+      <span style="font-size:28px;">🧠</span>
+      <div style="flex:1;">
+        <div style="color:var(--text);font-weight:700;font-size:13px;">ARIA Ultra</div>
+        <div style="color:var(--text3);font-size:11px;">Instale na tela inicial do seu celular para usar como app</div>
+      </div>
+      <button class="btn-cyan btn-sm" onclick="installApp()">📲 Instalar</button>
+    </div>
+    <div class="sec-title" style="margin-top:6px;">📝 Bloco de Notas</div>
+    <textarea id="notepad-editor" placeholder="Escreva suas anotações rápidas aqui... (salva automaticamente)" oninput="saveNotepad(this.value)" style="min-height:100px;font-size:13px;line-height:1.6;">${esc(S.notepad)}</textarea>
+    <div class="sec-title" style="margin-top:8px;">⚙️ Status das IAs</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+      ${aiStatus.map(a=>`
+        <div class="ai-card" style="${a.configured?`box-shadow:0 0 0 2px ${a.color};border-color:${a.color};`:''}">
+          <div class="ai-dot" style="background:${a.configured?'var(--green)':'var(--bg4)'};${a.configured?'box-shadow:0 0 6px var(--green);':''}"></div>
+          <div>
+            <div style="font-weight:700;font-size:13px;color:${a.color};">${a.icon} ${a.name}</div>
+            <div style="font-size:10px;color:${a.configured?'var(--green)':'var(--muted)'};">${a.configured?'✅ Configurada':'❌ Sem chave'}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// DOCUMENT TEMPLATES
+// ═══════════════════════════════════════════════════════
+const TEMPLATES=[
+  {id:'oficio',label:'Ofício Padrão',icon:'📋',desc:'Ofício administrativo formal completo.',setType:'oficio',setDesc:'Redija um Ofício administrativo formal completo, incluindo numeração, data, destinatário, assunto, corpo bem desenvolvido, fecho cordial e assinatura do remetente. Use linguagem culta e tom institucional.'},
+  {id:'contrato',label:'Contrato Simples',icon:'📜',desc:'Contrato com cláusulas numeradas, partes, objeto e valor.',setType:'contrato',setDesc:'Redija um Contrato completo com cláusulas numeradas, incluindo identificação das partes, objeto, obrigações, valor e forma de pagamento, vigência, penalidades, foro e assinaturas.'},
+  {id:'ata',label:'Ata de Reunião',icon:'📝',desc:'Ata formal com participantes, pauta e deliberações.',setType:'ata',setDesc:'Redija uma Ata de Reunião formal e completa, incluindo data, horário, local, participantes, pauta, discussões, decisões tomadas, votações, encerramento e assinatura dos presentes.'},
+  {id:'declaracao',label:'Declaração',icon:'✍️',desc:'Declaração formal com dados e finalidade.',setType:'declaracao',setDesc:'Redija uma Declaração formal, incluindo identificação completa do declarante, objeto claro da declaração, finalidade, cláusula de veracidade, local, data e assinatura.'},
+  {id:'recibo',label:'Recibo',icon:'🧾',desc:'Recibo com valor, partes envolvidas e data.',setType:'recibo',setDesc:'Redija um Recibo formal completo, incluindo valor em algarismos e por extenso, identificação de quem paga e recebe, descrição do serviço/produto, forma de pagamento, data, local e assinatura.'},
+  {id:'requerimento',label:'Requerimento',icon:'🗂️',desc:'Requerimento formal com pedido específico.',setType:'requerimento',setDesc:'Redija um Requerimento formal e completo, incluindo identificação do requerente, autoridade destinatária, exposição dos fatos, fundamentação legal, pedido claro e específico, data e assinatura.'},
+];
+
+// ═══════════════════════════════════════════════════════
+// EXPORT PDF / DOCX
+// ═══════════════════════════════════════════════════════
+function exportDocPDF(){
+  if(!S.docResult){toast('Gere um documento primeiro.','var(--orange)');return;}
+  const editor=document.getElementById('doc-editor');
+  const content=editor?editor.innerHTML:esc(S.docResult).replace(/\n/g,'<br>');
+  const el=document.createElement('div');
+  el.style.cssText='padding:40px;font-family:Georgia,serif;font-size:14px;line-height:1.8;color:#000;background:#fff;max-width:800px;margin:auto;';
+  el.innerHTML=content;
+  document.body.appendChild(el);
+  el.setAttribute('id','pdf-export-temp');
+  html2pdf().from(el).set({margin:[15,15],filename:`documento_${Date.now()}.pdf`,html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).save().then(()=>{const e=document.getElementById('pdf-export-temp');if(e)e.remove();}).catch(()=>{const e=document.getElementById('pdf-export-temp');if(e)e.remove();});
+  toast('📥 Gerando PDF...','var(--cyan)',5000);
+}
+function exportDocDOCX(){
+  if(!S.docResult){toast('Gere um documento primeiro.','var(--orange)');return;}
+  const editor=document.getElementById('doc-editor');
+  const content=editor?editor.innerHTML:esc(S.docResult).replace(/\n/g,'<br>');
+  const html=`<html><head><meta charset="utf-8"><style>body{font-family:Georgia,serif;font-size:14pt;line-height:1.8;padding:40px;color:#000;}</style></head><body>${content}</body></html>`;
+  const b=new Blob([html],{type:'application/msword'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`documento_${Date.now()}.doc`;a.click();
+  toast('📥 DOCX exportado!','var(--green)');
+}
+function exportFilePDF(id){
+  const f=S.savedFiles.find(x=>x.id===id);if(!f)return;
+  const c=f.html||esc(f.content).replace(/\n/g,'<br>');
+  const el=document.createElement('div');
+  el.style.cssText='padding:40px;font-family:Georgia,serif;font-size:14px;line-height:1.8;color:#000;background:#fff;max-width:800px;margin:auto;';
+  el.innerHTML=c;
+  document.body.appendChild(el);
+  el.setAttribute('id','pdf-export-temp');
+  html2pdf().from(el).set({margin:[15,15],filename:`${f.type}_${Date.now()}.pdf`,html2canvas:{scale:2,useCORS:true},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).save().then(()=>{const e=document.getElementById('pdf-export-temp');if(e)e.remove();}).catch(()=>{const e=document.getElementById('pdf-export-temp');if(e)e.remove();});
+  toast('📥 Gerando PDF...','var(--cyan)',5000);
+}
+function exportFileDOCX(id){
+  const f=S.savedFiles.find(x=>x.id===id);if(!f)return;
+  const c=f.html||esc(f.content).replace(/\n/g,'<br>');
+  const html=`<html><head><meta charset="utf-8"><style>body{font-family:Georgia,serif;font-size:14pt;line-height:1.8;padding:40px;color:#000;}</style></head><body>${c}</body></html>`;
+  const b=new Blob([html],{type:'application/msword'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`${f.type}_${Date.now()}.doc`;a.click();
+  toast('📥 DOCX exportado!','var(--green)');
+}
+
+// ═══════════════════════════════════════════════════════
+// CLOUD SYNC (FIREBASE)
+// ═══════════════════════════════════════════════════════
+function openFirebaseModal(){
+  const m=document.getElementById('firebase-modal');if(!m)return;
+  m.classList.add('open');
+  const cfg=S.firebaseConfig||{};
+  ['apiKey','authDomain','projectId','storageBucket','messagingSenderId','appId'].forEach(k=>{
+    const el=document.getElementById('fb-'+k);
+    if(el)el.value=cfg[k]||'';
+  });
+  document.getElementById('fb-user').value=S.cloudUser||'';
+}
+function closeFirebaseModal(){document.getElementById('firebase-modal')?.classList.remove('open');}
+function saveFirebaseConfig(){
+  const cfg={};
+  ['apiKey','authDomain','projectId','storageBucket','messagingSenderId','appId'].forEach(k=>{
+    const el=document.getElementById('fb-'+k);if(el&&el.value.trim())cfg[k]=el.value.trim();
+  });
+  const userEl=document.getElementById('fb-user');
+  S.firebaseConfig=cfg;S.cloudUser=userEl?.value.trim()||'';
+  S.cloudEnabled=Object.keys(cfg).length>=2;
+  save('aria_firebase',cfg);localStorage.setItem('aria_cloud_user',S.cloudUser);localStorage.setItem('aria_cloud_enabled',S.cloudEnabled);
+  if(S.cloudEnabled)initFirebase();
+  closeFirebaseModal();
+  toast('☁️ Configuração Firebase salva!','var(--cyan)');
+}
+function initFirebase(){
+  if(!S.cloudEnabled||!S.firebaseConfig.projectId)return;
+  try{
+    if(!firebase.apps.length)firebase.initializeApp(S.firebaseConfig);
+    S._db=firebase.firestore();
+    toast('☁️ Firebase conectado!','var(--green)');
+    return S._db;
+  }catch(e){console.error('Firebase:',e);toast('❌ Erro Firebase: '+e.message,'var(--red)');return null;}
+}
+async function saveCloud(){
+  if(!S.cloudEnabled||!S._db){toast('Configure o Firebase primeiro.','var(--orange)');return;}
+  try{
+    const uid=S.cloudUser||'default';
+    await S._db.collection('aria_ultra').doc(uid).set({files:S.savedFiles,agenda:S.agenda,activity:S.activity,updated:firebase.firestore.FieldValue.serverTimestamp()});
+    toast('☁️ Dados salvos na nuvem!','var(--green)');
+  }catch(e){toast('❌ Erro ao salvar: '+e.message,'var(--red)');}
+}
+async function loadCloud(){
+  if(!S.cloudEnabled||!S._db){toast('Configure o Firebase primeiro.','var(--orange)');return;}
+  try{
+    const uid=S.cloudUser||'default';
+    const doc=await S._db.collection('aria_ultra').doc(uid).get();
+    if(doc.exists){
+      const d=doc.data();
+      if(d.files){S.savedFiles=d.files;save('aria_files',d.files);}
+      if(d.agenda){S.agenda=d.agenda;save('aria_agenda',d.agenda);}
+      if(d.activity){S.activity=d.activity;save('aria_activity',d.activity);}
+      updateStatus();render();toast('☁️ Dados carregados da nuvem!','var(--cyan)');
+    }else toast('☁️ Nenhum dado encontrado na nuvem.','var(--orange)');
+  }catch(e){toast('❌ Erro ao carregar: '+e.message,'var(--red)');}
+}
+async function syncCloud(){
+  if(!S.cloudEnabled||!S._db){toast('Configure o Firebase primeiro.','var(--orange)');return;}
+  toast('☁️ Sincronizando...','var(--cyan)');
+  try{await saveCloud();}catch(e){toast('❌ Erro: '+e.message,'var(--red)');}
+}
+
+// ═══════════════════════════════════════════════════════
+// PORTUGUESE SPELL CHECKER
+// ═══════════════════════════════════════════════════════
+const PT_DICT=new Set([
+  'o','a','os','as','um','uma','uns','umas',
+  'de','da','do','das','dos','em','na','no','nas','nos','para','por','com','sem','sob','sobre','entre','até','após','desde','perante','conforme','mediante',
+  'eu','tu','ele','ela','nós','vós','eles','elas','meu','minha','meus','minhas','seu','sua','seus','suas','nosso','nossa','nossos','nossas','este','esta','estes','estas','esse','essa','esses','essas','aquele','aquela','aqueles','aquelas','isto','isso','aquilo','lhe','lhes','me','te','se','nos','vos',
+  'e','mas','ou','porque','pois','como','quando','enquanto','embora','apesar','contudo','portanto','porém','todavia','entretanto','assim','logo','que','se','caso','conquanto','bem','nem',
+  'ser','sou','é','são','era','era','eram','foi','foram','seja','sejam','fosse','fossem','estar','estou','está','estão','estava','estavam','esteve','estiveram','esteja','estejam','estivesse','ter','tenho','tem','têm','tinha','tinham','teve','tiveram','tenha','tenham','tivesse','fazer','faço','faz','fazem','fazia','faziam','fez','fizeram','faça','façam','dizer','digo','diz','dizem','dizia','diziam','disse','disseram','diga','digam','poder','posso','pode','podem','podia','podiam','pôde','puderam','possa','possam','pudesse','dever','devo','deve','devem','devia','deviam','deveu','deveram','deva','devam','haver','há','houve','houveram','haja','hajam','ficar','fico','fica','ficam','ficava','ficaram','ficou','fique','fiquem','saber','sei','sabe','sabem','sabia','sabiam','soube','souberam','saiba','saibam','querer','quero','quer','querem','queria','queriam','quis','quiseram','queira','queiram','vir','venho','vem','vêm','vinha','vinham','veio','vieram','venha','venham','dar','dou','dá','dão','dava','davam','deu','deram','dê','deem','ver','vejo','vê','veem','via','viam','viu','viram','veja','vejam','ler','leio','lê','leem','lia','liam','leu','leram','leia','leiam','escrever','escrevo','escreve','escrevem','escrevia','escreviam','escreveu','escreveram','escreva','escrevam','falar','falo','fala','falam','falava','falavam','falou','falaram','fale','falem','pensar','penso','pensa','pensam','pensava','pensavam','pensou','pensaram','pense','pensem','trabalhar','trabalho','trabalha','trabalham','trabalhava','trabalhavam','trabalhou','trabalharam','trabalhe','trabalhem','estudar','estudo','estuda','estudam','estudava','estudavam','estudou','estudaram','estude','estudem','administrar','administro','administra','administram','administrava','administravam','administrou','administraram','administre','administrem','gerir','giro','gere','gerem','geria','geriam','geriu','geriram','gira','giram','redigir','redijo','redige','redigem','redigia','redigiam','redigiu','redigiram','redija','redijam','assinar','assino','assina','assinam','assinava','assinavam','assinou','assinaram','assine','assinem','documentar','documento','documenta','documentam','documentava','documentavam','documentou','documentaram','documente','documentem',
+  'administração','documento','ofício','contrato','relatório','ata','recibo','declaração','requerimento','edital','parecer','processo','prazo','data','assinatura','órgão','empresa','funcionário','servidor','cliente','fornecedor','parceiro','diretor','gerente','coordenador','assistente','secretário','presidente','reunião','evento','compromisso','agenda','tarefa','projeto','atividade','meta','objetivo','resultado','análise','estudo','pesquisa','informação','dado','sistema','programa','aplicativo','tecnologia','internet','rede','computador','arquivo','pasta','planilha','apresentação','gráfico','tabela','lista','item','valor','total','custo','preço','orçamento','verba','despesa','receita','lucro','balanço','pagamento','boleto','nota','fiscal','imposto','taxa','multa','juros','acordo','convênio','parceria','licitação','proposta','concurso','seleção','inscrição','candidato','vaga','cargo','função','salário','benefício','adicional','desconto','prorrogação','urgência','prioridade','qualidade','quantidade','eficiência','eficácia','produtividade','desempenho','competência','habilidade','capacidade','conhecimento','experiência','formação','educação','curso','treinamento','aprendizado','desenvolvimento','crescimento','evolução','mudança','inovação','solução','decisão','planejamento','organização','execução','controle','avaliação','monitoramento','fiscalização','auditoria','inspeção','verificação','documentação','protocolo','número','endereço','telefone','email','site','página','senha','usuário','login','acesso','segurança','privacidade','termo','condição','cláusula','parágrafo','inciso','artigo','lei','decreto','portaria','resolução','norma','regulamento','estatuto','regimento','deliberação','recomendação','orientação','instrução','comunicado','aviso','notificação','intimação','citação','sentença','despacho','encaminhamento','providência','diligência','medida','ação','procedimento','trâmite','andamento',
+  'bom','boa','bons','boas','ruim','ruins','grande','grandes','pequeno','pequena','pequenos','pequenas','novo','nova','novos','novas','velho','velha','velhos','velhas','primeiro','primeira','primeiros','primeiras','último','última','últimos','últimas','melhor','melhores','pior','piores','maior','maiores','menor','menores','importante','importantes','necessário','necessária','necessários','necessárias','possível','possíveis','público','pública','públicos','públicas','privado','privada','privados','privadas','formal','formais','oficial','oficiais','legal','legais','jurídico','jurídica','jurídicos','jurídicas','administrativo','administrativa','administrativos','administrativas','financeiro','financeira','financeiros','financeiras','técnico','técnica','técnicos','técnicas','profissional','profissionais','competente','competentes','eficiente','eficientes','eficaz','eficazes',
+  'zero','um','dois','três','quatro','cinco','seis','sete','oito','nove','dez','cento','cem','duzentos','trezentos','quatrocentos','quinhentos','seiscentos','setecentos','oitocentos','novecentos','mil','milhão','milhões','bilhão','bilhões',
+  'janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro',
+  'segunda','terça','quarta','quinta','sexta','sábado','domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira',
+  'senhor','senhora','senhores','senhoras','prezado','prezada','prezados','prezadas','caro','cara','caros','caras','ilustríssimo','ilustríssima','excelentíssimo','excelentíssima','doutor','doutora','doutores','doutoras','atenciosamente','cordialmente','respeitosamente','saudações','agradecimento','agradecimentos','obrigado','obrigada','obrigados','obrigadas',
+]);
+
+function checkSpelling(text){
+  const words=text.toLowerCase().split(/[\s,.;:!?()\[\]{}""'']+/).filter(w=>w.length>1);
+  const misspelled=[];const seen=new Set();
+  words.forEach(w=>{
+    if(!PT_DICT.has(w)&&!/^\d+$/.test(w)){
+      if(!seen.has(w)){seen.add(w);misspelled.push(w);}
+    }
+  });
+  return misspelled;
+}
+function highlightSpelling(){
+  const editor=document.getElementById('doc-editor');
+  if(!editor){toast('Abra um documento na aba Documentos.','var(--orange)');return;}
+  const text=editor.innerText||editor.textContent||'';
+  const misspelled=checkSpelling(text);
+  if(misspelled.length===0){toast('✅ Nenhum erro ortográfico encontrado!','var(--green)');return;}
+  const walker=document.createTreeWalker(editor,NodeFilter.SHOW_TEXT,null,false);
+  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+  nodes.forEach(node=>{
+    const txt=node.textContent;
+    const parts=txt.split(/\b/);
+    let changed=false;
+    const frag=document.createDocumentFragment();
+    parts.forEach(p=>{
+      const clean=p.replace(/[^\wà-úÀ-ÚçÇ]/g,'').toLowerCase();
+      if(clean&&misspelled.includes(clean)){
+        const sp=document.createElement('span');sp.className='spell-warn';sp.textContent=p;
+        frag.appendChild(sp);changed=true;
+      }else frag.appendChild(document.createTextNode(p));
+    });
+    if(changed)node.parentNode.replaceChild(frag,node);
+  });
+  toast(`🔍 ${misspelled.length} palavra(s) com possível erro ortográfico destacada(s).`,'var(--orange)',4000);
+}
+
+// ═══════════════════════════════════════════════════════
+// DIGITAL SIGNATURE
+// ═══════════════════════════════════════════════════════
+let _sigCanvasCtx=null;
+function openSigModal(){
+  const m=document.getElementById('sig-modal');if(!m)return;
+  m.classList.add('open');
+  const u=document.getElementById('fb-user')?.value||S.cloudUser||'';
+  document.getElementById('sig-name').value=u;document.getElementById('sig-cpf').value='';
+  setTimeout(initSigCanvas,100);
+}
+function closeSigModal(){document.getElementById('sig-modal')?.classList.remove('open');}
+function initSigCanvas(){
+  const canvas=document.getElementById('sig-canvas');if(!canvas)return;
+  canvas.width=canvas.offsetWidth||400;canvas.height=180;
+  const ctx=canvas.getContext('2d');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.strokeStyle='#000';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';
+  _sigCanvasCtx=ctx;
+  let drawing=false;
+  const start=e=>{
+    drawing=true;const rect=canvas.getBoundingClientRect();
+    ctx.beginPath();ctx.moveTo((e.touches?e.touches[0].clientX:e.clientX)-rect.left,(e.touches?e.touches[0].clientY:e.clientY)-rect.top);
+    canvas.classList.add('drawing');e.preventDefault();
+  };
+  const move=e=>{
+    if(!drawing)return;const rect=canvas.getBoundingClientRect();
+    ctx.lineTo((e.touches?e.touches[0].clientX:e.clientX)-rect.left,(e.touches?e.touches[0].clientY:e.clientY)-rect.top);ctx.stroke();
+    e.preventDefault();
+  };
+  const stop=()=>{drawing=false;canvas.classList.remove('drawing');};
+  canvas.onmousedown=start;canvas.onmousemove=move;canvas.onmouseup=stop;canvas.onmouseleave=stop;
+  canvas.ontouchstart=start;canvas.ontouchmove=move;canvas.ontouchend=stop;
+}
+function clearSigCanvas(){
+  const canvas=document.getElementById('sig-canvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.strokeStyle='#000';ctx.lineWidth=3;
+}
+function confirmSignature(){
+  const name=document.getElementById('sig-name')?.value.trim();
+  const cpf=document.getElementById('sig-cpf')?.value.trim();
+  if(!name){toast('Informe o nome do signatário.','var(--orange)');return;}
+  const canvas=document.getElementById('sig-canvas');if(!canvas)return;
+  const data=canvas.toDataURL('image/png');
+  const pixelData=canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height).data;
+  if(!pixelData.some((v,i)=>v<255)){toast('Desenhe sua assinatura no campo acima.','var(--orange)');return;}
+  const hash='SIG-'+btoa(name+cpf+Date.now()).slice(0,12).toUpperCase();
+  S.docSignature={name,cpf:cpf||'—',data,hash,date:new Date().toISOString(),hash256:Array.from(new TextEncoder().encode(name+cpf+Date.now())).map(b=>b.toString(16).padStart(2,'0')).join('').toUpperCase().slice(0,16)};
+  closeSigModal();render();
+  toast('✍️ Documento assinado por '+name+'!','var(--green)');
+  logActivity('sign','Documento assinado por '+name);
+}
+
+// ═══════════════════════════════════════════════════════
+// SHARE LINK
+// ═══════════════════════════════════════════════════════
+function shareDoc(){
+  if(!S.docResult){toast('Gere um documento primeiro.','var(--orange)');return;}
+  const editor=document.getElementById('doc-editor');
+  const content=editor?editor.innerHTML:S.docResult.replace(/\n/g,'<br>');
+  try{
+    const encoded=btoa(unescape(encodeURIComponent(content)));
+    const url=location.href.split('#')[0]+'#share='+encoded;
+    navigator.clipboard.writeText(url).then(()=>{
+      toast('🔗 Link compartilhável copiado!','var(--cyan)');logActivity('share','Link de documento compartilhado copiado');
+    }).catch(()=>{
+      const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+      toast('🔗 Link copiado (fallback)!','var(--cyan)');
+    });
+  }catch(e){toast('Erro ao compartilhar: '+e.message,'var(--red)');}
+}
+function openSharedModal(content){
+  const m=document.getElementById('share-modal');if(!m)return;
+  document.getElementById('share-view-content').innerHTML=content;
+  m.classList.add('open');
+}
+function closeSharedModal(){document.getElementById('share-modal')?.classList.remove('open');}
+
+// ═══════════════════════════════════════════════════════
+// BACKUP / RESTORE
+// ═══════════════════════════════════════════════════════
+function exportBackup(){
+  const backup = {
+    version: '3.1',
+    exportedAt: new Date().toISOString(),
+    exportedAtFmt: new Date().toLocaleString('pt-BR'),
+    savedFiles: S.savedFiles,
+    agenda: S.agenda,
+    activity: S.activity,
+    sheetData: S.sheetData,
+    chatHistory: S.chatHistory,
+    keys: KEYS,
+    firebaseConfig: S.firebaseConfig,
+    cloudUser: S.cloudUser,
+    currencyRates: S.currencyRates,
+    versionHistory: S.versionHistory,
+    stats: {
+      totalFiles: S.savedFiles.length,
+      totalChat: S.chatHistory.length,
+      totalAgenda: S.agenda.length
+    }
+  };
+  const json = JSON.stringify(backup, null, 2);
+  const blob = new Blob([json], {type: 'application/json'});
+  const dateStr = new Date().toISOString().slice(0,19).replace('T','_');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `aria_ultra_backup_${dateStr}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('💾 Backup completo exportado!','var(--green)');
+  logActivity('file','Backup exportado: '+backup.stats.totalFiles+' arquivos');
+}
+function importBackup(){
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (!data.version || !data.exportedAt) {
+          toast('❌ Arquivo de backup inválido.','var(--red)');
+          return;
+        }
+        if (data.savedFiles) { S.savedFiles = data.savedFiles; save('aria_files', data.savedFiles); }
+        if (data.agenda) { S.agenda = data.agenda; save('aria_agenda', data.agenda); }
+        if (data.activity) { S.activity = data.activity; save('aria_activity', data.activity); }
+        if (data.sheetData) S.sheetData = data.sheetData;
+        if (data.chatHistory) S.chatHistory = data.chatHistory;
+        if (data.keys) { KEYS = data.keys; save('aria_keys', KEYS); }
+        if (data.firebaseConfig) { S.firebaseConfig = data.firebaseConfig; save('aria_firebase', data.firebaseConfig); }
+        if (data.cloudUser) { S.cloudUser = data.cloudUser; localStorage.setItem('aria_cloud_user', data.cloudUser); }
+        if (data.currencyRates) { S.currencyRates = data.currencyRates; save('aria_currency_rates', data.currencyRates); }
+        if (data.versionHistory) { S.versionHistory = data.versionHistory; save('aria_version_history', data.versionHistory); }
+        updateStatus();
+        render();
+        toast(`✅ Backup restaurado! ${data.stats?.totalFiles || data.savedFiles?.length || 0} arquivos, ${data.savedFiles?.length || 0} documentos, ${data.agenda?.length || 0} eventos.`,'var(--green)',5000);
+        logActivity('file','Backup importado de '+file.name);
+      } catch(e) {
+        toast('❌ Erro ao ler backup: '+e.message,'var(--red)');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// ═══════════════════════════════════════════════════════
+// WHATSAPP SHARE
+// ═══════════════════════════════════════════════════════
+function shareWhatsApp(){
+  const editor = document.getElementById('doc-editor');
+  const text = editor ? editor.innerText : S.docResult;
+  if (!text) { toast('Gere um documento primeiro.','var(--orange)'); return; }
+  const maxLen = 4096;
+  let msg = text.slice(0, maxLen);
+  if (text.length > maxLen) msg += '\n\n... (continue lendo no ARIA Ultra)';
+  const url = 'https://wa.me/?text=' + encodeURIComponent(msg);
+  window.open(url, '_blank');
+  toast('📱 WhatsApp aberto!','var(--green)');
+}
+
+// ═══════════════════════════════════════════════════════
+// SCREEN CAPTURE (OCR)
+// ═══════════════════════════════════════════════════════
+async function captureScreen(){
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+    toast('❌ Captura de tela não suportada. Use Chrome/Edge Desktop.','var(--red)',5000);
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getDisplayMedia({ audio: false, video: { cursor: 'never' } });
+    const track = stream.getVideoTracks()[0];
+    const video = document.createElement('video');
+    video.srcObject = stream;
+    await video.play();
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0);
+    track.stop(); stream.getTracks().forEach(t=>t.stop());
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    if (!blob) { toast('❌ Falha ao capturar tela.','var(--red)'); return; }
+    const file = new File([blob], 'screenshot.png', { type: 'image/png' });
+    toast('📸 Tela capturada! Processando OCR...','var(--cyan)');
+    processOCR(file);
+  } catch(e) {
+    if (e.name === 'NotAllowedError' || e.message?.includes('canceled') || e.message?.includes('Permission')) {
+      toast('📸 Captura cancelada.','var(--orange)');
+    } else {
+      toast('❌ Erro: '+e.message,'var(--red)');
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// CURRENCY CONVERTER
+// ═══════════════════════════════════════════════════════
+const CURRENCIES = [
+  { code: 'BRL', name: 'Real', flag: '🇧🇷' },
+  { code: 'USD', name: 'Dólar', flag: '🇺🇸' },
+  { code: 'EUR', name: 'Euro', flag: '🇪🇺' },
+  { code: 'GBP', name: 'Libra', flag: '🇬🇧' },
+  { code: 'ARS', name: 'Peso ARS', flag: '🇦🇷' },
+  { code: 'JPY', name: 'Iene', flag: '🇯🇵' },
+  { code: 'CAD', name: 'Dólar CA', flag: '🇨🇦' },
+  { code: 'AUD', name: 'Dólar AU', flag: '🇦🇺' },
+  { code: 'CNY', name: 'Yuan', flag: '🇨🇳' },
+  { code: 'CHF', name: 'Franco', flag: '🇨🇭' },
+];
+
+function renderCurrency(){
+  const fromOpts = CURRENCIES.map(c =>
+    `<option value="${c.code}" ${S.currencyFrom===c.code?'selected':''}>${c.flag} ${c.code} — ${c.name}</option>`
+  ).join('');
+  const toOpts = CURRENCIES.map(c =>
+    `<option value="${c.code}" ${S.currencyTo===c.code?'selected':''}>${c.flag} ${c.code} — ${c.name}</option>`
+  ).join('');
+
+  return `<div class="col fade-in">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">💱 Conversor de Moedas</div>
+    <div style="color:var(--text3);font-size:13px;">Taxas em tempo real via open.er-api.com</div>
+    <div class="card" style="border-color:var(--cyan);">
+      <div class="col" style="gap:12px;">
+        <div>
+          <div class="sec-title">Valor</div>
+          <input id="cur-amount" type="number" step="0.01" min="0" value="1" placeholder="Digite o valor" style="font-size:18px;font-weight:700;"/>
+        </div>
+        <div class="row" style="gap:10px;">
+          <div style="flex:1;">
+            <div class="sec-title">De</div>
+            <select id="cur-from" onchange="S.currencyFrom=this.value">${fromOpts}</select>
+          </div>
+          <div style="flex:1;">
+            <div class="sec-title">Para</div>
+            <select id="cur-to" onchange="S.currencyTo=this.value">${toOpts}</select>
+          </div>
+        </div>
+        <button class="btn-cyan" onclick="convertCurrency()" id="cur-btn">
+          🔄 Converter
+        </button>
+      </div>
+    </div>
+    <div id="cur-result"></div>
+    <div id="cur-rate-info" style="color:var(--muted);font-size:11px;"></div>
+  </div>`;
+}
+
+async function convertCurrency(){
+  const amount = parseFloat(document.getElementById('cur-amount')?.value);
+  if (!amount || amount <= 0) { toast('Digite um valor válido.','var(--orange)'); return; }
+  const from = document.getElementById('cur-from')?.value || S.currencyFrom;
+  const to = document.getElementById('cur-to')?.value || S.currencyTo;
+  S.currencyFrom = from;
+  S.currencyTo = to;
+  const btn = document.getElementById('cur-btn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spin">⚙️</span> Convertendo...'; }
+
+  try {
+    let rates = S.currencyRates[from];
+    const now = Date.now();
+    if (!rates || (now - rates.timestamp) > 3600000) {
+      const resp = await fetch(`https://open.er-api.com/v6/latest/${from}`);
+      const data = await resp.json();
+      if (data.result !== 'success') throw new Error('API retornou erro: ' + (data['error-type'] || 'desconhecido'));
+      rates = { rates: data.rates, timestamp: now };
+      S.currencyRates[from] = rates;
+      save('aria_currency_rates', S.currencyRates);
+    }
+    const rate = rates.rates[to];
+    if (!rate) throw new Error(`Taxa ${from} → ${to} não encontrada.`);
+    const result = amount * rate;
+    const resultEl = document.getElementById('cur-result');
+    const infoEl = document.getElementById('cur-rate-info');
+    const fromName = CURRENCIES.find(c => c.code === from);
+    const toName = CURRENCIES.find(c => c.code === to);
+    if (resultEl) {
+      resultEl.innerHTML = `
+        <div class="card fade-in" style="border-color:var(--green);text-align:center;padding:20px;">
+          <div style="font-size:14px;color:var(--text3);margin-bottom:6px;">${fromName?.flag||''} ${amount} ${from} =</div>
+          <div style="font-size:32px;font-weight:900;" class="text-green">${toName?.flag||''} ${result.toFixed(2)} ${to}</div>
+          <div style="font-size:13px;color:var(--text3);margin-top:8px;">Taxa: 1 ${from} = ${rate.toFixed(6)} ${to}</div>
+        </div>`;
+    }
+    if (infoEl) {
+      infoEl.textContent = `💰 Última atualização: ${new Date(rates.timestamp).toLocaleString('pt-BR')}`;
+    }
+    toast(`💱 ${amount} ${from} = ${result.toFixed(2)} ${to}`,'var(--green)');
+  } catch(e) {
+    const resultEl = document.getElementById('cur-result');
+    if (resultEl) {
+      resultEl.innerHTML = `<div class="card" style="border-color:var(--red);text-align:center;padding:16px;color:var(--red);">❌ Erro: ${esc(e.message)}</div>`;
+    }
+    toast('❌ Erro na conversão: '+e.message,'var(--red)');
+  }
+  if (btn) { btn.disabled = false; btn.innerHTML = '🔄 Converter'; }
+}
+
+// ═══════════════════════════════════════════════════════
+// VERSION HISTORY
+// ═══════════════════════════════════════════════════════
+function saveVersion(fileId){
+  const f = S.savedFiles.find(x => x.id === fileId);
+  if (!f) return;
+  if (!S.versionHistory[fileId]) S.versionHistory[fileId] = [];
+  S.versionHistory[fileId].push({
+    content: f.content,
+    html: f.html || esc(f.content).replace(/\n/g,'<br>'),
+    date: new Date().toISOString(),
+    signature: f.signature || null
+  });
+  if (S.versionHistory[fileId].length > 20) S.versionHistory[fileId].shift();
+  save('aria_version_history', S.versionHistory);
+}
+function restoreVersion(fileId, versionIndex){
+  const versions = S.versionHistory[fileId];
+  if (!versions || !versions[versionIndex]) return;
+  const v = versions[versionIndex];
+  const f = S.savedFiles.find(x => x.id === fileId);
+  if (!f) return;
+  saveVersion(fileId);
+  f.content = v.content;
+  f.html = v.html;
+  f.signature = v.signature;
+  S.versionHistory[fileId].splice(versionIndex, 1);
+  if (S.versionHistory[fileId].length === 0) delete S.versionHistory[fileId];
+  save('aria_files', S.savedFiles);
+  save('aria_version_history', S.versionHistory);
+  render();
+  toast(`📜 Versão de ${new Date(v.date).toLocaleString('pt-BR')} restaurada!`,'var(--cyan)');
+}
+
+// ═══════════════════════════════════════════════════════
+// BIND EVENTS
+// ═══════════════════════════════════════════════════════
+function bindEvents(){
+  // CHAT
+  const ci=document.getElementById('chat-in');
+  if(ci){
+    ci.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat(ci.value);}});
+    ci.addEventListener('input',()=>{ci.style.height='auto';ci.style.height=Math.min(ci.scrollHeight,140)+'px';});
+  }
+  document.getElementById('btn-send')?.addEventListener('click',()=>{const i=document.getElementById('chat-in');if(i)sendChat(i.value);});
+  document.getElementById('btn-voice')?.addEventListener('click',()=>S.listening?stopVoice():startVoice());
+  // OCR
+  document.getElementById('ocr-file')?.addEventListener('change',e=>{if(e.target.files[0])processOCR(e.target.files[0]);});
+  // CSV
+  document.getElementById('csv-in')?.addEventListener('change',e=>{if(e.target.files[0])importCSV(e.target.files[0]);});
+  // FUSION
+  document.getElementById('fus-files')?.addEventListener('change',e=>{
+    Array.from(e.target.files).forEach(file=>{
+      const r=new FileReader();r.onload=ev=>{S.fusFiles.push({name:file.name,content:ev.target.result});render();};r.readAsText(file);
+    });
+  });
+  // MODAL close on backdrop
+  document.getElementById('key-modal')?.addEventListener('click',e=>{if(e.target.id==='key-modal')closeKeyModal();});
+  document.getElementById('sig-modal')?.addEventListener('click',e=>{if(e.target.id==='sig-modal')closeSigModal();});
+  document.getElementById('firebase-modal')?.addEventListener('click',e=>{if(e.target.id==='firebase-modal')closeFirebaseModal();});
+  document.getElementById('share-modal')?.addEventListener('click',e=>{if(e.target.id==='share-modal')closeSharedModal();});
+}
+
+// ═══════════════════════════════════════════════════════
+// VOICE
+// ═══════════════════════════════════════════════════════
+function startVoice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){toast('Voz não suportada. Use Chrome ou Edge.','var(--orange)');return;}
+  const r=new SR();r.lang='pt-BR';r.continuous=true;r.interimResults=true;
+  r.onresult=e=>{
+    const t=Array.from(e.results).map(x=>x[0].transcript).join('');
+    const ci=document.getElementById('chat-in');if(ci)ci.value=t;
+  };
+  r.onend=()=>{S.listening=false;render();};
+  r.onerror=()=>{S.listening=false;render();};
+  r.start();S.recognition=r;S.listening=true;render();
+  toast('🎤 Gravando... Fale agora!','var(--cyan)');
+}
+function stopVoice(){S.recognition?.stop();S.listening=false;render();}
+
+// ═══════════════════════════════════════════════════════
+// AGENDA ALERTS
+// ═══════════════════════════════════════════════════════
+const _alerted=new Set();
+function checkAlerts(){
+  const now=Date.now();
+  S.agenda.forEach(ev=>{
+    const ms=new Date(ev.date)-now;
+    if(ms>0&&ms<3600000&&!_alerted.has(ev.id+'1h')){
+      _alerted.add(ev.id+'1h');
+      toast(`⚠️ "${ev.title}" em menos de 1 hora!`,ev.color,6000);
+      if(Notification.permission==='granted') new Notification('ARIA Ultra',{body:`"${ev.title}" em ${Math.round(ms/60000)} minutos!`});
+    }
+    if(ms>0&&ms<900000&&!_alerted.has(ev.id+'15m')){
+      _alerted.add(ev.id+'15m');
+      toast(`🚨 URGENTE: "${ev.title}" em 15 minutos!`,'var(--red)',8000);
+    }
+  });
+}
+setInterval(checkAlerts,60000);
+
+// ═══════════════════════════════════════════════════════
+// PWA — SERVICE WORKER + INSTALL
+// ═══════════════════════════════════════════════════════
+let _installPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_installPrompt=e;renderDashboard();});
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(()=>{});
+}
+
+function installApp(){
+  if(_installPrompt){_installPrompt.prompt();_installPrompt.userChoice.then(()=>{_installPrompt=null;});}
+  else toast('📲 Chrome: menu ⋮ → Adicionar à tela inicial | Safari: compartilhar → Adicionar à Tela de Início','var(--cyan)',6000);
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+if('Notification' in window&&Notification.permission==='default') Notification.requestPermission();
+renderAISelector();
+render();
+// Welcome toast
+setTimeout(()=>toast('🧠 ARIA Ultra v3.0 pronta!','var(--cyan)'),500);
+// Check shared document in URL
+(function(){
+  if(location.hash.startsWith('#share=')){
+    try{
+      const raw=location.hash.replace('#share=','');
+      const data=decodeURIComponent(escape(atob(raw)));
+      setTimeout(()=>openSharedModal(data),1200);
+    }catch(e){console.error('Share link error:',e);}
+  }
+})();
+</script>
+</body>
+</html>
