@@ -1,11 +1,9 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { authMiddleware } from '../middleware/auth.js';
 import OpenAI from 'openai';
 
 const router = Router();
 const upload = multer({ dest: process.env.UPLOAD_DIR || './uploads', limits: { fileSize: (parseInt(process.env.MAX_UPLOAD_MB) || 20) * 1024 * 1024 } });
-router.use(authMiddleware);
 
 router.post('/image', upload.single('image'), async (req, res) => {
   try {

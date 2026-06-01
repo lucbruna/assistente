@@ -872,7 +872,6 @@ const API={base:localStorage.getItem('aria_api_base')||'/api',token:localStorage
     const headers={'Content-Type':'application/json'};
     if(this.token)headers['Authorization']='Bearer '+this.token;
     const r=await fetch(this.base+path,{...opts,headers:{...headers,...(opts.headers||{})}});
-    if(r.status===401){this.logout();throw new Error('Sessão expirada');}
     return r.json();
   },
   async login(email,password){
@@ -895,9 +894,17 @@ const API={base:localStorage.getItem('aria_api_base')||'/api',token:localStorage
 
 // ─── AI CALL ─────────────────────────────────────────────
 async function ai(messages,systemOverride){
-  if(API.token&&API.base){
-    try{const r=await API.ai(S.provider,messages,systemOverride||'');if(r.success)return r.text;throw new Error(r.error);}
-    catch(e){console.warn('Backend falhou:',e.message);}
+  if(API.base){
+    try{
+      const r=await API.ai(S.provider,messages,systemOverride||'');
+      if(r.success&&r.text)return r.text;
+      // Backend retornou erro (ex: chave não configurada) — NÃO tenta local
+      throw new Error(r.error||'Sem resposta do servidor');
+    }catch(e){
+      console.warn('Backend:',e.message);
+      // Só tenta local se for erro de conexão (não de configuração)
+      if(e.message!=='Failed to fetch'&&e.message!=='NetworkError')throw e;
+    }
   }
   return PROVIDERS[S.provider].call(messages,systemOverride);
 }

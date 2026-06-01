@@ -1,10 +1,8 @@
 import { Router } from 'express';
-import { authMiddleware } from '../middleware/auth.js';
 import { apiLimiter } from '../middleware/rateLimit.js';
 import { callAI } from '../services/providers.js';
 
 const router = Router();
-router.use(authMiddleware);
 router.use(apiLimiter);
 
 router.post('/chat', async (req, res) => {

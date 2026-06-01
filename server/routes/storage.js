@@ -1,8 +1,6 @@
 import { Router } from 'express';
-import { authMiddleware } from '../middleware/auth.js';
 
 const router = Router();
-router.use(authMiddleware);
 
 const db = new Map();
 
