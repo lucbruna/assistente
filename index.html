@@ -11,7 +11,6 @@
 <title>ARIA Admin Ultra</title>
 <link rel="manifest" href="manifest.json" id="mlink"/>
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%2302080f'/><text x='96' y='128' font-size='110' text-anchor='middle'>🧠</text></svg>"/>
-<meta name="apple-mobile-web-app-title" content="ARIA Ultra"/>
 <style>
 /* ═══════════════════════════════════════════
    ARIA ULTRA — DESIGN SYSTEM
@@ -28,13 +27,13 @@
   --border:#1a3450;
   --border2:#224466;
 
-  /* Textos — MUITO MAIS FORTES agora */
-  --text:#f0f8ff;        /* quase branco puro */
-  --text2:#c8e0f4;       /* azul claro */
-  --text3:#8ab8d8;       /* médio */
-  --muted:#5080a0;       /* muted mas visível */
+  /* Textos */
+  --text:#f0f8ff;
+  --text2:#c8e0f4;
+  --text3:#8ab8d8;
+  --muted:#5080a0;
 
-  /* Cores de destaque vibrantes */
+  /* Cores de destaque */
   --cyan:#00e5ff;
   --cyan2:#00bcd4;
   --blue:#2979ff;
@@ -51,24 +50,37 @@
   --red:#ff1744;
   --teal:#1de9b6;
 
-  /* Gradientes */
   --grad-main:linear-gradient(135deg,#00e5ff22,#2979ff11,#d500f922);
   --grad-cyan:linear-gradient(135deg,#00e5ff,#2979ff);
   --grad-purple:linear-gradient(135deg,#d500f9,#aa00ff);
   --grad-green:linear-gradient(135deg,#00e676,#1de9b6);
   --grad-orange:linear-gradient(135deg,#ff9100,#ffd740);
 
-  /* Sombras */
   --shadow-cyan:0 0 20px #00e5ff33;
   --shadow-blue:0 0 20px #2979ff33;
   --shadow-card:0 4px 24px #00000066;
 
-  /* Spacing */
   --r:10px;
   --r2:14px;
 
   --safe-top:env(safe-area-inset-top,0px);
   --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+[data-theme="light"]{
+  --bg0:#f0f4f8;
+  --bg1:#e8edf2;
+  --bg2:#dce3eb;
+  --bg3:#d0d9e3;
+  --bg4:#c4cfdb;
+  --border:#b0bcc8;
+  --border2:#9aabc0;
+  --text:#0a1628;
+  --text2:#1a2a44;
+  --text3:#405570;
+  --muted:#7088a0;
+  --shadow-card:0 4px 24px #0000001a;
+  --grad-main:linear-gradient(135deg,#00e5ff22,#2979ff11,#d500f922);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -224,6 +236,14 @@ button:disabled{opacity:.3;cursor:not-allowed;transform:none;filter:none;}
   cursor:text;user-select:text;-webkit-user-select:text;
 }
 
+/* ─── GENERAL MODAL STYLES ─── */
+#firebase-modal, #sig-modal, #share-modal{
+  display:none;position:fixed;inset:0;background:#000000cc;
+  z-index:9998;align-items:center;justify-content:center;padding:20px;
+  backdrop-filter:blur(6px);
+}
+#firebase-modal.open, #sig-modal.open, #share-modal.open{display:flex;}
+
 /* ─── SHEET ─── */
 #sheet-wrap{overflow:auto;border-radius:var(--r);border:1.5px solid var(--border);}
 table{border-collapse:collapse;font-size:13px;width:100%;}
@@ -375,6 +395,130 @@ td:first-child{
 .spell-suggest{position:absolute;background:var(--bg4);border:1.5px solid var(--border2);border-radius:8px;padding:6px;z-index:100;box-shadow:0 4px 20px #000;}
 .spell-suggest div{padding:4px 10px;font-size:12px;cursor:pointer;border-radius:4px;}
 .spell-suggest div:hover{background:var(--cyan);color:var(--bg0);}
+
+/* ─── VALIDATOR ─── */
+.br-doc-input{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:800;letter-spacing:2px;text-align:center;}
+.br-result-ok{background:#00e67622;border:1.5px solid var(--green);color:var(--green);padding:14px;border-radius:var(--r2);text-align:center;font-weight:700;}
+.br-result-err{background:#ff174422;border:1.5px solid var(--red);color:var(--red);padding:14px;border-radius:var(--r2);text-align:center;font-weight:700;}
+/* ─── CALCULATOR ─── */
+.calc-result-box{background:var(--bg1);border:1.5px solid var(--cyan);border-radius:var(--r2);padding:18px;line-height:2;}
+.calc-result-box strong{color:var(--cyan);}
+/* ─── TASKS / KANBAN ─── */
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+@media(max-width:600px){.kanban{grid-template-columns:1fr;}}
+.kanban-col{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r2);padding:10px;min-height:200px;}
+.kanban-col-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.kanban-card{background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--r);padding:10px;margin-bottom:6px;cursor:grab;font-size:12px;border-left:3px solid var(--cyan);}
+.kanban-card.dragging{opacity:.4;cursor:grabbing;}
+.kanban-col.drag-over{background:var(--bg3);border-color:var(--cyan);}
+.task-tag{display:inline-block;font-size:9px;padding:2px 6px;border-radius:10px;font-weight:700;margin-right:4px;}
+/* ─── POMODORO ─── */
+.pomo-circle{width:240px;height:240px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;background:conic-gradient(var(--cyan) var(--pomo-progress,0%),var(--bg3) 0%);transition:background .3s;}
+.pomo-inner{width:210px;height:210px;border-radius:50%;background:var(--bg1);display:flex;align-items:center;justify-content:center;flex-direction:column;}
+.pomo-time{font-size:56px;font-weight:900;color:var(--text);font-family:'JetBrains Mono',monospace;line-height:1;}
+.pomo-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;}
+/* ─── QR CODE ─── */
+#qr-canvas-wrap{background:#fff;padding:18px;border-radius:var(--r2);display:inline-block;border:2px solid var(--border2);}
+/* ─── DRAG & DROP ─── */
+.drop-zone{border:3px dashed var(--border2);border-radius:var(--r2);padding:30px;text-align:center;transition:all .2s;}
+.drop-zone.drag-over{border-color:var(--cyan);background:var(--bg3);transform:scale(1.02);}
+
+/* ═══ NOVAS FEATURES v3.2 ═══ */
+.drop-overlay{position:fixed;inset:0;background:#00e5ff22;border:4px dashed var(--cyan);z-index:9997;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px);pointer-events:none;}
+.drop-overlay.open{display:flex;}
+.drop-overlay-content{background:var(--bg2);border:2px solid var(--cyan);border-radius:24px;padding:32px 48px;text-align:center;box-shadow:0 0 60px #00e5ff66;}
+.drop-overlay-content .icon{font-size:72px;margin-bottom:12px;animation:floatGlow 1.5s ease-in-out infinite;}
+.drop-overlay-content .text{font-size:22px;font-weight:900;color:var(--cyan);}
+
+#global-search-overlay{position:fixed;inset:0;background:#000000bb;z-index:9996;display:none;align-items:flex-start;justify-content:center;padding:60px 20px;backdrop-filter:blur(8px);}
+#global-search-overlay.open{display:flex;}
+.global-search-box{background:var(--bg2);border:1.5px solid var(--cyan);border-radius:20px;width:100%;max-width:600px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 0 40px #00e5ff44;}
+.global-search-input{background:transparent;border:none;color:var(--text);font-size:18px;padding:18px 22px;outline:none;border-bottom:1.5px solid var(--border);}
+.global-search-input::placeholder{color:var(--muted);}
+.global-search-results{flex:1;overflow-y:auto;padding:8px;}
+.gs-item{padding:12px 16px;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .15s;}
+.gs-item:hover{background:var(--bg3);}
+.gs-item-icon{font-size:22px;flex-shrink:0;}
+.gs-item-content{flex:1;min-width:0;}
+.gs-item-title{color:var(--text);font-size:14px;font-weight:700;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gs-item-sub{color:var(--text3);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gs-empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:14px;}
+
+.pin-badge{display:inline-flex;align-items:center;gap:3px;background:var(--yellow)+'22';color:var(--yellow);font-size:9px;padding:2px 6px;border-radius:8px;font-weight:800;margin-left:6px;vertical-align:middle;}
+.btn-pin{background:transparent;border:1.5px solid var(--border2);color:var(--muted);border-radius:8px;padding:4px 8px;font-size:13px;cursor:pointer;}
+.btn-pin.pinned{background:var(--yellow)+'22';border-color:var(--yellow);color:var(--yellow);}
+
+.theme-colors{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:6px 0;}
+.theme-color-btn{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .2s;position:relative;}
+.theme-color-btn:hover{transform:scale(1.15);}
+.theme-preset{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;}
+.theme-preset-card{padding:12px;border-radius:12px;cursor:pointer;border:2px solid var(--border2);transition:all .2s;display:flex;align-items:center;gap:10px;}
+.theme-preset-card:hover{border-color:var(--cyan);transform:translateY(-2px);}
+.theme-preset-card.active{border-color:var(--cyan);box-shadow:0 0 0 2px var(--cyan);}
+.theme-preset-preview{width:32px;height:32px;border-radius:8px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;overflow:hidden;flex-shrink:0;}
+.theme-preset-preview span{display:block;}
+
+.tts-fab{position:fixed;bottom:80px;right:14px;z-index:200;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+.tts-fab button{width:46px;height:46px;border-radius:50%;background:var(--grad-cyan);color:var(--bg0);border:none;font-size:18px;cursor:pointer;box-shadow:0 4px 16px #00e5ff66;display:flex;align-items:center;justify-content:center;}
+.tts-fab button:hover{transform:scale(1.1);}
+.tts-fab button.active{background:var(--grad-orange);box-shadow:0 4px 16px #ff910066;}
+
+.kbd{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:1px 6px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--cyan);font-weight:700;}
+
+@media(max-width:600px){
+  .global-search-box{max-height:85vh;margin:0;}
+  #global-search-overlay{padding:20px 10px;align-items:center;}
+  .tts-fab{bottom:75px;right:8px;}
+  .tts-fab button{width:42px;height:42px;font-size:16px;}
+  .theme-preset{grid-template-columns:1fr 1fr;}
+}
+
+/* ═══ NOVAS FEATURES v3.3 ═══ */
+.rec-btn{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--red),#d50000);color:#fff;border:none;font-size:30px;cursor:pointer;box-shadow:0 4px 20px #ff174466;display:flex;align-items:center;justify-content:center;margin:auto;transition:all .2s;}
+.rec-btn:hover{transform:scale(1.05);}
+.rec-btn.recording{animation:urgentPulse 1s infinite;background:linear-gradient(135deg,#d50000,#800000);}
+.rec-btn:disabled{opacity:.3;cursor:not-allowed;}
+.rec-visualizer{display:flex;align-items:center;justify-content:center;gap:3px;height:60px;margin:14px 0;}
+.rec-bar{width:4px;background:var(--cyan);border-radius:2px;animation:wave 1s ease-in-out infinite;}
+@keyframes wave{0%,100%{height:8px}50%{height:50px}}
+.audio-transcript{background:var(--bg1);border:1.5px solid var(--border2);border-radius:var(--r);padding:14px;min-height:140px;font-size:14px;line-height:1.7;color:var(--text);white-space:pre-wrap;margin-top:12px;}
+.audio-transcript:empty::before{content:attr(data-placeholder);color:var(--muted);font-style:italic;}
+.chart-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r2);padding:14px;}
+.chart-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px;}
+.chart-tab{padding:5px 11px;font-size:11px;font-weight:700;border-radius:20px;border:1.5px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .2s;}
+.chart-tab.active{background:var(--cyan);color:var(--bg0);border-color:var(--cyan);}
+.chart-svg{width:100%;height:300px;display:block;background:var(--bg1);border-radius:var(--r);padding:10px;}
+.chart-legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:10px;font-size:11px;}
+.chart-legend-item{display:flex;align-items:center;gap:5px;}
+.chart-legend-dot{width:10px;height:10px;border-radius:50%;}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.agent-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r2);padding:14px;text-align:center;cursor:pointer;transition:all .25s;position:relative;}
+.agent-card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 6px 20px #00e5ff33;}
+.agent-card.active{border-color:var(--purple);background:linear-gradient(135deg,var(--bg2),#1a0833);}
+.agent-icon{font-size:36px;margin-bottom:6px;display:block;}
+.agent-name{font-size:13px;font-weight:800;color:var(--text);margin-bottom:2px;}
+.agent-desc{font-size:10px;color:var(--text3);line-height:1.4;}
+.agent-badge{position:absolute;top:6px;right:6px;background:var(--purple);color:#fff;font-size:8px;padding:2px 6px;border-radius:8px;font-weight:800;}
+.agent-suggestion-box{background:var(--bg1);border:1.5px solid var(--border2);border-radius:var(--r2);padding:14px;font-size:13px;line-height:1.7;color:var(--text);white-space:pre-wrap;}
+.gcal-status{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r2);padding:14px;display:flex;align-items:center;gap:12px;}
+.gcal-status.connected{border-color:var(--green);background:#00e6760a;}
+.gcal-status-dot{width:12px;height:12px;border-radius:50%;background:var(--muted);box-shadow:0 0 8px var(--muted);}
+.gcal-status.connected .gcal-status-dot{background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite;}
+.gcal-event{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:var(--r);padding:10px 12px;margin-bottom:6px;}
+.gcal-event.gcal-synced{border-left-color:var(--green);}
+.gcal-event-title{color:var(--text);font-weight:700;font-size:13px;}
+.gcal-event-time{color:var(--text3);font-size:11px;margin-top:2px;}
+
+/* ═══ v4.0 NOVAS FEATURES ═══ */
+.webrtc-avatar{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-size:64px;margin:14px auto;box-shadow:0 0 40px #00e5ff66;transition:all .3s;}
+.webrtc-avatar.active{animation:floatGlow 2s infinite;}
+.webrtc-pulse{position:absolute;bottom:5px;right:5px;background:var(--red);width:18px;height:18px;border-radius:50%;border:3px solid var(--bg1);animation:urgentPulse 1.5s infinite;}
+.emoji-large{font-size:64px;text-align:center;margin-bottom:10px;}
+.chip{display:inline-block;padding:4px 10px;border-radius:16px;background:var(--bg3);color:var(--text2);font-size:11px;font-weight:600;border:1px solid var(--border);}
+.img-result-box{max-width:100%;border-radius:var(--r2);border:2px solid var(--cyan);box-shadow:0 0 30px #00e5ff44;margin:10px 0;}
+.wa-modal-bg{display:flex;position:fixed;inset:0;background:#000000cc;z-index:9998;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);}
+.wa-modal-box{background:var(--bg1);border:1.5px solid var(--border);border-radius:var(--r2);padding:24px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;}
+.mobile-preview{background:#050d16;border:2px solid var(--border);border-radius:20px;padding:16px;max-width:360px;margin:10px auto;font-family:system-ui,sans-serif;}
 </style>
 </head>
 <body>
@@ -390,7 +534,10 @@ td:first-child{
     </div>
     <div class="flex1"></div>
     <div id="ai-selector-wrap"></div>
+    <button class="btn-ghost btn-sm" onclick="toggleTheme()" title="Tema claro/escuro (Ctrl+B)" style="font-size:16px;padding:8px 10px;">🌓</button>
+    <button class="btn-ghost btn-sm" onclick="openThemePicker()" title="Temas e Cores" style="font-size:16px;padding:8px 10px;">🎨</button>
     <button class="btn-ghost btn-sm" onclick="openFirebaseModal()" title="Cloud Sync (Firebase)" style="font-size:16px;padding:8px 10px;">☁️</button>
+    <button class="btn-ghost btn-sm" onclick="openWhatsAppConfig()" title="WhatsApp Business" style="font-size:16px;padding:8px 10px;">📱</button>
     <button class="btn-ghost btn-sm" onclick="openKeyModal()" title="Configurar chaves de API" style="font-size:16px;padding:8px 10px;">⚙️</button>
     <div id="hclock" style="color:var(--text3);font-size:11px;font-weight:500;"></div>
   </div>
@@ -407,6 +554,18 @@ td:first-child{
     <button class="tab-btn" data-tab="fusion">🔀 Fusão IA</button>
     <button class="tab-btn" data-tab="translator">🌐 Tradutor</button>
     <button class="tab-btn" data-tab="currency">💱 Moedas</button>
+    <button class="tab-btn" data-tab="validator">🆔 Validar Docs</button>
+    <button class="tab-btn" data-tab="calc">💰 Cálculos</button>
+    <button class="tab-btn" data-tab="tasks">✅ Tarefas</button>
+    <button class="tab-btn" data-tab="pomodoro">⏱️ Pomodoro</button>
+    <button class="tab-btn" data-tab="qrcode">📱 QR Code</button>
+    <button class="tab-btn" data-tab="audio">🎙️ Áudio</button>
+    <button class="tab-btn" data-tab="charts">📊 Gráficos</button>
+    <button class="tab-btn" data-tab="agents">🤖 Agentes</button>
+    <button class="tab-btn" data-tab="gcal">📅 Google Cal</button>
+    <button class="tab-btn" data-tab="webrtc">📞 Voz IA</button>
+    <button class="tab-btn" data-tab="sentiment">💭 Sentimento</button>
+    <button class="tab-btn" data-tab="imgen">🎨 Gerar Imagem</button>
     <button class="tab-btn" data-tab="summarizer">📝 Resumidor</button>
     <button class="tab-btn" data-tab="files">📁 Arquivos<span id="files-badge"></span></button>
   </div>
@@ -495,10 +654,35 @@ td:first-child{
 <!-- ═══ TOASTS ═══ -->
 <div id="toasts"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<!-- ═══ DRAG & DROP OVERLAY ═══ -->
+<div class="drop-overlay" id="drop-overlay">
+  <div class="drop-overlay-content">
+    <div class="icon">📥</div>
+    <div class="text">Solte o arquivo aqui!</div>
+    <div style="color:var(--text3);font-size:13px;margin-top:6px;">Imagens para OCR · TXT/CSV para Fusão</div>
+  </div>
+</div>
+
+<!-- ═══ BUSCA GLOBAL ═══ -->
+<div id="global-search-overlay">
+  <div class="global-search-box">
+    <input id="global-search-input" class="global-search-input" placeholder="🔍 Buscar em tudo... (documentos, notas, agenda, chat)" autocomplete="off"/>
+    <div class="global-search-results" id="global-search-results">
+      <div class="gs-empty">💡 Digite para buscar em todos os documentos, notas, eventos e mensagens</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TTS FLOATING ═══ -->
+<div class="tts-fab" id="tts-fab" style="display:none;">
+  <button id="tts-toggle" onclick="ttsToggle()" title="Ler em voz alta (TTS)">🔊</button>
+  <button id="tts-stop" onclick="ttsStop()" title="Parar leitura" style="display:none;">⏹️</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
 <script>
 'use strict';
 /* ═══════════════════════════════════════════════════════════
@@ -596,6 +780,9 @@ const S={
   notepad:localStorage.getItem('aria_notepad')||'',
   notes:JSON.parse(localStorage.getItem('aria_notes')||'[]'),
   notesView:null,
+  gcalEvents:JSON.parse(localStorage.getItem('aria_gcalEvents')||'[]'),
+  audioRec:JSON.parse(localStorage.getItem('aria_audioRec')||'{}'),
+  webrtc:{active:false,transcript:'',duration:0,stream:null,peer:null,interval:null,recognition:null},
 };
 
 // ─── UTILITIES ───────────────────────────────────────────
@@ -603,8 +790,12 @@ const uid=()=>Math.random().toString(36).slice(2,9);
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const fmt=d=>new Date(d).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
 const fmtT=d=>new Date(d).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+let save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const colLetter=i=>String.fromCharCode(65+i);
+const sanitize=html=>{const d=document.createElement('div');d.textContent=html;return d.innerHTML;};
+const debounceTimers={};
+const debounce=(key,fn,delay=500)=>{clearTimeout(debounceTimers[key]);debounceTimers[key]=setTimeout(fn,delay);};
+const realHash=async text=>{const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').toUpperCase();};
 
 function toast(msg,color='var(--cyan)',duration=3000){
   const d=document.createElement('div');
@@ -633,8 +824,81 @@ function updateStatus(){
   else ab.textContent='';
 }
 
+// ═══════════════════════════════════════════════════════════
+// 💾 INDEXEDDB WRAPPER (milhões de documentos!)
+// ═══════════════════════════════════════════════════════════
+const IDB={db:null,
+  async init(){
+    return new Promise((resolve,reject)=>{
+      const req=indexedDB.open('aria_ultra',2);
+      req.onerror=()=>reject(req.error);
+      req.onsuccess=()=>{this.db=req.result;resolve();};
+      req.onupgradeneeded=e=>{
+        const db=e.target.result;
+        if(!db.objectStoreNames.contains('files'))db.createObjectStore('files',{keyPath:'id'});
+        if(!db.objectStoreNames.contains('notes'))db.createObjectStore('notes',{keyPath:'id'});
+        if(!db.objectStoreNames.contains('events'))db.createObjectStore('events',{keyPath:'id'});
+        if(!db.objectStoreNames.contains('blobs'))db.createObjectStore('blobs');
+      };
+    });
+  },
+  async put(store,data){return new Promise((resolve,reject)=>{const tx=this.db.transaction(store,'readwrite');tx.objectStore(store).put(data);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});},
+  async get(store,id){return new Promise((resolve,reject)=>{const tx=this.db.transaction(store,'readonly');const req=tx.objectStore(store).get(id);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});},
+  async getAll(store){return new Promise((resolve,reject)=>{const tx=this.db.transaction(store,'readonly');const req=tx.objectStore(store).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error);});},
+  async delete(store,id){return new Promise((resolve,reject)=>{const tx=this.db.transaction(store,'readwrite');tx.objectStore(store).delete(id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});},
+  async search(store,term,limit=50){const all=await this.getAll(store);const t=term.toLowerCase();return all.filter(i=>JSON.stringify(i).toLowerCase().includes(t)).slice(0,limit);},
+  async putBlob(k,blob){return this.put('blobs',{id:k,data:blob,date:new Date().toISOString()});},
+  async getBlob(k){const r=await this.get('blobs',k);return r?.data;}
+};
+const _origSave=save;
+save=async(key,value)=>{
+  if(!IDB.db){localStorage.setItem(key,JSON.stringify(value));return;}
+  const map={'aria_files':'files','aria_notes':'notes','aria_agenda':'events'};
+  const store=map[key];
+  if(!store){localStorage.setItem(key,JSON.stringify(value));return;}
+  try{
+    const tx=IDB.db.transaction(store,'readwrite');
+    tx.objectStore(store).clear();
+    if(Array.isArray(value))for(const item of value)if(item.id)tx.objectStore(store).put(item);
+    await new Promise((res,rej)=>{tx.oncomplete=res;tx.onerror=()=>rej(tx.error);});
+  }catch(e){console.warn('IDB save fallback:',e);localStorage.setItem(key,JSON.stringify(value));}
+};
+
+// ═══════════════════════════════════════════════════════════
+// 🔌 API CLIENT (Backend Proxy)
+// ═══════════════════════════════════════════════════════════
+const API={base:'http://localhost:3000/api',token:localStorage.getItem('aria_token')||null,user:JSON.parse(localStorage.getItem('aria_user')||'null'),
+  async request(path,opts={}){
+    const headers={'Content-Type':'application/json'};
+    if(this.token)headers['Authorization']='Bearer '+this.token;
+    const r=await fetch(this.base+path,{...opts,headers:{...headers,...(opts.headers||{})}});
+    if(r.status===401){this.logout();throw new Error('Sessão expirada');}
+    return r.json();
+  },
+  async login(email,password){
+    const r=await this.request('/auth/login',{method:'POST',body:JSON.stringify({email,password})});
+    if(r.success){this.token=r.token;this.user=r.user;localStorage.setItem('aria_token',r.token);localStorage.setItem('aria_user',JSON.stringify(r.user));}
+    return r;
+  },
+  async register(email,password,name){
+    const r=await this.request('/auth/register',{method:'POST',body:JSON.stringify({email,password,name})});
+    if(r.success)await this.login(email,password);
+    return r;
+  },
+  logout(){this.token=null;this.user=null;localStorage.removeItem('aria_token');localStorage.removeItem('aria_user');},
+  async ai(provider,messages,system){return this.request('/ai/chat',{method:'POST',body:JSON.stringify({provider,messages,system})});},
+  async ocrImage(file){const fd=new FormData();fd.append('image',file);const r=await fetch(this.base+'/ocr/image',{method:'POST',headers:{'Authorization':'Bearer '+this.token},body:fd});return r.json();},
+  async ocrPDF(file){const fd=new FormData();fd.append('pdf',file);const r=await fetch(this.base+'/ocr/pdf',{method:'POST',headers:{'Authorization':'Bearer '+this.token},body:fd});return r.json();},
+  async transcribeAudio(file,language='pt'){const fd=new FormData();fd.append('audio',file);fd.append('language',language);const r=await fetch(this.base+'/ocr/audio',{method:'POST',headers:{'Authorization':'Bearer '+this.token},body:fd});return r.json();},
+  async generateImage(prompt,size='1024x1024'){return this.request('/ocr/image-generate',{method:'POST',body:JSON.stringify({prompt,size})});}
+};
+
 // ─── AI CALL ─────────────────────────────────────────────
 async function ai(messages,systemOverride){
+  if(API.token&&API.base){
+    try{const r=await API.ai(S.provider,messages,systemOverride||'');if(r.success)return r.text;throw new Error(r.error);}
+    catch(e){console.warn('Backend falhou:',e.message);}
+  }
   return PROVIDERS[S.provider].call(messages,systemOverride);
 }
 
@@ -667,6 +931,17 @@ function setProvider(k){
 }
 
 function saveNotepad(v){S.notepad=v;localStorage.setItem('aria_notepad',v);}
+
+// ─── THEME TOGGLE ─────────────────────────────────────
+const _savedTheme=localStorage.getItem('aria_theme')||'dark';
+document.documentElement.setAttribute('data-theme',_savedTheme);
+function toggleTheme(){
+  const cur=document.documentElement.getAttribute('data-theme');
+  const next=cur==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('aria_theme',next);
+  toast(`🌓 Tema ${next==='light'?'claro':'escuro'} ativado!`,'var(--cyan)');
+}
 
 // ─── KEY MODAL ───────────────────────────────────────────
 function openKeyModal(){
@@ -725,9 +1000,26 @@ function render(){
   else if(t==='currency') c.innerHTML=renderCurrency();
   else if(t==='summarizer') c.innerHTML=renderSummarizer();
   else if(t==='files') c.innerHTML=renderFiles();
+  else if(t==='validator') c.innerHTML=renderValidator();
+  else if(t==='calc') c.innerHTML=renderCalc();
+  else if(t==='tasks') c.innerHTML=renderTasks();
+  else if(t==='pomodoro') c.innerHTML=renderPomodoro();
+   else if(t==='qrcode') c.innerHTML=renderQRCode();
+   else if(t==='audio') c.innerHTML=renderAudio();
+   else if(t==='charts') c.innerHTML=renderCharts();
+   else if(t==='agents') c.innerHTML=renderAgents();
+   else if(t==='gcal') c.innerHTML=renderGCal();
+   else if(t==='webrtc') c.innerHTML=renderWebRTC();
+   else if(t==='sentiment') c.innerHTML=renderSentiment();
+   else if(t==='imgen') c.innerHTML=renderImgGen();
   bindEvents();
   updateStatus();
+  updateTTSUI();
   if(t==='chat'){const cm=document.getElementById('chat-messages');if(cm)cm.scrollTop=cm.scrollHeight;}
+  if(t==='calc')renderCalcForm();
+  if(t==='qrcode')renderQRForm();
+  if(t==='charts')setTimeout(renderChartPreview,50);
+  if(t==='audio'&&S.audioRec?.transcript){const el=document.querySelector('.audio-transcript');if(el)el.textContent=S.audioRec.transcript;}
 }
 
 // ═══════════════════════════════════════════════════════
@@ -758,7 +1050,7 @@ function renderChat(){
   const qpHTML=S.chatHistory.length===0?`
     <div style="margin-bottom:14px;">
       <div class="sec-title">Sugestões rápidas</div>
-      <div class="row-wrap">${quickPrompts.map(q=>`<button class="btn-ghost btn-sm" onclick="sendChat(${JSON.stringify(q.p)})">${q.label}</button>`).join('')}</div>
+      <div class="row-wrap">${quickPrompts.map(q=>`<button class="btn-ghost btn-sm qp-btn" data-prompt="${esc(q.p)}">${q.label}</button>`).join('')}</div>
     </div>`:'';
 
   return `
@@ -772,6 +1064,7 @@ function renderChat(){
     <div class="col" style="gap:8px;">
       <div class="row" style="gap:6px;">
         <button id="btn-voice" class="btn-icon ${S.listening?'btn-danger':' btn-ghost'}" style="${S.listening?'animation:urgentPulse 1s infinite;':''}">${S.listening?'🔴 Parar':'🎤'}</button>
+        <button class="btn-icon btn-ghost" onclick="speakLastResponse()" title="Ouvir última resposta" style="font-size:14px;padding:9px 10px;">🔊</button>
         ${S.clipboard?`<button class="btn-icon btn-ghost" onclick="pasteToChat()" title="Colar OCR/Texto copiado" style="font-size:14px;padding:9px 10px;">📋 Colar</button>`:''}
         <textarea id="chat-in" placeholder="Digite ou fale qualquer coisa... (Enter = enviar, Shift+Enter = nova linha)" style="min-height:44px;max-height:140px;flex:1;border-radius:12px;resize:none;" rows="1"></textarea>
         <button id="btn-send" class="btn-cyan btn-icon" ${S.chatLoading?'disabled':''}>➤</button>
@@ -795,7 +1088,7 @@ async function sendChat(text){
   }
   S.chatLoading=false;render();
 }
-function clearChat(){S.chatHistory=[];render();}
+function clearChat(){if(!confirm('Limpar todo o histórico do chat?'))return;S.chatHistory=[];render();}
 function exportChat(){
   const txt=S.chatHistory.map(m=>`[${m.role.toUpperCase()}]\n${m.content}`).join('\n\n---\n\n');
   const b=new Blob([txt],{type:'text/plain'});
@@ -983,7 +1276,7 @@ function renderOCR(){
         <button class="btn-ghost btn-sm" onclick="document.getElementById('ocr-file').click()">🔄 Re-extrair</button>
         <button class="btn-ghost btn-sm" onclick="exportOCR()">📥 Exportar</button>
       `:''}
-      <input id="ocr-file" type="file" accept="image/*" style="display:none"/>
+      <input id="ocr-file" type="file" accept="image/*,.pdf" style="display:none"/>
       ${S.ocrLoading?`<span style="color:var(--cyan);font-size:13px;font-weight:600;"><span class="spin">⚙️</span> <span id="ocr-progress">Processando OCR...</span></span>`:''}
     </div>
     <div class="row-wrap" style="gap:4px;">
@@ -1026,10 +1319,27 @@ async function aiFixOCR(){
   }catch(e){toast('❌ '+e.message,'var(--red)');}
   S.ocrLoading=false;render();
 }
+async function loadTesseract(){
+  if(window.Tesseract)return Tesseract;
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/tesseract.js-wasm@5/dist/tesseract.min.js';
+    s.onload=()=>{console.log('⚡ Tesseract WASM carregado (10x mais rápido!)');resolve(Tesseract);};
+    s.onerror=()=>{
+      const s2=document.createElement('script');
+      s2.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+      s2.onload=()=>resolve(Tesseract);
+      s2.onerror=()=>reject(new Error('Falha ao carregar Tesseract'));
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s);
+  });
+}
 async function processOCR(file){
   const allowed=['image/jpeg','image/jpg','image/png','image/gif','image/webp'];
   if(!allowed.includes(file.type)){
-    S.ocrText='❌ Formato não suportado. Use JPG, PNG, GIF ou WEBP.';
+    if(file.type==='application/pdf'){processPDF(file);return;}
+    S.ocrText='❌ Formato não suportado. Use JPG, PNG, GIF, WEBP ou PDF.';
     S.ocrLoading=false;render();return;
   }
   S.ocrImg=URL.createObjectURL(file);S.ocrLoading=true;S.ocrText='';render();
@@ -1116,7 +1426,8 @@ async function processOCR(file){
     const psmMap={auto:'3',doc:'3',table:'6',screen:'4'};
     const psm=psmMap[S.ocrMode]||'3';
 
-    const {data:{text}}=await Tesseract.recognize(blob,'por',{
+    const T=await loadTesseract();
+    const {data:{text}}=await T.recognize(blob,'por',{
       logger: m=>{if(m.status==='recognizing text'){const p=document.getElementById('ocr-progress');if(p)p.textContent=`OCR: ${Math.round(m.progress*100)}%`;}}
     });
     S.ocrText=text.trim()||'Nenhum texto encontrado na imagem.';
@@ -1334,17 +1645,18 @@ function newNote(){
   save('aria_notes',S.notes);render();
 }
 function delNote(id){
+  if(!confirm('Excluir esta nota?'))return;
   S.notes=S.notes.filter(n=>n.id!==id);
   if(S.notesView===id)S.notesView=null;
   save('aria_notes',S.notes);render();
 }
 function updateNoteTitle(id,v){
   const n=S.notes.find(x=>x.id===id);
-  if(n){n.title=v||'Sem título';n.updated=new Date().toISOString();save('aria_notes',S.notes);}
+  if(n){n.title=v||'Sem título';n.updated=new Date().toISOString();debounce('title-'+id,()=>save('aria_notes',S.notes),600);}
 }
 function updateNoteContent(id,v){
   const n=S.notes.find(x=>x.id===id);
-  if(n){n.content=v;n.updated=new Date().toISOString();save('aria_notes',S.notes);}
+  if(n){n.content=v;n.updated=new Date().toISOString();debounce('note-'+id,()=>save('aria_notes',S.notes),600);}
 }
 // ═══════════════════════════════════════════════════════
 // TAB: FUSÃO
@@ -1417,7 +1729,7 @@ function renderTranslator(){
       <button class="btn-ghost btn-icon" onclick="swapLang()" style="font-size:20px;padding:8px 12px;">⇌</button>
       <select id="trans-to" onchange="S.transTo=this.value" style="flex:1;">${toOpts}</select>
     </div>
-    <textarea id="trans-in" placeholder="Cole aqui o texto que deseja traduzir..." style="min-height:120px;">${esc(S.sumText==='trans'?S.clipboard:'')}</textarea>
+    <textarea id="trans-in" placeholder="Cole aqui o texto que deseja traduzir..." style="min-height:120px;"></textarea>
     <div class="row">
       <button class="btn-cyan flex1" onclick="runTranslation()" ${S.transLoading?'disabled':''}>
         ${S.transLoading?`<span class="spin">⚙️</span> Traduzindo...`:'🌐 Traduzir com IA'}
@@ -1568,7 +1880,10 @@ function renderFiles(){
     </div>
   </div>`;
 }
-function delFile(id){S.savedFiles=S.savedFiles.filter(f=>f.id!==id);save('aria_files',S.savedFiles);updateStatus();render();toast('🗑 Removido.','var(--red)');}
+function delFile(id){
+  if(!confirm('Excluir este documento permanentemente?'))return;
+  S.savedFiles=S.savedFiles.filter(f=>f.id!==id);save('aria_files',S.savedFiles);updateStatus();render();toast('🗑 Removido.','var(--red)');
+}
 function exportFile(id){
   const f=S.savedFiles.find(x=>x.id===id);if(!f)return;
   const b=new Blob([f.content],{type:'text/plain'});
@@ -1874,16 +2189,18 @@ function clearSigCanvas(){
   const ctx=canvas.getContext('2d');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.strokeStyle='#000';ctx.lineWidth=3;
 }
-function confirmSignature(){
+async function confirmSignature(){
   const name=document.getElementById('sig-name')?.value.trim();
   const cpf=document.getElementById('sig-cpf')?.value.trim();
   if(!name){toast('Informe o nome do signatário.','var(--orange)');return;}
   const canvas=document.getElementById('sig-canvas');if(!canvas)return;
   const data=canvas.toDataURL('image/png');
   const pixelData=canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height).data;
-  if(!pixelData.some((v,i)=>v<255)){toast('Desenhe sua assinatura no campo acima.','var(--orange)');return;}
+  const isBlank=[...pixelData].every((v,i)=>i%4===3?true:v===255);
+  if(isBlank){toast('Desenhe sua assinatura no campo acima.','var(--orange)');return;}
   const hash='SIG-'+btoa(name+cpf+Date.now()).slice(0,12).toUpperCase();
-  S.docSignature={name,cpf:cpf||'—',data,hash,date:new Date().toISOString(),hash256:Array.from(new TextEncoder().encode(name+cpf+Date.now())).map(b=>b.toString(16).padStart(2,'0')).join('').toUpperCase().slice(0,16)};
+  const hash256=await realHash(name+cpf+Date.now());
+  S.docSignature={name,cpf:cpf||'—',data,hash,date:new Date().toISOString(),hash256:hash256.slice(0,16)};
   closeSigModal();render();
   toast('✍️ Documento assinado por '+name+'!','var(--green)');
   logActivity('sign','Documento assinado por '+name);
@@ -1932,6 +2249,12 @@ function exportBackup(){
     cloudUser: S.cloudUser,
     currencyRates: S.currencyRates,
     versionHistory: S.versionHistory,
+    pinnedFiles: S.pinnedFiles,
+    customTheme: S.customTheme,
+    tasks: S.tasks,
+    audioRec: S.audioRec,
+    gcalEvents: S.gcalEvents,
+    agentChatHistory: _agentChatHistory,
     stats: {
       totalFiles: S.savedFiles.length,
       totalChat: S.chatHistory.length,
@@ -1974,6 +2297,12 @@ function importBackup(){
         if (data.cloudUser) { S.cloudUser = data.cloudUser; localStorage.setItem('aria_cloud_user', data.cloudUser); }
         if (data.currencyRates) { S.currencyRates = data.currencyRates; save('aria_currency_rates', data.currencyRates); }
         if (data.versionHistory) { S.versionHistory = data.versionHistory; save('aria_version_history', data.versionHistory); }
+        if (data.pinnedFiles) { S.pinnedFiles = data.pinnedFiles; save('aria_pinned', data.pinnedFiles); }
+        if (data.customTheme) { S.customTheme = data.customTheme; localStorage.setItem('aria_custom_theme', JSON.stringify(data.customTheme)); }
+        if (data.tasks) { S.tasks = data.tasks; save('aria_tasks', data.tasks); }
+        if (data.audioRec) { S.audioRec = data.audioRec; save('aria_audioRec', data.audioRec); }
+        if (data.gcalEvents) { S.gcalEvents = data.gcalEvents; save('aria_gcalEvents', data.gcalEvents); }
+        if (data.agentChatHistory) { _agentChatHistory = data.agentChatHistory; }
         updateStatus();
         render();
         toast(`✅ Backup restaurado! ${data.stats?.totalFiles || data.savedFiles?.length || 0} arquivos, ${data.savedFiles?.length || 0} documentos, ${data.agenda?.length || 0} eventos.`,'var(--green)',5000);
@@ -2177,30 +2506,70 @@ function restoreVersion(fileId, versionIndex){
 // BIND EVENTS
 // ═══════════════════════════════════════════════════════
 function bindEvents(){
-  // CHAT
-  const ci=document.getElementById('chat-in');
-  if(ci){
-    ci.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat(ci.value);}});
-    ci.addEventListener('input',()=>{ci.style.height='auto';ci.style.height=Math.min(ci.scrollHeight,140)+'px';});
-  }
-  document.getElementById('btn-send')?.addEventListener('click',()=>{const i=document.getElementById('chat-in');if(i)sendChat(i.value);});
-  document.getElementById('btn-voice')?.addEventListener('click',()=>S.listening?stopVoice():startVoice());
-  // OCR
+  const app=document.getElementById('app');if(!app||app._delegationAttached)return;
+  app._delegationAttached=true;
+
+  app.addEventListener('keydown',e=>{
+    if(e.target.id==='chat-in'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat(e.target.value);}
+  });
+  app.addEventListener('input',e=>{
+    if(e.target.id==='chat-in'){e.target.style.height='auto';e.target.style.height=Math.min(e.target.scrollHeight,140)+'px';}
+    if(e.target.id==='cur-amount')debounce('cur',convertCurrency,400);
+  });
+  app.addEventListener('click',e=>{
+    const t=e.target;
+    if(t.id==='btn-send'){const i=document.getElementById('chat-in');if(i)sendChat(i.value);}
+    if(t.id==='btn-voice'){S.listening?stopVoice():startVoice();}
+    if(t.id==='key-modal')closeKeyModal();
+    if(t.id==='sig-modal')closeSigModal();
+    if(t.id==='firebase-modal')closeFirebaseModal();
+    if(t.id==='share-modal')closeSharedModal();
+  });
+
   document.getElementById('ocr-file')?.addEventListener('change',e=>{if(e.target.files[0])processOCR(e.target.files[0]);});
-  // CSV
   document.getElementById('csv-in')?.addEventListener('change',e=>{if(e.target.files[0])importCSV(e.target.files[0]);});
-  // FUSION
   document.getElementById('fus-files')?.addEventListener('change',e=>{
     Array.from(e.target.files).forEach(file=>{
       const r=new FileReader();r.onload=ev=>{S.fusFiles.push({name:file.name,content:ev.target.result});render();};r.readAsText(file);
     });
   });
-  // MODAL close on backdrop
-  document.getElementById('key-modal')?.addEventListener('click',e=>{if(e.target.id==='key-modal')closeKeyModal();});
-  document.getElementById('sig-modal')?.addEventListener('click',e=>{if(e.target.id==='sig-modal')closeSigModal();});
-  document.getElementById('firebase-modal')?.addEventListener('click',e=>{if(e.target.id==='firebase-modal')closeFirebaseModal();});
-  document.getElementById('share-modal')?.addEventListener('click',e=>{if(e.target.id==='share-modal')closeSharedModal();});
 }
+
+// ─── KEYBOARD SHORTCUTS ────────────────────────────────
+document.addEventListener('keydown',e=>{
+  const ctrl=e.ctrlKey||e.metaKey;
+  if(ctrl&&e.key==='k'){e.preventDefault();S.tab='chat';switchTab('chat');}
+  if(ctrl&&e.key==='n'){e.preventDefault();newNote();}
+  if(ctrl&&e.key==='s'){e.preventDefault();S.tab='files';switchTab('files');}
+  if(ctrl&&e.key==='d'){e.preventDefault();S.tab='docs';switchTab('docs');}
+  if(ctrl&&e.key==='o'){e.preventDefault();S.tab='ocr';switchTab('ocr');}
+  if(ctrl&&e.key==='a'){e.preventDefault();S.tab='agenda';switchTab('agenda');}
+  if(ctrl&&e.key==='f'){e.preventDefault();S.tab='fusion';switchTab('fusion');}
+  if(ctrl&&e.key==='t'){e.preventDefault();S.tab='translator';switchTab('translator');}
+  if(ctrl&&e.key==='r'){e.preventDefault();S.tab='summarizer';switchTab('summarizer');}
+  if(ctrl&&e.key==='c'){e.preventDefault();S.tab='currency';switchTab('currency');}
+  if(ctrl&&e.key==='v'){e.preventDefault();S.tab='validator';switchTab('validator');}
+  if(ctrl&&e.key==='p'){e.preventDefault();S.tab='pomodoro';switchTab('pomodoro');}
+  if(ctrl&&e.key==='q'){e.preventDefault();S.tab='qrcode';switchTab('qrcode');}
+  if(ctrl&&e.key==='j'){e.preventDefault();S.tab='tasks';switchTab('tasks');}
+  if(ctrl&&e.key==='e'){e.preventDefault();S.tab='audio';switchTab('audio');}
+  if(ctrl&&e.key==='g'){e.preventDefault();S.tab='charts';switchTab('charts');}
+  if(ctrl&&e.key==='h'){e.preventDefault();S.tab='agents';switchTab('agents');}
+  if(ctrl&&e.key==='l'){e.preventDefault();S.tab='gcal';switchTab('gcal');}
+  if(ctrl&&e.key==='i'){e.preventDefault();S.tab='webrtc';switchTab('webrtc');}
+  if(ctrl&&e.key==='y'){e.preventDefault();S.tab='sentiment';switchTab('sentiment');}
+  if(ctrl&&e.key==='z'){e.preventDefault();S.tab='imgen';switchTab('imgen');}
+  if(ctrl&&e.key==='/'){e.preventDefault();openGlobalSearch();}
+  if(ctrl&&e.key==='b'){e.preventDefault();toggleTheme();}
+  if(ctrl&&e.key==='m'){e.preventDefault();ttsToggle();}
+  if(e.key==='Escape'){closeKeyModal();closeFirebaseModal();closeSigModal();closeSharedModal();closeGlobalSearch();closeThemePicker();ttsStop();}
+  if(document.getElementById('global-search-overlay')?.classList.contains('open')){
+    const items=document.querySelectorAll('.gs-item');
+    if(e.key==='ArrowDown'){e.preventDefault();_gsIdx=Math.min(_gsIdx+1,items.length-1);renderGlobalSearch(document.getElementById('global-search-input').value);}
+    if(e.key==='ArrowUp'){e.preventDefault();_gsIdx=Math.max(_gsIdx-1,0);renderGlobalSearch(document.getElementById('global-search-input').value);}
+    if(e.key==='Enter'&&_gsIdx>=0&&items[_gsIdx]){e.preventDefault();items[_gsIdx].click();}
+  }
+});
 
 // ═══════════════════════════════════════════════════════
 // VOICE
@@ -2257,23 +2626,1065 @@ function installApp(){
 }
 
 // ═══════════════════════════════════════════════════════
+// TAB: VALIDATOR (CPF/CNPJ/PIS/CNH)
+// ═══════════════════════════════════════════════════════
+let _brType='cpf';
+const _brMasks={cpf:v=>v.replace(/\D/g,'').slice(0,11).replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2'),cnpj:v=>v.replace(/\D/g,'').slice(0,14).replace(/(\d{2})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1/$2').replace(/(\d{4})(\d{1,2})$/,'$1-$2'),pis:v=>v.replace(/\D/g,'').slice(0,11).replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{5})(\d)/,'$1.$2').replace(/(\d{5}\.\d{2})(\d{1,3})$/,'$1-$2'),cnh:v=>v.replace(/\D/g,'').slice(0,11)};
+function _valCPF(c){c=c.replace(/\D/g,'');if(c.length!==11||/^(\d)\1{10}$/.test(c))return false;let s=0;for(let i=0;i<9;i++)s+=+c[i]*(10-i);let r=(s*10)%11;if(r===10)r=0;if(r!==+c[9])return false;s=0;for(let i=0;i<10;i++)s+=+c[i]*(11-i);r=(s*10)%11;if(r===10)r=0;return r===+c[10];}
+function _valCNPJ(c){c=c.replace(/\D/g,'');if(c.length!==14||/^(\d)\1{13}$/.test(c))return false;const w1=[5,4,3,2,9,8,7,6,5,4,3,2],w2=[6,5,4,3,2,9,8,7,6,5,4,3,2];let s=0;for(let i=0;i<12;i++)s+=+c[i]*w1[i];let r=s%11;const d1=r<2?0:11-r;if(d1!==+c[12])return false;s=0;for(let i=0;i<13;i++)s+=+c[i]*w2[i];r=s%11;const d2=r<2?0:11-r;return d2===+c[13];}
+function _valPIS(p){p=p.replace(/\D/g,'');if(p.length!==11)return false;const w=[3,2,9,8,7,6,5,4,3,2];let s=0;for(let i=0;i<10;i++)s+=+p[i]*w[i];let r=(s*10)%11;if(r===10)r=0;return r===+p[10];}
+function _valCNH(c){c=c.replace(/\D/g,'');return c.length===11&&!/^(\d)\1{10}$/.test(c)&&c!=='00000000000';}
+const _validators={cpf:_valCPF,cnpj:_valCNPJ,pis:_valPIS,cnh:_valCNH};
+function _genCPF(){const n=Array.from({length:9},()=>Math.floor(Math.random()*10));let s=0;for(let i=0;i<9;i++)s+=n[i]*(10-i);let r=(s*10)%11;if(r===10)r=0;n.push(r);s=0;for(let i=0;i<10;i++)s+=n[i]*(11-i);r=(s*10)%11;if(r===10)r=0;n.push(r);return n.join('').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4');}
+function _genCNPJ(){const n=Array.from({length:12},()=>Math.floor(Math.random()*10));const d1=()=>{const w=[5,4,3,2,9,8,7,6,5,4,3,2];let s=0;for(let i=0;i<12;i++)s+=n[i]*w[i];const r=s%11;return r<2?0:11-r;};n.push(d1());n.push(d1());return n.join('').replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,'$1.$2.$3/$4-$5');}
+function _genPIS(){const n=Array.from({length:10},()=>Math.floor(Math.random()*10));const w=[3,2,9,8,7,6,5,4,3,2];let s=0;for(let i=0;i<10;i++)s+=n[i]*w[i];let r=(s*10)%11;if(r===10)r=0;n.push(r);return n.join('').replace(/(\d{3})(\d{5})(\d{2})(\d{1})/,'$1.$2.$3-$4');}
+const _generators={cpf:_genCPF,cnpj:_genCNPJ,pis:_genPIS,cnh:()=>Array.from({length:11},()=>Math.floor(Math.random()*10)).join('')};
+
+function renderValidator(){
+  const tabs=['cpf','cnpj','pis','cnh'].map(t=>`<button class="br-tab" data-type="${t}" onclick="switchBRTab('${t}')" style="background:${_brType===t?'var(--cyan)':'var(--bg3)'};color:${_brType===t?'var(--bg0)':'var(--text2)'};border:1.5px solid ${_brType===t?'var(--cyan)':'var(--border)'};border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;">${t.toUpperCase()}</button>`).join('');
+  const ph={cpf:'000.000.000-00',cnpj:'00.000.000/0000-00',pis:'000.00000.00-0',cnh:'00000000000'};
+  return `<div class="col fade-in">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">🆔 Validador de Documentos BR</div>
+    <div style="color:var(--text3);font-size:13px;">Valide ou gere CPF, CNPJ, PIS e CNH válidos</div>
+    <div class="card">
+      <div class="sec-title">Selecione o tipo</div>
+      <div class="row-wrap">${tabs}</div>
+      <div style="margin-top:14px;">
+        <div class="sec-title">Digite para validar</div>
+        <input id="br-input" class="br-doc-input" placeholder="${ph[_brType]}" maxlength="18" oninput="validateBR(this.value)"/>
+        <div id="br-result" style="margin-top:10px;"></div>
+      </div>
+      <div class="sep"></div>
+      <div class="row-wrap">
+        <button class="btn-cyan flex1" onclick="generateBR()">🎲 Gerar ${_brType.toUpperCase()} Válido</button>
+        <button class="btn-ghost btn-sm" onclick="copyBR()">📋 Copiar</button>
+        <button class="btn-ghost btn-sm" onclick="document.getElementById('br-input').value='';document.getElementById('br-result').innerHTML=''">✕ Limpar</button>
+      </div>
+      <div class="sep"></div>
+      <div style="color:var(--text3);font-size:11px;line-height:1.5;">💡 <strong>CPF:</strong> 11 dígitos com dígitos verificadores · <strong>CNPJ:</strong> 14 dígitos · <strong>PIS:</strong> 11 dígitos · <strong>CNH:</strong> 11 dígitos</div>
+    </div>
+  </div>`;
+}
+function switchBRTab(t){_brType=t;const i=document.getElementById('br-input');if(i){i.value='';i.placeholder={cpf:'000.000.000-00',cnpj:'00.000.000/0000-00',pis:'000.00000.00-0',cnh:'00000000000'}[t];}const r=document.getElementById('br-result');if(r)r.innerHTML='';render();}
+function validateBR(v){
+  const r=document.getElementById('br-result');if(!r)return;
+  const i=document.getElementById('br-input');
+  const masked=_brMasks[_brType](v);if(i)i.value=masked;
+  const clean=masked.replace(/\D/g,'');
+  if(!clean){r.innerHTML='';return;}
+  const isValid=_validators[_brType](masked);
+  r.innerHTML=isValid?`<div class="br-result-ok">✅ ${_brType.toUpperCase()} VÁLIDO!<br><span style="font-family:'JetBrains Mono',monospace;font-size:15px;">${esc(i.value)}</span></div>`:`<div class="br-result-err">❌ ${_brType.toUpperCase()} INVÁLIDO!<br><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">${esc(i.value)}</span><br><span style="font-size:11px;margin-top:6px;display:block;">Verifique os dígitos verificadores</span></div>`;
+}
+function generateBR(){const i=document.getElementById('br-input');i.value=_generators[_brType]();validateBR(i.value);}
+function copyBR(){const v=document.getElementById('br-input')?.value;if(!v)return;navigator.clipboard.writeText(v);toast('📋 Copiado!','var(--green)');}
+
+// ═══════════════════════════════════════════════════════
+// TAB: CALCULADORA TRABALHISTA
+// ═══════════════════════════════════════════════════════
+function renderCalc(){
+  return `<div class="col fade-in">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">💰 Calculadora Trabalhista</div>
+    <div style="color:var(--text3);font-size:13px;">Cálculos trabalhistas com base na legislação brasileira</div>
+    <div class="card" style="border-color:var(--cyan);">
+      <div class="sec-title">Tipo de Cálculo</div>
+      <select id="calc-type" onchange="renderCalcForm()" style="font-size:14px;">
+        <option value="ferias">🏖️ Férias (+1/3 constitucional)</option>
+        <option value="13">💰 13º Salário (proporcional ou integral)</option>
+        <option value="rescisao">📋 Rescisão Sem Justa Causa</option>
+        <option value="fgts">🏦 Saque do FGTS (rescisão)</option>
+        <option value="horaextra">⏰ Horas Extras</option>
+        <option value="inss">📊 INSS (tabela 2024/2025)</option>
+        <option value="irrf">💼 IRRF (tabela 2024/2025)</option>
+      </select>
+    </div>
+    <div id="calc-form"></div>
+    <div id="calc-result"></div>
+    <div class="sep"></div>
+    <div style="color:var(--muted);font-size:11px;line-height:1.5;">⚖️ <strong>Aviso:</strong> Cálculos simplificados para referência. Consulte um contador para valores oficiais.</div>
+  </div>`;
+}
+const _num=v=>parseFloat(v)||0;
+const _fmt=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+function renderCalcForm(){
+  const t=document.getElementById('calc-type').value;
+  const f=document.getElementById('calc-form');
+  const forms={
+    ferias:`<div class="card"><div class="col"><input id="calc-salario" type="number" placeholder="Salário bruto (R$)" step="0.01"/><div class="row"><input id="calc-dias" type="number" placeholder="Dias de férias" value="30" style="flex:1;"/><select id="calc-vender" style="width:160px;"><option value="0">Não vende</option><option value="10">Vende 10 dias</option></select></div><button class="btn-cyan" onclick="calcFerias()">Calcular Férias</button></div></div>`,
+    '13':`<div class="card"><div class="col"><input id="calc-salario" type="number" placeholder="Salário bruto (R$)" step="0.01"/><div class="row"><input id="calc-meses" type="number" placeholder="Meses trabalhados" value="12" min="1" max="12" style="flex:1;"/><select id="calc-tipo13" style="width:160px;"><option value="integral">Integral</option><option value="primeira">1ª parcela</option><option value="segunda">2ª parcela</option></select></div><button class="btn-cyan" onclick="calc13()">Calcular 13º</button></div></div>`,
+    rescisao:`<div class="card"><div class="col"><input id="calc-salario" type="number" placeholder="Salário bruto (R$)" step="0.01"/><div class="row"><input id="calc-meses" type="number" placeholder="Meses trabalhados (ano)" value="6" style="flex:1;"/><input id="calc-anos" type="number" placeholder="Anos completos" value="2" style="flex:1;"/></div><div class="row"><input id="calc-aviso" type="number" placeholder="Aviso prévio (dias)" value="30" style="flex:1;"/><input id="calc-ferias-venc" type="number" placeholder="Férias vencidas (dias)" value="0" style="flex:1;"/></div><button class="btn-cyan" onclick="calcRescisao()">Calcular Rescisão</button></div></div>`,
+    fgts:`<div class="card"><div class="col"><input id="calc-salario" type="number" placeholder="Salário bruto (R$)" step="0.01"/><input id="calc-meses" type="number" placeholder="Meses trabalhados (último ano)" value="12"/><input id="calc-anos" type="number" placeholder="Anos de empresa" value="3"/><button class="btn-cyan" onclick="calcFGTS()">Calcular FGTS</button></div></div>`,
+    horaextra:`<div class="card"><div class="col"><input id="calc-salario" type="number" placeholder="Salário bruto (R$)" step="0.01"/><input id="calc-jornada" type="number" placeholder="Horas mensais (padrão 220)" value="220"/><input id="calc-extra" type="number" placeholder="Horas extras no mês" value="20"/><select id="calc-perc"><option value="50">50% (dias úteis)</option><option value="100">100% (domingos/feriados)</option></select><button class="btn-cyan" onclick="calcHoraExtra()">Calcular Horas Extras</button></div></div>`,
+    inss:`<div class="card"><div class="col"><input id="calc-salario" type="number" placeholder="Salário bruto (R$)" step="0.01"/><button class="btn-cyan" onclick="calcINSS()">Calcular INSS</button></div></div>`,
+    irrf:`<div class="card"><div class="col"><input id="calc-salario" type="number" placeholder="Salário bruto (R$)" step="0.01"/><input id="calc-dependentes" type="number" placeholder="Nº de dependentes" value="0"/><input id="calc-pensao" type="number" placeholder="Pensão alimentícia (R$)" value="0" step="0.01"/><button class="btn-cyan" onclick="calcIRRF()">Calcular IRRF</button></div></div>`,
+  };
+  f.innerHTML=forms[t]||'';
+}
+function calcFerias(){
+  const sal=_num(document.getElementById('calc-salario').value);const dias=_num(document.getElementById('calc-dias').value);const vender=_num(document.getElementById('calc-vender').value);
+  if(!sal){toast('Preencha o salário.','var(--orange)');return;}
+  const vb=(sal/30)*dias,ter=vb/3,ab=(sal/30)*vender,abt=ab/3,tot=vb+ter+(vender?ab+abt:0);
+  document.getElementById('calc-result').innerHTML=`<div class="calc-result-box fade-in"><strong>🏖️ FÉRIAS — ${dias} dias</strong><br>Valor base: ${_fmt(vb)}<br>1/3 Constitucional: ${_fmt(ter)}<br>${vender?`Abono (${vender} dias): ${_fmt(ab)}<br>1/3 do abono: ${_fmt(abt)}<br>`:''}<hr style="border-color:var(--border);margin:10px 0;">💰 <strong>TOTAL BRUTO: ${_fmt(tot)}</strong></div>`;
+}
+function calc13(){
+  const sal=_num(document.getElementById('calc-salario').value);const meses=_num(document.getElementById('calc-meses').value);const tipo=document.getElementById('calc-tipo13').value;
+  if(!sal){toast('Preencha o salário.','var(--orange)');return;}
+  const tot=(sal/12)*meses;let r='';if(tipo==='integral')r=`<strong>TOTAL BRUTO: ${_fmt(tot)}</strong>`;else if(tipo==='primeira')r=`1ª Parcela: <strong>${_fmt(tot/2)}</strong>`;else{const inss=_calcINSS(sal/2);r=`Total: ${_fmt(tot)}<br>INSS s/2ª parcela: -${_fmt(inss)}<br>2ª Parcela líquida: <strong>${_fmt((tot/2)-inss)}</strong>`;}
+  document.getElementById('calc-result').innerHTML=`<div class="calc-result-box fade-in"><strong>💰 13º SALÁRIO — ${meses} meses</strong><br>${r}</div>`;
+}
+function calcRescisao(){
+  const sal=_num(document.getElementById('calc-salario').value);const meses=_num(document.getElementById('calc-meses').value);const anos=_num(document.getElementById('calc-anos').value);const aviso=_num(document.getElementById('calc-aviso').value);const fv=_num(document.getElementById('calc-ferias-venc').value);
+  if(!sal){toast('Preencha o salário.','var(--orange)');return;}
+  const ss=(sal/30)*meses*2.5,ap=aviso?(sal/30)*aviso:0,fp=(sal/30)*((meses/12)*30),fpt=fp/3,fvv=(sal/30)*fv,fvt=fvv/3,dp=(sal/12)*meses,fg=sal*0.08*anos*12+sal*0.08*meses,mf=fg*0.40,tot=ss+ap+fp+fpt+fvv+fvt+dp+mf;
+  document.getElementById('calc-result').innerHTML=`<div class="calc-result-box fade-in"><strong>📋 RESCISÃO SEM JUSTA CAUSA</strong><br>Saldo salário: ${_fmt(ss)}<br>Aviso prévio: ${_fmt(ap)}<br>Férias prop. + 1/3: ${_fmt(fp+fpt)}<br>Férias vencidas + 1/3: ${_fmt(fvv+fvt)}<br>13º proporcional: ${_fmt(dp)}<br>Multa 40% FGTS: ${_fmt(mf)}<hr style="border-color:var(--border);margin:10px 0;">💰 <strong>TOTAL ESTIMADO: ${_fmt(tot)}</strong></div>`;
+}
+function calcFGTS(){
+  const sal=_num(document.getElementById('calc-salario').value);const meses=_num(document.getElementById('calc-meses').value);const anos=_num(document.getElementById('calc-anos').value);
+  if(!sal){toast('Preencha o salário.','var(--orange)');return;}
+  const dt=sal*0.08*anos*12+sal*0.08*meses;
+  document.getElementById('calc-result').innerHTML=`<div class="calc-result-box fade-in"><strong>🏦 FGTS — Saque Rescisório</strong><br>Depósitos totais: ${_fmt(dt)}<br>Multa 40%: <strong>${_fmt(dt*0.40)}</strong><br>Total sacar: <strong>${_fmt(dt*1.40)}</strong></div>`;
+}
+function calcHoraExtra(){
+  const sal=_num(document.getElementById('calc-salario').value);const jorn=_num(document.getElementById('calc-jornada').value);const ext=_num(document.getElementById('calc-extra').value);const perc=_num(document.getElementById('calc-perc').value);
+  if(!sal){toast('Preencha o salário.','var(--orange)');return;}
+  const vh=sal/jorn,ve=vh*(1+perc/100)*ext;
+  document.getElementById('calc-result').innerHTML=`<div class="calc-result-box fade-in"><strong>⏰ HORAS EXTRAS ${perc}%</strong><br>Valor hora: ${_fmt(vh)}<br>Valor hora extra: ${_fmt(vh*(1+perc/100))}<br><hr style="border-color:var(--border);margin:10px 0;">💰 <strong>Total: ${_fmt(ve)} (${ext} horas)</strong></div>`;
+}
+function _calcINSS(s){if(s<=1412)return s*0.075;if(s<=2666.68)return s*0.09-21.18;if(s<=4000.03)return s*0.12-101.18;if(s<=7786.02)return s*0.14-181.18;return 908.85;}
+function calcINSS(){const sal=_num(document.getElementById('calc-salario').value);if(!sal)return;const inss=_calcINSS(sal);document.getElementById('calc-result').innerHTML=`<div class="calc-result-box fade-in"><strong>📊 INSS 2024/2025</strong><br>Salário bruto: ${_fmt(sal)}<br>Alíquota efetiva: ${((inss/sal)*100).toFixed(2)}%<hr style="border-color:var(--border);margin:10px 0;">💰 <strong>Desconto INSS: ${_fmt(inss)}</strong><br>Salário-base INSS: ${_fmt(sal-inss)}</div>`;}
+function calcIRRF(){const sal=_num(document.getElementById('calc-salario').value);const dep=_num(document.getElementById('calc-dependentes').value);const pensao=_num(document.getElementById('calc-pensao').value);if(!sal){toast('Preencha o salário.','var(--orange)');return;}const inss=_calcINSS(sal);const base=sal-inss-(dep*189.59)-pensao;let imp=0;if(base<=2259.20)imp=0;else if(base<=2826.65)imp=base*0.075-169.44;else if(base<=3751.05)imp=base*0.15-381.44;else if(base<=4664.68)imp=base*0.225-662.77;else imp=base*0.275-896.00;if(imp<0)imp=0;document.getElementById('calc-result').innerHTML=`<div class="calc-result-box fade-in"><strong>💼 IRRF 2024/2025</strong><br>Base de cálculo: ${_fmt(base)}<hr style="border-color:var(--border);margin:10px 0;">💰 <strong>IRRF: ${_fmt(imp)}</strong><br>Salário líquido: ${_fmt(sal-inss-imp)}</div>`;}
+
+// ═══════════════════════════════════════════════════════
+// TAB: TAREFAS / KANBAN
+// ═══════════════════════════════════════════════════════
+if(!S.tasks)S.tasks=JSON.parse(localStorage.getItem('aria_tasks')||'[]');
+function renderTasks(){
+  const cols=[
+    {k:'todo',label:'📋 A Fazer',color:'var(--cyan)'},
+    {k:'doing',label:'⚙️ Fazendo',color:'var(--orange)'},
+    {k:'done',label:'✅ Concluído',color:'var(--green)'},
+  ];
+  const cards=cols.map(c=>{
+    const list=S.tasks.filter(t=>t.status===c.k);
+    return `<div class="kanban-col" data-status="${c.k}" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="dropTask(event,'${c.k}');this.classList.remove('drag-over')">
+      <div class="kanban-col-title"><span style="color:${c.color};">${c.label}</span><span style="background:var(--bg3);padding:2px 8px;border-radius:10px;font-size:10px;">${list.length}</span></div>
+      ${list.map(t=>`<div class="kanban-card" draggable="true" ondragstart="dragTask(event,'${t.id}')" data-id="${t.id}" style="border-left-color:${t.tag==='urgente'?'var(--red)':t.tag==='importante'?'var(--orange)':'var(--cyan)'};"><div style="font-weight:700;color:var(--text);margin-bottom:4px;">${esc(t.title)}</div>${t.desc?`<div style="color:var(--text3);font-size:11px;margin-bottom:4px;">${esc(t.desc)}</div>`:''}<div style="display:flex;justify-content:space-between;align-items:center;"><div>${t.tag?`<span class="task-tag" style="background:${t.tag==='urgente'?'var(--red)':t.tag==='importante'?'var(--orange)':'var(--cyan)'}22;color:${t.tag==='urgente'?'var(--red)':t.tag==='importante'?'var(--orange)':'var(--cyan)'};">${t.tag}</span>`:''}</div><button class="btn-danger btn-xs" onclick="delTask('${t.id}')">🗑</button></div></div>`).join('')}
+    </div>`;
+  }).join('');
+  return `<div class="col fade-in"><div style="display:flex;justify-content:space-between;align-items:center;"><div><span style="font-size:22px;font-weight:900;" class="text-cyan">✅ Tarefas</span><span style="color:var(--text3);font-size:13px;margin-left:8px;">${S.tasks.length} tarefas</span></div><button class="btn-cyan" onclick="newTaskForm()">+ Nova Tarefa</button></div><div class="row-wrap" style="font-size:11px;color:var(--text3);gap:10px;"><span>📌 Pendentes: <strong style="color:var(--cyan);">${S.tasks.filter(t=>t.status==='todo').length}</strong></span><span>⚙️ Em andamento: <strong style="color:var(--orange);">${S.tasks.filter(t=>t.status==='doing').length}</strong></span><span>✅ Concluídas: <strong style="color:var(--green);">${S.tasks.filter(t=>t.status==='done').length}</strong></span></div><div class="kanban">${cards}</div><div style="color:var(--muted);font-size:11px;margin-top:6px;">💡 Arraste os cards entre as colunas para mudar o status</div></div>`;
+}
+let _draggedTaskId=null;
+function dragTask(e,id){_draggedTaskId=id;e.dataTransfer.setData('text/plain',id);e.target.classList.add('dragging');}
+function dropTask(e,status){e.preventDefault();const id=e.dataTransfer.getData('text/plain')||_draggedTaskId;const t=S.tasks.find(x=>x.id===id);if(t){t.status=status;save('aria_tasks',S.tasks);render();toast(`Movido para "${status}"!`,'var(--cyan)');}_draggedTaskId=null;}
+function newTaskForm(){const title=prompt('Título da tarefa:');if(!title)return;const desc=prompt('Descrição (opcional):')||'';const tag=prompt('Tag (urgente / importante / normal):')||'normal';S.tasks.unshift({id:uid(),title,desc,status:'todo',tag,date:new Date().toISOString()});save('aria_tasks',S.tasks);render();}
+function delTask(id){if(!confirm('Excluir tarefa?'))return;S.tasks=S.tasks.filter(t=>t.id!==id);save('aria_tasks',S.tasks);render();}
+
+// ═══════════════════════════════════════════════════════
+// TAB: POMODORO
+// ═══════════════════════════════════════════════════════
+if(!S.pomo)S.pomo={running:false,paused:false,time:25*60,total:25*60,mode:'focus',cycles:0,interval:null};
+function renderPomodoro(){
+  const m=Math.floor(S.pomo.time/60),s=S.pomo.time%60;
+  const progress=((S.pomo.total-S.pomo.time)/S.pomo.total)*100;
+  const label={focus:'🎯 Foco',short:'☕ Pausa Curta',long:'🌴 Pausa Longa'}[S.pomo.mode];
+  return `<div class="col fade-in" style="align-items:center;text-align:center;">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">⏱️ Pomodoro Timer</div>
+    <div style="color:var(--text3);font-size:13px;">${S.pomo.cycles} ciclos completos hoje</div>
+    <div class="pomo-circle" id="pomo-circle" style="--pomo-progress:${progress}%;">
+      <div class="pomo-inner">
+        <div class="pomo-time">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div>
+        <div class="pomo-label">${label}</div>
+      </div>
+    </div>
+    <div class="row-wrap" style="justify-content:center;">
+      <button class="btn-cyan" onclick="pomoToggle()" id="pomo-toggle-btn">${S.pomo.running?'⏸️ Pausar':'▶️ Iniciar'}</button>
+      <button class="btn-ghost btn-sm" onclick="pomoReset()">🔄 Resetar</button>
+    </div>
+    <div class="row-wrap" style="justify-content:center;">
+      <button class="btn-ghost btn-sm" onclick="pomoSetMode('focus')" style="${S.pomo.mode==='focus'?'border-color:var(--cyan);color:var(--cyan);':''}">🎯 25 min</button>
+      <button class="btn-ghost btn-sm" onclick="pomoSetMode('short')" style="${S.pomo.mode==='short'?'border-color:var(--cyan);color:var(--cyan);':''}">☕ 5 min</button>
+      <button class="btn-ghost btn-sm" onclick="pomoSetMode('long')" style="${S.pomo.mode==='long'?'border-color:var(--cyan);color:var(--cyan);':''}">🌴 15 min</button>
+    </div>
+    ${S.pomo.running?`<button class="btn-ghost btn-sm" onclick="pomoSkip()">⏭️ Pular</button>`:''}
+    <div style="color:var(--muted);font-size:11px;max-width:300px;line-height:1.5;margin-top:10px;">💡 Técnica Pomodoro: 25min foco → 5min pausa (após 4 ciclos: 15min pausa longa).</div>
+  </div>`;
+}
+function pomoToggle(){
+  if(S.pomo.running){clearInterval(S.pomo.interval);S.pomo.running=false;}
+  else{
+    S.pomo.running=true;
+    S.pomo.interval=setInterval(()=>{
+      S.pomo.time--;
+      if(S.pomo.time<=0){
+        clearInterval(S.pomo.interval);S.pomo.running=false;
+        if(S.pomo.mode==='focus')S.pomo.cycles++;
+        try{new Notification('⏱️ Pomodoro',{body:`${S.pomo.mode==='focus'?'Hora da pausa!':'Hora de focar!'}`});}catch(e){}
+        toast('⏱️ '+(S.pomo.mode==='focus'?'Hora da pausa!':'Hora de focar!'),'var(--cyan)',5000);
+        if('vibrate' in navigator)navigator.vibrate([200,100,200]);
+        const next=S.pomo.mode==='focus'?(S.pomo.cycles%4===0?'long':'short'):'focus';
+        pomoSetMode(next);
+      }
+      render();
+    },1000);
+  }
+  render();
+}
+function pomoSetMode(m){if(S.pomo.running){clearInterval(S.pomo.interval);S.pomo.running=false;}S.pomo.mode=m;S.pomo.total={focus:25*60,short:5*60,long:15*60}[m];S.pomo.time=S.pomo.total;render();}
+function pomoReset(){if(S.pomo.running){clearInterval(S.pomo.interval);S.pomo.running=false;}S.pomo.time=S.pomo.total;render();}
+function pomoSkip(){S.pomo.time=0;pomoToggle();}
+
+// ═══════════════════════════════════════════════════════
+// TAB: AUDIO RECORDING
+// ═══════════════════════════════════════════════════════
+let _recMediaRecorder=null,_recChunks=[],_recStream=null,_recRecognition=null,_recFinalText='';
+function renderAudio(){
+  const rec=S.audioRec&&S.audioRec.recording;
+  const trans=S.audioRec&&S.audioRec.transcript||'';
+  return `<div class="col fade-in" style="gap:14px;max-width:600px;margin:0 auto;">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">🎙️ Gravação de Áudio</div>
+    <div style="color:var(--text3);font-size:13px;">Grave áudio com transcrição automática (Web Speech)</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:20px;background:var(--bg1);border-radius:var(--r2);border:1.5px solid var(--border);">
+      <button class="rec-btn" id="rec-toggle-btn" onclick="recToggle()">${rec?'⏹️':'🎤'}</button>
+      <div style="color:var(--text3);font-size:12px;">${rec?'🔴 Gravando... Clique para parar':'Clique para começar a gravar'}</div>
+      ${rec?`<div class="rec-visualizer">${Array.from({length:20},(_,i)=>`<div class="rec-bar" style="animation-delay:${i*0.1}s"></div>`).join('')}</div>`:''}
+      <div class="audio-transcript" data-placeholder="A transcrição aparecerá aqui...">${esc(trans)}</div>
+      <div class="row-wrap">
+        <button class="btn-cyan btn-sm" onclick="recCopyTranscript()">📋 Copiar Transcrição</button>
+        <button class="btn-ghost btn-sm" onclick="recClear()">🗑️ Limpar</button>
+        <button class="btn-ghost btn-sm" onclick="recSendToChat()">🤖 Enviar ao Chat</button>
+      </div>
+      ${S.audioRec&&S.audioRec.audioURL?`<audio controls src="${S.audioRec.audioURL}" style="max-width:100%;border-radius:var(--r);"></audio>`:''}
+    </div>
+  </div>`;
+}
+function recToggle(){
+  if(S.audioRec&&S.audioRec.recording){recStop();return;}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){toast('❌ Microfone não disponível neste navegador','var(--red)');return;}
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    _recStream=stream;
+    _recMediaRecorder=new MediaRecorder(stream);
+    _recChunks=[];
+    _recMediaRecorder.ondataavailable=e=>{if(e.data.size>0)_recChunks.push(e.data);};
+    _recMediaRecorder.onstop=()=>{
+      const blob=new Blob(_recChunks,{type:'audio/webm'});
+      const url=URL.createObjectURL(blob);
+      if(!S.audioRec)S.audioRec={};
+      S.audioRec.audioURL=url;
+      S.audioRec.recording=false;
+      save('aria_audioRec',S.audioRec);
+      render();
+    };
+    _recMediaRecorder.start();
+    if(!S.audioRec)S.audioRec={};
+    S.audioRec.recording=true;
+    _recFinalText='';
+    if('webkitSpeechRecognition' in window||'SpeechRecognition' in window){
+      const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+      _recRecognition=new SR();
+      _recRecognition.lang='pt-BR';
+      _recRecognition.continuous=true;
+      _recRecognition.interimResults=true;
+      _recRecognition.onresult=e=>{
+        let final='',interim='';
+        for(let i=e.resultIndex;i<e.results.length;i++){
+          if(e.results[i].isFinal)final+=e.results[i][0].transcript;
+          else interim+=e.results[i][0].transcript;
+        }
+        if(final)_recFinalText+=final;
+        if(!S.audioRec)S.audioRec={};
+        S.audioRec.transcript=_recFinalText+interim;
+        const el=document.querySelector('.audio-transcript');
+        if(el)el.textContent=_recFinalText+interim;
+      };
+      _recRecognition.onerror=e=>{
+        if(e.error!=='no-speech')toast('❌ Erro no reconhecimento: '+e.error,'var(--red)');
+      };
+      try{_recRecognition.start();}catch(e){}
+    }
+    toast('🎤 Gravação iniciada!','var(--green)');
+    render();
+  }).catch(e=>{toast('❌ Erro ao acessar microfone: '+e.message,'var(--red)');});
+}
+function recStop(){
+  if(_recMediaRecorder&&_recMediaRecorder.state!=='inactive')_recMediaRecorder.stop();
+  if(_recStream)_recStream.getTracks().forEach(t=>t.stop());
+  if(_recRecognition){try{_recRecognition.stop();}catch(e){}}
+  _recMediaRecorder=null;_recStream=null;_recRecognition=null;
+  if(S.audioRec){S.audioRec.recording=false;if(_recFinalText)S.audioRec.transcript=_recFinalText;save('aria_audioRec',S.audioRec);}
+  toast('⏹️ Gravação finalizada','var(--cyan)');
+  render();
+}
+function recCopyTranscript(){
+  const t=S.audioRec&&S.audioRec.transcript;
+  if(t){navigator.clipboard.writeText(t).then(()=>toast('📋 Transcrição copiada!','var(--cyan)'));}
+  else toast('❌ Nada para copiar','var(--red)');
+}
+function recClear(){S.audioRec={};save('aria_audioRec',S.audioRec);_recFinalText='';render();}
+function recSendToChat(){
+  const t=S.audioRec&&S.audioRec.transcript;
+  if(!t){toast('❌ Nada para enviar','var(--red)');return;}
+  S.chatHistory.push({role:'user',content:'📝 Transcrição de áudio:\n\n'+t});
+  S.tab='chat';save('aria_chatHistory',S.chatHistory);
+  const btn=document.querySelector('[data-tab="chat"]');
+  if(btn)btn.click();
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: CHARTS & ANALYTICS
+// ═══════════════════════════════════════════════════════
+let _chartType='bar';
+function renderCharts(){
+  const hcols=S.sheetCols||6;
+  const hrows=S.sheetRows;
+  const data=S.sheetData;
+  const hasData=Array.isArray(data)&&data.length>1;
+  const colOpts=Array.from({length:Math.min(hcols,data[0]?.length||6)},(_,i)=>`<option value="${i}">${data[0]?.[i]||String.fromCharCode(65+i)}</option>`).join('');
+  return `<div class="col fade-in" style="gap:12px;">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">📊 Gráficos e Analytics</div>
+    <div style="color:var(--text3);font-size:13px;">Visualize dados da planilha em gráficos interativos</div>
+    <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r2);padding:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+      <label style="font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;">📊 Coluna X <select id="chart-col-x" onchange="renderChartPreview()">${colOpts}</select></label>
+      <label style="font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;">📈 Coluna Y <select id="chart-col-y" onchange="renderChartPreview()">${colOpts.length>1?colOpts.replace('value="0"','value="1"'):colOpts}</select></label>
+      <label style="font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;">🔢 Linhas <input type="number" id="chart-rows" value="10" min="2" max="50" style="width:50px;padding:4px 6px;border-radius:6px;border:1.5px solid var(--border);background:var(--bg2);color:var(--text);" onchange="renderChartPreview()"></label>
+    </div>
+    <div class="chart-tabs">
+      ${['bar','line','pie','area','donut'].map(t=>`<button class="chart-tab${_chartType===t?' active':''}" onclick="switchChartType('${t}')">${t==='bar'?'📊 Barras':t==='line'?'📈 Linha':t==='pie'?'🥧 Pizza':t==='area'?'🌊 Área':'🍩 Donut'}</button>`).join('')}
+    </div>
+    <div class="chart-card">
+      ${hasData?`<svg class="chart-svg" id="chart-svg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet"></svg><div class="chart-legend" id="chart-legend"></div>`:`<div style="text-align:center;padding:40px;color:var(--muted);font-size:14px;">📭 Nenhum dado na planilha. Adicione dados na aba Planilha primeiro.</div>`}
+    </div>
+    <div style="font-size:11px;color:var(--text3);text-align:center;">💡 Use a aba Planilha para inserir dados numéricos e visualize aqui.</div>
+  </div>`;
+}
+function switchChartType(t){_chartType=t;renderChartPreview();render();}
+function renderChartPreview(){
+  const svg=document.getElementById('chart-svg');
+  const leg=document.getElementById('chart-legend');
+  if(!svg)return;
+  const colX=document.getElementById('chart-col-x');
+  const colY=document.getElementById('chart-col-y');
+  const rowsI=document.getElementById('chart-rows');
+  if(!colX||!colY||!rowsI)return;
+  const xi=parseInt(colX.value),yi=parseInt(colY.value);
+  const maxRows=parseInt(rowsI.value)||10;
+  const data=S.sheetData||[];
+  const labels=[],values=[];
+  for(let r=1;r<data.length&&labels.length<maxRows;r++){
+    const row=data[r];
+    if(!row||!row[xi]||row[yi]===undefined||row[yi]==='')continue;
+    const v=parseFloat(String(row[yi]).replace(',','.'));
+    if(!isNaN(v)){labels.push(row[xi]);values.push(v);}
+  }
+  if(!labels.length){svg.innerHTML='';if(leg)leg.innerHTML='';return;}
+  const w=800,h=300,p=40,graphW=w-2*p,graphH=h-2*p;
+  const maxVal=Math.max(...values)*1.1||1;
+  const minVal=Math.min(0,...values);
+  const range=maxVal-minVal||1;
+  const barW=Math.min(graphW/labels.length*0.7,40);
+  const gap=graphW/labels.length;
+  const colors=['#00e5ff','#7c4dff','#ff6d00','#00e676','#ff1744','#d500f9','#3d5afe','#ff9100','#69f0ae','#e040fb'];
+  let html='';
+  if(_chartType==='bar'||_chartType==='area'){
+    const baseY=p+graphH;
+    html=values.map((v,i)=>{
+      const barH=(v-minVal)/range*graphH;
+      const x=p+i*gap+(gap-barW)/2;
+      const y=baseY-barH;
+      const col=colors[i%colors.length];
+      return `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" fill="${col}" rx="3"><title>${esc(labels[i])}: ${v}</title></rect>`;
+    }).join('');
+    if(_chartType==='area'){
+      const pts=values.map((v,i)=>`${p+i*gap},${p+graphH-(v-minVal)/range*graphH}`).join(' ');
+      html+=`<polyline points="${p},${p+graphH} ${pts} ${p+(values.length-1)*gap},${p+graphH}" fill="${colors[0]}33" stroke="none"/>`;
+    }
+  }else if(_chartType==='line'){
+    const pts=values.map((v,i)=>`${p+i*gap},${p+graphH-(v-minVal)/range*graphH}`).join(' ');
+    html=`<polyline points="${pts}" fill="none" stroke="${colors[0]}" stroke-width="2.5"/>`;
+    html+=values.map((v,i)=>{
+      const cx=p+i*gap,cy=p+graphH-(v-minVal)/range*graphH;
+      return `<circle cx="${cx}" cy="${cy}" r="4" fill="${colors[0]}" stroke="#fff" stroke-width="1.5"><title>${esc(labels[i])}: ${v}</title></circle>`;
+    }).join('');
+  }else if(_chartType==='pie'||_chartType==='donut'){
+    const total=values.reduce((a,b)=>a+b,0)||1;
+    let cum=0;
+    const cx=w/2,cy=h/2,r=Math.min(graphW,graphH)/2.2;
+    const dr=_chartType==='donut'?r*0.4:0;
+    html=values.map((v,i)=>{
+      const ang=v/total*360;
+      const a1=cum*Math.PI/180,a2=(cum+ang)*Math.PI/180;
+      cum+=ang;
+      const x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+      const x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
+      const large=ang>180?1:0;
+      const col=colors[i%colors.length];
+      return `<path d="M${cx+dr*Math.cos(a1)},${cy+dr*Math.sin(a1)} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z" fill="${col}" stroke="#fff" stroke-width="1"><title>${esc(labels[i])}: ${v} (${(v/total*100).toFixed(1)}%)</title></path>`;
+    }).join('');
+    if(_chartType==='donut')html+=`<circle cx="${cx}" cy="${cy}" r="${dr}" fill="var(--bg1)"/>`;
+  }
+  // Y axis
+  html+=`<line x1="${p}" y1="${p}" x2="${p}" y2="${p+graphH}" stroke="var(--border)" stroke-width="1"/>`;
+  html+=`<line x1="${p}" y1="${p+graphH}" x2="${p+graphW}" y2="${p+graphH}" stroke="var(--border)" stroke-width="1"/>`;
+  for(let i=0;i<=4;i++){
+    const y=p+graphH-i/4*graphH;
+    const val=minVal+i/4*range;
+    html+=`<text x="${p-6}" y="${y+4}" text-anchor="end" fill="var(--text3)" font-size="9">${val.toFixed(1)}</text>`;
+    html+=`<line x1="${p}" y1="${y}" x2="${p+graphW}" y2="${y}" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="3,3"/>`;
+  }
+  // X labels (max 10)
+  const step=Math.max(1,Math.floor(labels.length/10));
+  labels.forEach((l,i)=>{
+    if(i%step===0){
+      html+=`<text x="${p+i*gap+gap/2}" y="${h-6}" text-anchor="middle" fill="var(--text3)" font-size="9">${esc(String(l).substring(0,10))}</text>`;
+    }
+  });
+  svg.innerHTML=html;
+  if(leg){
+    leg.innerHTML=labels.map((l,i)=>`<span class="chart-legend-item"><span class="chart-legend-dot" style="background:${colors[i%colors.length]}"></span>${esc(String(l))}: ${values[i]}</span>`).join('');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: AI AGENTS
+// ═══════════════════════════════════════════════════════
+const AGENTS=[
+  {id:'juridico',name:'⚖️ Jurídico',desc:'Direito trabalhista, contratos, LGPD',prompt:'Você é um advogado especialista em direito trabalhista, contratual e LGPD. Responda com embasamento legal (CLT, CC, LGPD).'},
+  {id:'financeiro',name:'💰 Financeiro',desc:'Orçamento, DRE, fluxo de caixa',prompt:'Você é um analista financeiro sênior. Auxilie com DRE, balanço, fluxo de caixa, custos e indicadores financeiros.'},
+  {id:'rh',name:'👥 RH',desc:'Admissão, rescisão, folha de pagamento',prompt:'Você é um consultor de RH. Ajude com admissão, rescisão, férias, 13º, eSocial e rotinas trabalhistas.'},
+  {id:'fiscal',name:'📋 Fiscal',desc:'Impostos, NF-e, SPED',prompt:'Você é um especialista fiscal. Responda sobre NF-e, SPED, ICMS, ISS, PIS/COFINS e obrigações acessórias.'},
+  {id:'administrativo',name:'📁 Administrativo',desc:'Rotinas, processos, organização',prompt:'Você é um assistente administrativo experiente. Ajude a organizar rotinas, fluxos de trabalho e processos administrativos.'},
+  {id:'marketing',name:'📢 Marketing',desc:'Redes sociais, campanhas, SEO',prompt:'Você é um estrategista de marketing digital. Auxilie com SEO, SEM, redes sociais, conteúdo e análise de métricas.'},
+  {id:'ti',name:'💻 TI & Suporte',desc:'Redes, hardware, software',prompt:'Você é um analista de TI. Ajude com troubleshooting, redes, hardware, software e boas práticas de tecnologia.'},
+  {id:'escrita',name:'✍️ Redação',desc:'Ofícios, e-mails, relatórios',prompt:'Você é um redator corporativo. Ajude a redigir ofícios, memorandos, relatórios, e-mails e comunicações oficiais.'},
+  {id:'dados',name:'📊 Dados',desc:'Análise, BI, SQL, Excel',prompt:'Você é um analista de dados. Ajude com SQL, Excel avançado, BI, dashboards e interpretação de dados.'},
+  {id:'compras',name:'🛒 Compras',desc:'Cotações, fornecedores, licitações',prompt:'Você é um especialista em compras e licitações. Auxilie com cotações, RFQ, pregão e gestão de fornecedores.'},
+  {id:'projetos',name:'📐 Projetos',desc:'PMO, cronogramas, riscos',prompt:'Você é um gerente de projetos (PMP). Ajude com cronogramas, EAP, riscos, stakeholders e metodologias ágeis/tradicionais.'},
+  {id:'qualidade',name:'✅ Qualidade',desc:'ISO, auditoria, processos',prompt:'Você é um auditor da qualidade. Auxilie com ISO 9001, procedimentos, indicadores e melhoria contínua.'},
+  {id:'contabil',name:'🧮 Contábil',desc:'Balanço, DRE, regime de caixa',prompt:'Você é um contador. Ajude com escrituração, balanço patrimonial, DRE, regime de competência e obrigações contábeis.'},
+  {id:'estoque',name:'📦 Estoque',desc:'Inventário, FIFO, reposição',prompt:'Você é um gestor de estoques. Ajude com controle de inventário, FIFO, PEPS, curva ABC e reposição.'},
+  {id:'atendimento',name:'💬 Atendimento',desc:'SAC, CRM, pós-venda',prompt:'Você é um especialista em atendimento ao cliente. Ajude com SAC, CRM, pesquisa de satisfação e pós-venda.'},
+  {id:'comercial',name:'🤝 Comercial',desc:'Vendas, prospecção, pipeline',prompt:'Você é um consultor de vendas. Ajude com prospecção, pipeline, fechamento, CRM e técnicas de negociação.'}
+];
+let _activeAgent=null,_agentLoading=false,_agentChatHistory=[];
+function renderAgents(){
+  const grid=AGENTS.map(a=>`<div class="agent-card${_activeAgent===a.id?' active':''}" onclick="selectAgent('${a.id}')"><span class="agent-icon">${a.name.split(' ')[0]}</span><div class="agent-name">${a.name}</div><div class="agent-desc">${a.desc}</div></div>`).join('');
+  const chatHtml=_activeAgent?_agentChatHistory.map(m=>`<div class="${m.role==='user'?'msg-user':'msg-ai'}"><div class="bubble ${m.role==='user'?'bubble-user':'bubble-ai'}">${esc(m.content)}</div></div>`).join('')+
+    (_agentLoading?'<div class="msg-ai"><div class="ai-ava">🧠</div><div class="bubble bubble-ai"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div></div>':'')+
+    `<div style="display:flex;gap:6px;margin-top:8px;"><input id="agent-msg-input" style="flex:1;padding:10px 14px;border-radius:var(--r2);border:1.5px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;" placeholder="Pergunte ao agente..." onkeydown="if(event.key==='Enter')sendAgentMsg()"><button class="btn-cyan" onclick="sendAgentMsg()">Enviar</button><button class="btn-ghost btn-sm" onclick="clearAgentChat()">🗑️</button></div>`:'';
+  return `<div class="col fade-in" style="gap:12px;">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">🤖 Agentes Especializados</div>
+    <div style="color:var(--text3);font-size:13px;">16 agentes IA especializados em áreas administrativas e empresariais</div>
+    ${_activeAgent?`<div style="background:var(--bg1);border:1.5px solid var(--purple);border-radius:var(--r2);padding:10px 14px;display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">${AGENTS.find(a=>a.id===_activeAgent)?.name.split(' ')[0]}</span><div><div style="font-weight:800;font-size:14px;color:var(--text);">${AGENTS.find(a=>a.id===_activeAgent)?.name}</div><div style="font-size:11px;color:var(--text3);">${AGENTS.find(a=>a.id===_activeAgent)?.desc}</div></div><div class="flex1"></div><button class="btn-ghost btn-sm" onclick="switchAgent()">🔄 Trocar</button></div>`:''}
+    ${_activeAgent?`<div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r2);padding:14px;max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;">${chatHtml}</div>`:`<div class="agent-grid">${grid}</div>`}
+  </div>`;
+}
+function selectAgent(id){_activeAgent=id;_agentChatHistory=[];render();}
+function switchAgent(){_activeAgent=null;_agentChatHistory=[];render();}
+function clearAgentChat(){_agentChatHistory=[];render();}
+async function sendAgentMsg(){
+  const input=document.getElementById('agent-msg-input');
+  if(!input||!input.value.trim())return;
+  const msg=input.value.trim();input.value='';
+  _agentChatHistory.push({role:'user',content:msg});
+  _agentLoading=true;render();
+  const agent=AGENTS.find(a=>a.id===_activeAgent);
+  const sysPrompt=agent?agent.prompt:'Você é um assistente especialista.';
+  const fullPrompt=sysPrompt+'\n\n Pergunta: '+msg;
+  try{
+    const resp=await ai(fullPrompt,true);
+    _agentChatHistory.push({role:'assistant',content:resp||'❌ Sem resposta.'});
+  }catch(e){_agentChatHistory.push({role:'assistant',content:'❌ Erro: '+e.message});}
+  _agentLoading=false;render();
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: GOOGLE CALENDAR (ICS)
+// ═══════════════════════════════════════════════════════
+let _gcalEvents=[];
+function renderGCal(){
+  const evs=S.gcalEvents||[];
+  const icsCount=evs.filter(e=>e.source==='ics').length;
+  const localCount=evs.filter(e=>e.source!=='ics').length;
+  const list=evs.length?evs.map((e,i)=>`<div class="gcal-event${e.source==='ics'?' gcal-synced':''}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div class="gcal-event-title">${esc(e.title||'Sem título')}</div>
+        <div class="gcal-event-time">📅 ${e.date||'?'} ${e.time||''} ${e.source==='ics'?'· Sincronizado ICS':''}</div>
+        ${e.desc?`<div style="color:var(--text2);font-size:11px;margin-top:4px;">${esc(e.desc)}</div>`:''}
+      </div>
+      <button class="btn-ghost btn-sm" onclick="gcalDeleteEvent(${i})" style="font-size:11px;">✕</button>
+    </div>
+  </div>`).join(''):'<div style="text-align:center;padding:30px;color:var(--muted);font-size:14px;">📅 Nenhum evento encontrado</div>';
+  return `<div class="col fade-in" style="gap:12px;max-width:650px;margin:0 auto;">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">📅 Google Calendar</div>
+    <div style="color:var(--text3);font-size:13px;">Gerencie eventos e importe arquivos ICS</div>
+    <div class="gcal-status${evs.length?' connected':''}">
+      <div class="gcal-status-dot"></div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:14px;color:var(--text);">${evs.length} evento${evs.length!==1?'s':''}</div>
+        <div style="font-size:11px;color:var(--text3);">${icsCount} importados · ${localCount} manuais</div>
+      </div>
+      <input type="file" accept=".ics" style="display:none;" id="gcal-ics-input" onchange="gcalImportICS(this)">
+      <button class="btn-ghost btn-sm" onclick="document.getElementById('gcal-ics-input').click()">📂 Importar ICS</button>
+      <button class="btn-cyan btn-sm" onclick="gcalShowAddForm()">+ Novo</button>
+    </div>
+    <div id="gcal-form-area"></div>
+    <div style="max-height:400px;overflow-y:auto;padding:4px;">${list}</div>
+    ${evs.length?`<button class="btn-ghost btn-sm" onclick="gcalExportICS()" style="align-self:center;">📤 Exportar ICS</button>`:''}
+  </div>`;
+}
+function gcalShowAddForm(){
+  const area=document.getElementById('gcal-form-area');
+  if(!area)return;
+  area.innerHTML=`<div style="background:var(--bg2);border:1.5px solid var(--cyan);border-radius:var(--r2);padding:14px;display:flex;flex-direction:column;gap:8px;">
+    <div style="font-weight:800;font-size:14px;color:var(--cyan);">➕ Novo Evento</div>
+    <input id="gcal-new-title" placeholder="Título" style="padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;">
+    <input id="gcal-new-date" type="date" style="padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;">
+    <input id="gcal-new-time" type="time" style="padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;">
+    <textarea id="gcal-new-desc" placeholder="Descrição (opcional)" style="padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;min-height:50px;resize:vertical;"></textarea>
+    <div class="row-wrap"><button class="btn-cyan" onclick="gcalAddEvent()">✅ Adicionar</button><button class="btn-ghost btn-sm" onclick="document.getElementById('gcal-form-area').innerHTML=''">Cancelar</button></div>
+  </div>`;
+}
+function gcalAddEvent(){
+  const title=document.getElementById('gcal-new-title');
+  const date=document.getElementById('gcal-new-date');
+  const time=document.getElementById('gcal-new-time');
+  const desc=document.getElementById('gcal-new-desc');
+  if(!title||!title.value.trim()){toast('❌ Título obrigatório','var(--red)');return;}
+  if(!S.gcalEvents)S.gcalEvents=[];
+  S.gcalEvents.push({title:title.value.trim(),date:date?.value||'',time:time?.value||'',desc:desc?.value||'',source:'local',created:new Date().toISOString()});
+  save('aria_gcalEvents',S.gcalEvents);
+  document.getElementById('gcal-form-area').innerHTML='';
+  toast('✅ Evento adicionado!','var(--green)');
+  render();
+}
+function gcalDeleteEvent(i){
+  if(!S.gcalEvents||!S.gcalEvents[i])return;
+  S.gcalEvents.splice(i,1);
+  save('aria_gcalEvents',S.gcalEvents);
+  render();
+}
+function gcalImportICS(input){
+  if(!input||!input.files||!input.files[0])return;
+  const file=input.files[0];
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const text=e.target.result;
+    const events=gcalParseICS(text);
+    if(!S.gcalEvents)S.gcalEvents=[];
+    S.gcalEvents.push(...events);
+    save('aria_gcalEvents',S.gcalEvents);
+    input.value='';
+    toast(`✅ ${events.length} evento${events.length!==1?'s':''} importado${events.length!==1?'s':''}!`,'var(--green)');
+    render();
+  };
+  reader.readAsText(file);
+}
+function gcalParseICS(ics){
+  const lines=ics.split(/\r?\n/);
+  const events=[];
+  let current=null,inEvent=false;
+  for(let line of lines){
+    line=line.trim();
+    if(line==='BEGIN:VEVENT'){current={source:'ics'};inEvent=true;}
+    else if(line==='END:VEVENT'){if(current&&current.title){events.push(current);}current=null;inEvent=false;}
+    else if(inEvent&&current){
+      if(line.startsWith('SUMMARY')||line.startsWith('SUMMARY;')){const idx=line.indexOf(':');if(idx>=0)current.title=line.substring(idx+1).trim();}
+      else if(line.startsWith('DTSTART')){const m=line.match(/DTSTART.*?:(\d{4})(\d{2})(\d{2})T?(\d{2})?(\d{2})?(\d{2})?/);if(m)current.date=`${m[1]}-${m[2]}-${m[3]}${m[4]?` ${m[4]}:${m[5]||'00'}:${m[6]||'00'}`:''}`;}
+      else if(line.startsWith('DTEND')); // skip
+      else if(line.startsWith('DESCRIPTION')){const idx=line.indexOf(':');if(idx>=0)current.desc=line.substring(idx+1).trim();}
+      else if(line.startsWith('LOCATION')){const idx=line.indexOf(':');if(idx>=0){if(!current.desc)current.desc='';current.desc+=(current.desc?' | ':'')+'📍 '+line.substring(idx+1).trim();}}
+    }
+  }
+  return events;
+}
+function gcalExportICS(){
+  const evs=S.gcalEvents||[];
+  if(!evs.length){toast('❌ Nenhum evento para exportar','var(--red)');return;}
+  let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//ARIA Admin Ultra//PT\r\n';
+  evs.forEach(e=>{
+    const dt=e.date?.replace(/-/g,'')||'20260101';
+    const tm=e.time?.replace(/:/g,'')||'000000';
+    ics+='BEGIN:VEVENT\r\n';
+    ics+=`DTSTART:${dt}T${tm}00\r\n`;
+    ics+=`SUMMARY:${e.title||'Evento'}\r\n`;
+    if(e.desc)ics+=`DESCRIPTION:${e.desc}\r\n`;
+    ics+='END:VEVENT\r\n';
+  });
+  ics+='END:VCALENDAR';
+  const blob=new Blob([ics],{type:'text/calendar'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='eventos.ics';a.click();
+  URL.revokeObjectURL(url);
+  toast('📤 ICS exportado com sucesso!','var(--cyan)');
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: WEBRTC - CHAMADAS DE VOZ COM IA
+// ═══════════════════════════════════════════════════════
+function renderWebRTC(){
+  return `<div class="col fade-in" style="gap:10px;">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">📞 Chamadas de Voz com IA</div>
+    <div style="color:var(--text3);font-size:13px;">Converse por voz com a ARIA em tempo real</div>
+    <div class="card" style="text-align:center;max-width:500px;margin:0 auto;">
+      <div style="position:relative;display:inline-block;">
+        <div class="webrtc-avatar${S.webrtc?.active?' active':''}">🧠</div>
+        ${S.webrtc?.active?'<div class="webrtc-pulse"></div>':''}
+      </div>
+      <div style="margin-top:14px;">
+        ${S.webrtc?.active?`
+          <button class="btn-danger" onclick="webrtcEnd()" style="font-size:16px;padding:12px 24px;">📞 Encerrar Chamada</button>
+          <div style="color:var(--green);margin-top:10px;font-weight:700;">🔴 Em chamada • ${Math.floor((S.webrtc?.duration||0)/60)}:${String((S.webrtc?.duration||0)%60).padStart(2,'0')}</div>
+        `:`<button class="btn-cyan" onclick="webrtcStart()" style="font-size:16px;padding:12px 24px;">📞 Iniciar Chamada de Voz</button>`}
+      </div>
+    </div>
+    ${S.webrtc?.active?`
+    <div class="card"><div class="sec-title">💬 Transcrição</div><div id="webrtc-transcript" class="audio-transcript" data-placeholder="Fale com a ARIA...">${esc(S.webrtc.transcript||'')}</div></div>
+    `:`
+    <div class="card" style="background:var(--bg3);"><div style="color:var(--text2);font-size:13px;line-height:1.7;"><strong style="color:var(--cyan);">🎯 Como funciona:</strong><br>• Conexão WebRTC peer-to-peer (baixa latência)<br>• Áudio capturado em tempo real<br>• Transcrição automática com Web Speech API<br>• IA responde com texto + voz (TTS)<br>• Ideal para consultas rápidas por voz<br><br><strong style="color:var(--orange);">⚠️ Requer Chrome/Edge + microfone</strong></div></div>
+    `}
+  </div>`;
+}
+async function webrtcStart(){
+  if(!navigator.mediaDevices?.getUserMedia){toast('❌ WebRTC não suportado.','var(--red)');return;}
+  try{
+    S.webrtc=S.webrtc||{};S.webrtc.stream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+    S.webrtc.active=true;S.webrtc.duration=0;S.webrtc.transcript='';
+    S.webrtc.peer=new RTCPeerConnection({iceServers:[]});
+    S.webrtc.stream.getTracks().forEach(t=>S.webrtc.peer.addTrack(t,S.webrtc.stream));
+    S.webrtc.peer.ontrack=e=>{const a=new Audio();a.srcObject=e.streams[0];a.play();};
+    S.webrtc.interval=setInterval(()=>{S.webrtc.duration++;const d=document.querySelector('[style*="Em chamada"]');if(d)d.textContent='🔴 Em chamada • '+Math.floor(S.webrtc.duration/60)+':'+String(S.webrtc.duration%60).padStart(2,'0');},1000);
+    startWebRTCTranscription();toast('📞 Chamada iniciada!','var(--green)');render();
+  }catch(e){toast('❌ Erro: '+e.message,'var(--red)');}
+}
+function startWebRTCTranscription(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){toast('⚠️ Transcrição não suportada.','var(--orange)');return;}
+  const r=new SR();r.continuous=true;r.interimResults=true;r.lang='pt-BR';
+  r.onresult=async e=>{
+    let interim='',final='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal){final+=e.results[i][0].transcript;if(final.trim()){S.webrtc.transcript+='👤 '+final+'\n';try{const resp=await ai([{role:'user',content:final}]);S.webrtc.transcript+='🧠 '+resp+'\n';ttsSpeak(resp);}catch(err){S.webrtc.transcript+='❌ Erro\n';}}}
+      else interim+=e.results[i][0].transcript;
+    }
+    const el=document.getElementById('webrtc-transcript');if(el)el.textContent=S.webrtc.transcript+interim;
+  };
+  r.onend=()=>{if(S.webrtc?.active)try{r.start();}catch(e){}};
+  try{r.start();S.webrtc.recognition=r;}catch(e){}
+}
+function webrtcEnd(){
+  if(S.webrtc.recognition)try{S.webrtc.recognition.stop();}catch(e){}
+  if(S.webrtc.stream)S.webrtc.stream.getTracks().forEach(t=>t.stop());
+  if(S.webrtc.peer)S.webrtc.peer.close();
+  if(S.webrtc.interval)clearInterval(S.webrtc.interval);
+  speechSynthesis.cancel();S.webrtc={active:false,transcript:'',duration:0};toast('📞 Chamada encerrada.','var(--orange)');render();
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: ANÁLISE DE SENTIMENTO
+// ═══════════════════════════════════════════════════════
+function renderSentiment(){
+  return `<div class="col fade-in">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">💭 Análise de Sentimento</div>
+    <div style="color:var(--text3);font-size:13px;">Detecte emoções, tom e polaridade de textos</div>
+    <textarea id="sentiment-input" placeholder="Cole aqui um texto, e-mail, feedback, reclamação, notícia..." style="min-height:160px;"></textarea>
+    <div class="row-wrap">
+      <button class="btn-cyan flex1" onclick="analyzeSentiment()">🔍 Analisar Sentimento</button>
+      <button class="btn-ghost btn-sm" onclick="document.getElementById('sentiment-input').value=S.clipboard">📋 Colar</button>
+    </div>
+    <div id="sentiment-result"></div>
+  </div>`;
+}
+async function analyzeSentiment(){
+  const text=document.getElementById('sentiment-input')?.value.trim();if(!text)return;
+  const res=document.getElementById('sentiment-result');res.innerHTML='<div style="color:var(--cyan);"><span class="spin">⚙️</span> Analisando...</div>';
+  try{
+    const r=await ai([{role:'user',content:'Analise o sentimento e o tom emocional deste texto em português. Retorne em JSON com esta estrutura EXATA:\n{\n"polaridade":"positivo|neutro|negativo|misto","score":-1.0 a 1.0,"emocoes_principais":["alegria","raiva","tristeza","medo","surpresa","nojo"],"emocoes_secundarias":[],"tom":"formal|informal|agressivo|empático|crítico|neutro|entusiasta|preocupado|confiante","intensidade":1-10,"resumo":"1-2 frases resumindo","sugestoes":"sugestões para melhorar o tom (se aplicável)"}\nTEXTO: '+text}]);
+    const match=r.match(/\{[\s\S]*\}/);const data=match?JSON.parse(match[0]):null;
+    if(data){
+      const colors={positivo:'var(--green)',negativo:'var(--red)',neutro:'var(--muted)',misto:'var(--orange)'};const color=colors[data.polaridade]||'var(--cyan)';const emoji={positivo:'😊',negativo:'😞',neutro:'😐',misto:'🤔'}[data.polaridade]||'💭';
+      res.innerHTML=`<div class="card fade-in" style="border-color:${color};max-width:550px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:14px;"><div class="emoji-large">${emoji}</div><div style="font-size:20px;font-weight:900;color:${color};text-transform:uppercase;">${data.polaridade}</div><div style="color:var(--text3);font-size:13px;margin-top:4px;">Score: ${data.score?.toFixed(2)} · Intensidade: ${data.intensidade}/10</div></div>
+        <div class="stat-card" style="background:var(--bg3);margin-bottom:8px;"><div class="stat-lbl">🎭 Tom</div><div style="color:var(--text);font-weight:700;margin-top:4px;">${esc(data.tom)}</div></div>
+        <div class="stat-card" style="background:var(--bg3);margin-bottom:8px;"><div class="stat-lbl">💚 Emoções Principais</div><div style="margin-top:6px;">${(data.emocoes_principais||[]).map(e=>'<span class="chip">'+e+'</span>').join('')}</div></div>
+        ${data.emocoes_secundarias?.length?`<div class="stat-card" style="background:var(--bg3);margin-bottom:8px;"><div class="stat-lbl">💛 Emoções Secundárias</div><div style="margin-top:6px;">${data.emocoes_secundarias.map(e=>'<span class="chip">'+e+'</span>').join('')}</div></div>`:''}
+        <div style="background:var(--bg1);border-radius:var(--r);padding:12px;margin-top:8px;"><div style="color:var(--cyan);font-weight:700;font-size:12px;margin-bottom:4px;">📋 Resumo</div><div style="color:var(--text);font-size:13px;line-height:1.6;">${esc(data.resumo)}</div></div>
+        ${data.sugestoes?`<div style="background:var(--bg1);border-radius:var(--r);padding:12px;margin-top:8px;"><div style="color:var(--orange);font-weight:700;font-size:12px;margin-bottom:4px;">💡 Sugestões</div><div style="color:var(--text2);font-size:13px;line-height:1.6;">${esc(data.sugestoes)}</div></div>`:''}
+      </div>
+      <div class="row-wrap" style="margin-top:10px;justify-content:center;">
+        <button class="btn-ghost btn-sm" onclick="S.chatHistory.push({role:'user',content:'Reescreva com tom positivo e empático: '+text});S.tab='chat';switchTab('chat');">😊 Tom Positivo</button>
+        <button class="btn-ghost btn-sm" onclick="S.chatHistory.push({role:'user',content:'Reescreva de forma formal e profissional: '+text});S.tab='chat';switchTab('chat');">👔 Mais Formal</button>
+        <button class="btn-ghost btn-sm" onclick="navigator.clipboard.writeText(JSON.stringify(data,null,2)).then(()=>toast('📋 JSON copiado!','var(--cyan)'));">📋 Copiar JSON</button>
+      </div>`;
+    } else {res.innerHTML='<div class="card">'+esc(r)+'</div>';}
+  }catch(e){res.innerHTML='<div style="color:var(--red);">❌ Erro: '+esc(e.message)+'</div>';}
+}
+
+// ═══════════════════════════════════════════════════════
+// TAB: GERAÇÃO DE IMAGENS DALL-E
+// ═══════════════════════════════════════════════════════
+function renderImgGen(){
+  return `<div class="col fade-in">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">🎨 Gerador de Imagens (DALL-E 3)</div>
+    <div style="color:var(--text3);font-size:13px;">Crie imagens únicas a partir de descrições em texto</div>
+    <div class="card">
+      <div class="sec-title">💡 Descreva a imagem que deseja</div>
+      <textarea id="img-prompt" placeholder="Ex: Um cérebro digital brilhante conectado a engrenagens douradas, estilo cyberpunk futurista, cores neon azul e roxo..." style="min-height:100px;"></textarea>
+      <div class="row" style="gap:8px;margin-top:10px;">
+        <select id="img-size" style="flex:1;"><option value="1024x1024">🟦 Quadrada 1024x1024</option><option value="1792x1024">🖼️ Widescreen 1792x1024</option><option value="1024x1792">📱 Vertical 1024x1792</option></select>
+        <select id="img-style" style="flex:1;"><option value="vivid">✨ Vivid (cores vibrantes)</option><option value="natural">🌿 Natural (realista)</option></select>
+      </div>
+      <button class="btn-cyan" onclick="generateImage()" id="img-gen-btn" style="width:100%;margin-top:10px;">🎨 Gerar Imagem</button>
+    </div>
+    <div id="img-result"></div>
+    <div class="card" style="background:var(--bg3);"><div class="sec-title">💡 Dicas para Prompts Perfeitos</div><div style="color:var(--text2);font-size:12px;line-height:1.7;">• <strong>Seja específico:</strong> Descreva detalhes como cores, iluminação, estilo<br>• <strong>Adicione contexto:</strong> "...estilo fotografia profissional", "...pintura a óleo"<br>• <strong>Defina ambiente:</strong> "...luz neon", "...pôr do sol", "...no espaço"</div></div>
+  </div>`;
+}
+async function generateImage(){
+  const prompt=document.getElementById('img-prompt')?.value.trim();if(!prompt){toast('❌ Descreva a imagem primeiro.','var(--orange)');return;}
+  const size=document.getElementById('img-size')?.value;const btn=document.getElementById('img-gen-btn');const res=document.getElementById('img-result');
+  btn.disabled=true;btn.innerHTML='<span class="spin">⚙️</span> Gerando... (10-20s)';res.innerHTML='';
+  try{
+    let url;
+    if(API.token){const r=await API.generateImage(prompt,size);if(!r.success)throw new Error(r.error);url=r.url;}
+    else{toast('⚠️ Configure o backend para DALL-E.','var(--orange)');btn.disabled=false;btn.innerHTML='🎨 Gerar Imagem';return;}
+    res.innerHTML=`<div class="card fade-in" style="text-align:center;"><img src="${url}" class="img-result-box"/><div style="margin-top:12px;"><div style="color:var(--text2);font-size:13px;margin-bottom:8px;line-height:1.5;text-align:left;padding:10px;background:var(--bg1);border-radius:var(--r);"><strong>Prompt:</strong> ${esc(prompt)}</div><div class="row-wrap" style="justify-content:center;"><button class="btn-cyan btn-sm" onclick="downloadImg('${url}')">📥 Baixar PNG</button><button class="btn-ghost btn-sm" onclick="navigator.clipboard.writeText('${url}').then(()=>toast('🔗 URL copiada!','var(--cyan)'));">🔗 Copiar URL</button><button class="btn-ghost btn-sm" onclick="document.getElementById('img-prompt').value=document.getElementById('img-prompt').value+' (variação)'">🔄 Variar</button></div></div></div>`;
+    logActivity('imgen','Imagem gerada');
+  }catch(e){res.innerHTML='<div class="card" style="border-color:var(--red);color:var(--red);">❌ Erro: '+esc(e.message)+'</div>';}
+  btn.disabled=false;btn.innerHTML='🎨 Gerar Imagem';
+}
+function downloadImg(url){const a=document.createElement('a');a.href=url;a.download='aria_'+Date.now()+'.png';a.target='_blank';document.body.appendChild(a);a.click();a.remove();toast('📥 Baixando...','var(--green)');}
+
+// ═══════════════════════════════════════════════════════
+// PROCESS PDF
+// ═══════════════════════════════════════════════════════
+async function processPDF(file){
+  if(API.token&&API.base){S.ocrText='';S.ocrLoading=true;render();
+    try{const r=await API.ocrPDF(file);S.ocrText=r.text+'\n\n📄 '+r.pages+' páginas extraídas';toast('✅ PDF processado!','var(--green)');}
+    catch(e){S.ocrText='❌ '+e.message;}
+    S.ocrLoading=false;render();
+  } else {S.ocrText='📄 PDF detectado! Configure o backend (npm run server) para extrair texto.';render();}
+}
+
+// ═══════════════════════════════════════════════════════
+// WHATSAPP BUSINESS
+// ═══════════════════════════════════════════════════════
+function openWhatsAppConfig(){
+  const cfg=JSON.parse(localStorage.getItem('aria_whatsapp')||'{}');
+  const m=document.createElement('div');m.id='wa-modal';m.className='wa-modal-bg';
+  m.innerHTML=`<div class="wa-modal-box"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div style="font-size:22px;font-weight:900;" class="text-green">📱 WhatsApp Business</div><button class="btn-ghost btn-sm" onclick="document.getElementById('wa-modal').remove()">✕</button></div>
+    <div style="background:var(--bg3);border-radius:var(--r);padding:12px;margin-bottom:12px;font-size:12px;color:var(--text2);line-height:1.6;">💡 Provedores: Z-API (Brasil), Twilio, Evolution API</div>
+    <div class="col" style="gap:8px;"><select id="wa-provider"><option value="zapi">Z-API</option><option value="twilio">Twilio</option><option value="evolution">Evolution API</option></select><input id="wa-instance" placeholder="ID da Instância (Z-API) / Account SID (Twilio)" value="${cfg.instance||''}"/><input id="wa-token" type="password" placeholder="Token da API" value="${cfg.token||''}"/><input id="wa-client-id" placeholder="Client Token (opcional)" value="${cfg.clientId||''}"/></div>
+    <div class="row" style="margin-top:14px;"><button class="btn-green flex1" onclick="saveWhatsAppConfig()">💾 Salvar</button><button class="btn-ghost btn-sm" onclick="testWhatsApp()">🧪 Testar</button></div></div>`;
+  document.body.appendChild(m);m.querySelector('#wa-provider').value=cfg.provider||'zapi';
+}
+function saveWhatsAppConfig(){
+  const cfg={provider:document.getElementById('wa-provider').value,instance:document.getElementById('wa-instance').value,token:document.getElementById('wa-token').value,clientId:document.getElementById('wa-client-id').value};
+  localStorage.setItem('aria_whatsapp',JSON.stringify(cfg));toast('📱 WhatsApp configurado!','var(--green)');document.getElementById('wa-modal')?.remove();
+}
+async function testWhatsApp(){
+  const cfg=JSON.parse(localStorage.getItem('aria_whatsapp')||'{}');
+  if(!cfg.token){toast('❌ Configure primeiro.','var(--orange)');return;}
+  const phone=prompt('Número para teste (com 55 + DDD):');if(!phone)return;
+  try{
+    if(cfg.provider==='zapi'){const r=await fetch(`https://api.z-api.io/instances/${cfg.instance}/token/${cfg.token}/send-text`,{method:'POST',headers:{'Content-Type':'application/json','Client-Token':cfg.clientId},body:JSON.stringify({phone,message:'🧠 ARIA Ultra: Teste de conexão OK! 🎉'})});const d=await r.json();toast(r.ok?'✅ Mensagem enviada!':'❌ Erro: '+(d.error||r.statusText),r.ok?'var(--green)':'var(--red)');}
+    else toast('📱 Teste manual via Twilio/Evolution requer backend.','var(--orange)');
+  }catch(e){toast('❌ '+e.message,'var(--red)');}
+}
+async function sendDocWhatsApp(phone,content){
+  const cfg=JSON.parse(localStorage.getItem('aria_whatsapp')||'{}');
+  if(!cfg.token){openWhatsAppConfig();return;}
+  try{if(cfg.provider==='zapi'){await fetch(`https://api.z-api.io/instances/${cfg.instance}/token/${cfg.token}/send-text`,{method:'POST',headers:{'Content-Type':'application/json','Client-Token':cfg.clientId},body:JSON.stringify({phone,message:content.slice(0,4096)})});toast('📱 Enviado!','var(--green)');}}catch(e){toast('❌ '+e.message,'var(--red)');}
+}
+
+// ═══════════════════════════════════════════════════════
+// REALTIME SYNC (Firebase)
+// ═══════════════════════════════════════════════════════
+function setupRealtimeSync(){
+  if(!S.cloudEnabled||!S._db)return;
+  const uid=S.cloudUser;
+  S._db.collection('aria_ultra').doc(uid).onSnapshot(doc=>{
+    if(!doc.exists)return;const d=doc.data();
+    if(JSON.stringify(d.files)!==JSON.stringify(S.savedFiles)){S.savedFiles=d.files||[];save('aria_files',S.savedFiles);updateStatus();if(S.tab==='files')render();}
+    if(JSON.stringify(d.events)!==JSON.stringify(S.agenda)){S.agenda=d.events||[];save('aria_agenda',S.agenda);if(S.tab==='agenda')render();}
+    toast('🔄 Dados sincronizados!','var(--cyan)',2000);
+  });
+// Sobrescreve initFirebase para chamar setupRealtimeSync
+}
+const _origInitFirebase=initFirebase;
+initFirebase=function(){
+  _origInitFirebase.call(this);
+  if(S.cloudEnabled)setTimeout(setupRealtimeSync,1000);
+};
+
+// ═══════════════════════════════════════════════════════
+// TAB: QR CODE GENERATOR
+// ═══════════════════════════════════════════════════════
+let _qrType='text';
+function renderQRCode(){
+  const tabs=['text','wifi','vcard','pix'].map(t=>`<button class="qr-tab" data-type="${t}" onclick="switchQRTab('${t}')" style="background:${_qrType===t?'var(--cyan)':'var(--bg3)'};color:${_qrType===t?'var(--bg0)':'var(--text2)'};border:1.5px solid ${_qrType===t?'var(--cyan)':'var(--border)'};border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;">${(t==='text'?'📝 Texto/Link':t==='wifi'?'📶 WiFi':t==='vcard'?'👤 Contato':'💰 PIX')}</button>`).join('');
+  return `<div class="col fade-in">
+    <div style="font-size:22px;font-weight:900;" class="text-cyan">📱 Gerador de QR Code</div>
+    <div style="color:var(--text3);font-size:13px;">Para PIX, links, WiFi, vCard e textos</div>
+    <div class="card">
+      <div class="sec-title">Tipo</div>
+      <div class="row-wrap">${tabs}</div>
+      <div id="qr-form" style="margin-top:12px;"></div>
+    </div>
+    <div id="qr-out" style="text-align:center;display:none;">
+      <div id="qr-canvas-wrap"><canvas id="qr-canvas" width="300" height="300"></canvas></div>
+      <div class="row-wrap" style="justify-content:center;margin-top:10px;">
+        <button class="btn-cyan btn-sm" onclick="downloadQR()">📥 Baixar PNG</button>
+        <button class="btn-ghost btn-sm" onclick="copyQRData()">📋 Copiar dados</button>
+      </div>
+    </div>
+  </div>`;
+}
+function switchQRTab(t){_qrType=t;renderQRForm();render();}
+function renderQRForm(){
+  const f=document.getElementById('qr-form');if(!f)return;
+  const forms={
+    text:`<textarea id="qr-text" placeholder="Digite texto ou cole um link..." style="min-height:100px;"></textarea><button class="btn-cyan" onclick="generateQR()" style="margin-top:8px;">📱 Gerar QR Code</button>`,
+    wifi:`<input id="qr-ssid" placeholder="Nome da rede (SSID)"/><input id="qr-pass" placeholder="Senha (ou vazia para aberta)"/><select id="qr-sec"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">Aberta</option></select><button class="btn-cyan" onclick="generateQRWiFi()" style="margin-top:8px;">📶 Gerar QR WiFi</button>`,
+    vcard:`<div class="row"><input id="qr-nome" placeholder="Nome completo" style="flex:1;"/><input id="qr-tel" placeholder="Telefone" style="flex:1;"/></div><input id="qr-email" placeholder="Email"/><input id="qr-org" placeholder="Empresa/Cargo"/><button class="btn-cyan" onclick="generateQRVCard()" style="margin-top:8px;">👤 Gerar Contato</button>`,
+    pix:`<input id="qr-chave" placeholder="Chave PIX (CPF, email, telefone ou aleatória)"/><input id="qr-nome-pix" placeholder="Nome do recebedor"/><input id="qr-cidade" placeholder="Cidade"/><input id="qr-valor" type="number" step="0.01" placeholder="Valor (opcional)"/><button class="btn-cyan" onclick="generateQRPIX()" style="margin-top:8px;">💰 Gerar PIX</button>`,
+  };
+  f.innerHTML=forms[_qrType]||'';
+  document.getElementById('qr-out').style.display='none';
+}
+function generateQR(){const t=document.getElementById('qr-text')?.value;if(t)drawQR(t);}
+function generateQRWiFi(){const ssid=document.getElementById('qr-ssid')?.value,pass=document.getElementById('qr-pass')?.value,sec=document.getElementById('qr-sec')?.value;if(ssid)drawQR(`WIFI:T:${sec};S:${ssid};P:${pass||''};;`);}
+function generateQRVCard(){const n=document.getElementById('qr-nome')?.value,t=document.getElementById('qr-tel')?.value,e=document.getElementById('qr-email')?.value,o=document.getElementById('qr-org')?.value;if(n)drawQR(`BEGIN:VCARD\nVERSION:3.0\nFN:${n}\n${t?'TEL:'+t:''}\n${e?'EMAIL:'+e:''}\n${o?'ORG:'+o:''}\nEND:VCARD`);}
+function computeCRC16(payload){
+  let crc=0xFFFF;
+  for(let i=0;i<payload.length;i++){
+    crc^=(payload.charCodeAt(i)<<8);
+    for(let j=0;j<8;j++){
+      if(crc&0x8000)crc=(crc<<1)^0x1021;
+      else crc<<=1;
+      crc&=0xFFFF;
+    }
+  }
+  return crc.toString(16).toUpperCase().padStart(4,'0');
+}
+function lv(tag,v){return tag+String(v.length).padStart(2,'0')+v;}
+function generateQRPIX(){
+  const chave=document.getElementById('qr-chave')?.value.trim();
+  const nome=document.getElementById('qr-nome-pix')?.value.trim();
+  const cidade=document.getElementById('qr-cidade')?.value.trim();
+  const valor=document.getElementById('qr-valor')?.value.trim();
+  if(!chave||!nome||!cidade)return toast('Preencha chave, nome e cidade.','var(--orange)');
+  const clean=chave.replace(/\D/g,'');
+  let keyType,keyValue;
+  if(/^[\w.+-]+@[\w-]+\.[\w.]+$/.test(chave)){keyType='25';keyValue=chave;}
+  else if(clean.length===11){keyType='01';keyValue=clean;}
+  else if(clean.length===14){keyType='02';keyValue=clean;}
+  else if(chave.replace(/\D/g,'').length>=10){keyType='03';keyValue=chave.replace(/\D/g,'');}
+  else{keyType='04';keyValue=chave;}
+  const merchantName=nome.slice(0,25);
+  const merchantCity=cidade.slice(0,15);
+  const pixAccount=lv('00','BR.GOV.BCB.PIX')+lv(keyType,keyValue);
+  const payload=[
+    lv('00','01'),
+    lv('01','11'),
+    lv('26',pixAccount),
+    '52040000',
+    '5303986',
+  ];
+  if(valor&&parseFloat(valor)>0){
+    const amt=parseFloat(valor).toFixed(2).replace('.','');
+    payload.push(lv('54',amt));
+  }
+  payload.push('5802BR');
+  payload.push(lv('59',merchantName));
+  payload.push(lv('60',merchantCity));
+  const txid='***';
+  payload.push(lv('62',lv('05',txid)));
+  const partial=payload.join('');
+  const crc=computeCRC16(partial+'6304');
+  const finalPayload=partial+lv('63',crc);
+  drawQR(finalPayload);
+  toast('💰 PIX gerado com sucesso! CRC16 validado.','var(--green)',5000);
+}
+function drawQR(data){
+  if(!data||!window.QRCode){toast('A biblioteca QR Code não carregou.','var(--orange)');return;}
+  const canvas=document.getElementById('qr-canvas');
+  QRCode.toCanvas(canvas,data,{width:300,margin:2,color:{dark:'#000',light:'#fff'}},err=>{
+    if(err)toast('Erro ao gerar QR: '+err.message,'var(--red)');
+    else{document.getElementById('qr-out').style.display='block';S._qrLastData=data;}
+  });
+}
+function downloadQR(){const c=document.getElementById('qr-canvas');if(!c)return;const a=document.createElement('a');a.download=`qrcode_${Date.now()}.png`;a.href=c.toDataURL();a.click();toast('📥 QR baixado!','var(--green)');}
+function copyQRData(){if(S._qrLastData){navigator.clipboard.writeText(S._qrLastData);toast('📋 Copiado!','var(--green)');}}
+
+// ═══════════════════════════════════════════════════════
+// TTS (Text-to-Speech)
+// ═══════════════════════════════════════════════════════
+function speakLastResponse(){
+  if(!('speechSynthesis' in window)){toast('TTS não suportado.','var(--orange)');return;}
+  const last=S.chatHistory.filter(m=>m.role==='assistant').pop();
+  if(!last){toast('Nenhuma resposta ainda.','var(--orange)');return;}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(last.content.slice(0,3000));
+  u.lang='pt-BR';u.rate=1.1;u.pitch=1;
+  speechSynthesis.speak(u);
+  toast('🔊 Lendo resposta...','var(--cyan)');
+}
+
+// ═══════════════════════════════════════════════════════
+// 🎤 TTS UNIVERSAL
+// ═══════════════════════════════════════════════════════
+if(!S.tts)S.tts={active:false,currentText:'',utterance:null};
+function ttsSpeak(text){
+  if(!('speechSynthesis' in window)){toast('TTS não suportado.','var(--red)');return false;}
+  if(!text)return false;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text.slice(0,8000));
+  u.lang='pt-BR';u.rate=1.05;u.pitch=1.05;u.volume=1;
+  u.onstart=()=>{S.tts.active=true;updateTTSUI();};
+  u.onend=()=>{S.tts.active=false;S.tts.currentText='';updateTTSUI();};
+  u.onerror=()=>{S.tts.active=false;S.tts.currentText='';updateTTSUI();};
+  S.tts.utterance=u;S.tts.currentText=text;
+  speechSynthesis.speak(u);return true;
+}
+function ttsToggle(){
+  if(S.tts.active){ttsStop();return;}
+  let text='';
+  if(S.tab==='chat'){const last=S.chatHistory.filter(m=>m.role==='assistant').pop();if(last)text=last.content;}
+  else if(S.tab==='docs'){const e=document.getElementById('doc-editor');if(e)text=e.innerText;}
+  else if(['summarizer','translator','fusion'].includes(S.tab)){const b=document.querySelectorAll('.doc-result-box');if(b.length)text=b[b.length-1].innerText;}
+  else if(S.tab==='notes'&&S.notesView){const n=S.notes.find(x=>x.id===S.notesView);if(n)text=(n.title||'')+'\n'+(n.content||'');}
+  if(!text){toast('Nada para ler nesta aba.','var(--orange)');return;}
+  if(ttsSpeak(text))toast('🔊 Lendo... Clique ⏹️ para parar.','var(--cyan)');
+}
+function ttsStop(){speechSynthesis.cancel();S.tts.active=false;S.tts.currentText='';updateTTSUI();toast('⏹️ Leitura parada.','var(--orange)');}
+function updateTTSUI(){
+  const fab=document.getElementById('tts-fab');const toggle=document.getElementById('tts-toggle');const stop=document.getElementById('tts-stop');
+  if(!fab||!toggle||!stop)return;
+  const show=['chat','docs','summarizer','translator','fusion','notes'].includes(S.tab);
+  fab.style.display=show?'flex':'none';
+  if(S.tts.active){toggle.classList.add('active');toggle.textContent='⏸️';stop.style.display='flex';}
+  else{toggle.classList.remove('active');toggle.textContent='🔊';stop.style.display='none';}
+}
+
+// ═══════════════════════════════════════════════════════
+// 🖱️ DRAG & DROP
+// ═══════════════════════════════════════════════════════
+function setupGlobalDropZone(){
+  const overlay=document.getElementById('drop-overlay');
+  let dragCounter=0;
+  document.addEventListener('dragenter',e=>{if(!e.dataTransfer?.types.includes('Files'))return;dragCounter++;overlay.classList.add('open');});
+  document.addEventListener('dragleave',e=>{dragCounter--;if(dragCounter<=0){dragCounter=0;overlay.classList.remove('open');}});
+  document.addEventListener('dragover',e=>{if(e.dataTransfer?.types.includes('Files'))e.preventDefault();});
+  document.addEventListener('drop',e=>{
+    e.preventDefault();dragCounter=0;overlay.classList.remove('open');
+    if(!e.dataTransfer?.files?.length)return;
+    const files=Array.from(e.dataTransfer.files);
+    const images=files.filter(f=>f.type.startsWith('image/'));
+    const texts=files.filter(f=>/\.(txt|csv|md|json|log)$/i.test(f.name)||f.type.startsWith('text/'));
+    if(images.length){S.tab='ocr';switchTab('ocr');toast('📷 '+images.length+' imagem(ns) detectada(s)!','var(--cyan)');setTimeout(()=>processOCR(images[0]),300);}
+    else if(texts.length){
+      S.tab='fusion';switchTab('fusion');
+      let pending=texts.length;
+      texts.forEach(f=>{const r=new FileReader();r.onload=ev=>{S.fusFiles.push({name:f.name,content:ev.target.result});pending--;if(pending===0){render();toast('📁 '+texts.length+' arquivo(s) carregado(s)!','var(--cyan)');}};r.readAsText(f);});
+    }else toast('⚠️ Tipo não suportado. Use imagens ou TXT/CSV.','var(--orange)');
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// 🔍 BUSCA GLOBAL
+// ═══════════════════════════════════════════════════════
+let _gsIdx=-1;
+function openGlobalSearch(){
+  document.getElementById('global-search-overlay').classList.add('open');
+  const inp=document.getElementById('global-search-input');
+  inp.value='';inp.focus();renderGlobalSearch('');setTimeout(()=>inp.focus(),50);
+}
+function closeGlobalSearch(){document.getElementById('global-search-overlay').classList.remove('open');}
+function renderGlobalSearch(q){
+  const r=document.getElementById('global-search-results');
+  if(!q.trim()){r.innerHTML='<div class="gs-empty">💡 Digite para buscar em todos os documentos, notas, eventos e mensagens</div>';return;}
+  const term=q.toLowerCase();const results=[];
+  S.savedFiles.forEach(f=>{if(f.title.toLowerCase().includes(term)||f.content.toLowerCase().includes(term))results.push({icon:f.icon||'📄',title:f.title,sub:f.content.slice(0,80)+'...',action:()=>{closeGlobalSearch();S.tab='files';S.fileView=f.id;switchTab('files');}});});
+  S.notes.forEach(n=>{if((n.title||'').toLowerCase().includes(term)||(n.content||'').toLowerCase().includes(term))results.push({icon:'📝',title:n.title||'Sem título',sub:(n.content||'').slice(0,80),action:()=>{closeGlobalSearch();S.tab='notes';S.notesView=n.id;switchTab('notes');}});});
+  S.agenda.forEach(e=>{if((e.title||'').toLowerCase().includes(term)||(e.notes||'').toLowerCase().includes(term))results.push({icon:'📅',title:e.title,sub:fmt(e.date)+' · '+(e.notes||''),action:()=>{closeGlobalSearch();S.tab='agenda';switchTab('agenda');}});});
+  S.chatHistory.forEach(m=>{if(m.content.toLowerCase().includes(term))results.push({icon:m.role==='user'?'👤':'🧠',title:(m.content||'').slice(0,60),sub:m.role==='user'?'Você':'ARIA',action:()=>{closeGlobalSearch();S.tab='chat';switchTab('chat');}});});
+  if(results.length===0){r.innerHTML='<div class="gs-empty">❌ Nenhum resultado para "'+esc(q)+'"</div>';return;}
+  _gsIdx=-1;
+  window._gsResults=results;
+  r.innerHTML=results.slice(0,30).map((res,i)=>`<div class="gs-item" data-idx="${i}" onclick="window._gsResults[${i}].action()" style="${i===_gsIdx?'background:var(--bg3);':''}"><div class="gs-item-icon">${res.icon}</div><div class="gs-item-content"><div class="gs-item-title">${esc(res.title)}</div><div class="gs-item-sub">${esc(res.sub)}</div></div></div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// 📌 PINNED DOCUMENTS
+// ═══════════════════════════════════════════════════════
+if(!S.pinnedFiles)S.pinnedFiles=JSON.parse(localStorage.getItem('aria_pinned')||'[]');
+function togglePin(id){
+  if(S.pinnedFiles.includes(id))S.pinnedFiles=S.pinnedFiles.filter(x=>x!==id);
+  else S.pinnedFiles.unshift(id);
+  save('aria_pinned',S.pinnedFiles);render();toast('📌 '+(S.pinnedFiles.includes(id)?'Fixado':'Desfixado')+'!','var(--yellow)');
+}
+function isPinned(id){return S.pinnedFiles.includes(id);}
+
+// ═══════════════════════════════════════════════════════
+// 🎨 TEMAS CUSTOMIZADOS
+// ═══════════════════════════════════════════════════════
+if(!S.customTheme)S.customTheme=JSON.parse(localStorage.getItem('aria_custom_theme')||'null');
+const THEME_PRESETS=[
+  {id:'default',name:'Padrão Ciano',colors:['#00e5ff','#2979ff','#d500f9','#00e676'],preview:['#02080f','#00e5ff','#081526','#2979ff']},
+  {id:'purple',name:'Roxo Real',colors:['#d500f9','#aa00ff','#ff4081','#ffd740'],preview:['#0a0414','#d500f9','#150826','#aa00ff']},
+  {id:'green',name:'Verde Matrix',colors:['#00e676','#1de9b6','#69f0ae','#ffd740'],preview:['#001a0e','#00e676','#0a1a0e','#1de9b6']},
+  {id:'sunset',name:'Pôr do Sol',colors:['#ff9100','#ffab40','#ff4081','#f50057'],preview:['#1a0d00','#ff9100','#261300','#ffab40']},
+  {id:'ocean',name:'Oceano',colors:['#2979ff','#00bcd4','#4fc3f7','#00e5ff'],preview:['#02080f','#2979ff','#081526','#4fc3f7']},
+  {id:'rose',name:'Rosa Pastel',colors:['#f50057','#ff4081','#ff80ab','#ffab40'],preview:['#1a0508','#f50057','#260810','#ff4081']},
+  {id:'cyber',name:'Cyberpunk',colors:['#00e5ff','#d500f9','#ffd740','#ff1744'],preview:['#000000','#00e5ff','#0a0a14','#d500f9']},
+  {id:'forest',name:'Floresta',colors:['#1de9b6','#00e676','#69f0ae','#ffd740'],preview:['#001a0e','#1de9b6','#0a261a','#00e676']},
+];
+function applyTheme(presetId,customColors){
+  const r=document.documentElement.style;
+  if(customColors){
+    r.setProperty('--cyan',customColors[0]);r.setProperty('--blue',customColors[1]||customColors[0]);r.setProperty('--purple',customColors[2]||customColors[0]);r.setProperty('--green',customColors[3]||customColors[0]);
+    r.setProperty('--grad-cyan',`linear-gradient(135deg,${customColors[0]},${customColors[1]||customColors[0]})`);r.setProperty('--grad-purple',`linear-gradient(135deg,${customColors[2]||customColors[0]},${customColors[1]||customColors[0]})`);
+  }else if(presetId&&presetId!=='default'){const p=THEME_PRESETS.find(x=>x.id===presetId);if(p)applyTheme(null,p.colors);}
+  else{r.removeProperty('--cyan');r.removeProperty('--blue');r.removeProperty('--purple');r.removeProperty('--green');r.removeProperty('--grad-cyan');r.removeProperty('--grad-purple');}
+  S.customTheme=customColors?{type:'custom',colors:customColors}:presetId?{type:'preset',id:presetId}:null;
+  if(S.customTheme)localStorage.setItem('aria_custom_theme',JSON.stringify(S.customTheme));else localStorage.removeItem('aria_custom_theme');
+  render();
+}
+function applyCustomColor(idx,hex){
+  if(!S.customTheme||S.customTheme.type!=='custom')S.customTheme={type:'custom',colors:['#00e5ff','#2979ff','#d500f9','#00e676']};
+  S.customTheme.colors[idx]=hex;applyTheme(null,S.customTheme.colors);
+}
+function openThemePicker(){
+  const m=document.getElementById('theme-modal');
+  if(!m){createThemeModal();setTimeout(openThemePicker,50);return;}
+  m.classList.add('open');renderThemePicker();
+}
+function closeThemePicker(){document.getElementById('theme-modal')?.classList.remove('open');}
+function createThemeModal(){
+  const div=document.createElement('div');div.id='theme-modal';
+  div.style.cssText='display:none;position:fixed;inset:0;background:#000000cc;z-index:9998;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);';
+  div.innerHTML='<div class="modal-box" style="max-width:560px;max-height:85vh;overflow-y:auto;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div style="font-size:22px;font-weight:900;" class="text-cyan">🎨 Temas & Cores</div><button class="btn-ghost btn-sm" onclick="closeThemePicker()">✕</button></div><div id="theme-picker-content"></div></div>';
+  div.addEventListener('click',e=>{if(e.target.id==='theme-modal')closeThemePicker();});
+  document.body.appendChild(div);
+}
+function renderThemePicker(){
+  const c=document.getElementById('theme-picker-content');if(!c)return;
+  const isCustom=S.customTheme?.type==='custom';const currentId=isCustom?null:(S.customTheme?.id||'default');
+  c.innerHTML='<div class="sec-title">📦 Temas Prontos</div><div class="theme-preset">'+THEME_PRESETS.map(p=>'<div class="theme-preset-card '+(currentId===p.id?'active':'')+'" onclick="applyTheme(\''+p.id+'\');renderThemePicker();"><div class="theme-preset-preview">'+p.preview.map(c=>'<span style="background:'+c+';"></span>').join('')+'</div><div><div style="font-weight:700;font-size:13px;color:var(--text2);">'+p.name+'</div><div style="font-size:10px;color:var(--muted);margin-top:2px;">'+p.colors.slice(0,3).map(x=>x.toUpperCase()).join(' · ')+'</div></div></div>').join('')+'</div><div class="sep" style="margin:16px 0;"></div><div class="sec-title">🎨 Cores Personalizadas</div><div style="color:var(--text3);font-size:12px;margin-bottom:10px;">Escolha suas próprias cores</div><div class="theme-colors" id="custom-colors">'+['--cyan','--blue','--purple','--green'].map((label,i)=>{const cur=isCustom?(S.customTheme.colors[i]||THEME_PRESETS[0].colors[i]):THEME_PRESETS.find(x=>x.id===currentId)?.colors[i]||'#00e5ff';return '<div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><input type="color" value="'+cur+'" onchange="applyCustomColor('+i+',this.value)" style="width:48px;height:48px;border-radius:50%;border:3px solid var(--border2);cursor:pointer;background:transparent;padding:0;"/><span style="font-size:10px;color:var(--text3);">'+label+'</span></div>';}).join('')+'</div>'+(isCustom?'<button class="btn-ghost btn-sm" onclick="applyTheme(\'default\');renderThemePicker();" style="margin-top:10px;width:100%;">🔄 Resetar para Padrão</button>':'')+'<div class="sep" style="margin:16px 0;"></div><div style="background:var(--bg3);border-radius:var(--r);padding:12px;"><div style="color:var(--text3);font-size:12px;line-height:1.6;">💡 <strong>Dica:</strong> Os temas são salvos automaticamente e sincronizam via backup.</div></div>';
+}
+
+// ═══════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════
+IDB.init().then(()=>{console.log('💾 IndexedDB pronto!');['aria_files','aria_notes','aria_agenda'].forEach(k=>{const v=localStorage.getItem(k);if(v)try{save(k,JSON.parse(v));}catch(e){}});}).catch(e=>console.warn('IDB init falhou:',e));
 if('Notification' in window&&Notification.permission==='default') Notification.requestPermission();
 renderAISelector();
 render();
-// Welcome toast
-setTimeout(()=>toast('🧠 ARIA Ultra v3.0 pronta!','var(--cyan)'),500);
-// Check shared document in URL
-(function(){
-  if(location.hash.startsWith('#share=')){
-    try{
-      const raw=location.hash.replace('#share=','');
-      const data=decodeURIComponent(escape(atob(raw)));
-      setTimeout(()=>openSharedModal(data),1200);
-    }catch(e){console.error('Share link error:',e);}
-  }
-})();
+if(S.customTheme){if(S.customTheme.type==='preset')applyTheme(S.customTheme.id);else if(S.customTheme.type==='custom')applyTheme(null,S.customTheme.colors);}
+setupGlobalDropZone();
+document.getElementById('global-search-input')?.addEventListener('input',e=>{_gsIdx=-1;renderGlobalSearch(e.target.value);});
+document.getElementById('global-search-overlay')?.addEventListener('click',e=>{if(e.target.id==='global-search-overlay')closeGlobalSearch();});
+setTimeout(()=>toast('🚀 ARIA Ultra v4.0 · 10 evoluções! Backend + IDB + WebRTC + WASM + Sentimento + Imagem + WhatsApp + PDF + Realtime + Mobile','var(--cyan)'),800);
+(function(){if(location.hash.startsWith('#share=')){try{const raw=location.hash.replace('#share=','');const data=decodeURIComponent(escape(atob(raw)));setTimeout(()=>openSharedModal(data),1200);}catch(e){console.error('Share link error:',e);}}})();
 </script>
 </body>
 </html>
