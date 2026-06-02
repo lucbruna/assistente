@@ -22,6 +22,12 @@ app.use('/api/auth', authRouter);
 app.use('/api/ocr', ocrRouter);
 app.use('/api/storage', storageRouter);
 
+app.use(express.static('../'));
+
 app.get('/health', (req, res) => res.json({ status: 'ok', version: '4.0' }));
+
+app.get('*', (req, res) => {
+  res.sendFile('index.html', { root: '../' });
+});
 
 export default app;
