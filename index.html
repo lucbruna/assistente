@@ -694,17 +694,17 @@ td:first-child{
 
 // ─── AI PROVIDERS ────────────────────────────────────────
 const PROVIDERS = {
-  grok: {
-    name:'Grok 2', icon:'🔵', color:'#29b6f6',
-    desc:'xAI – chave própria', free:true, keyNeeded:true,
+  deepseek: {
+    name:'DeepSeek Chat', icon:'🔮', color:'#4fc3f7',
+    desc:'DeepSeek – chave própria', free:true, keyNeeded:true,
     call: async (msgs,sys)=>{
-      const key=KEYS.grok; if(!key) throw new Error('Configure sua chave Grok em ⚙️');
-      const r=await fetch('https://api.x.ai/v1/chat/completions',{
+      const key=KEYS.deepseek; if(!key) throw new Error('Configure sua chave DeepSeek em ⚙️');
+      const r=await fetch('https://api.deepseek.com/v1/chat/completions',{
         method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-        body:JSON.stringify({model:'grok-4.3',max_tokens:2000,messages:[{role:'system',content:sys||SYS_PROMPT},...msgs]})
+        body:JSON.stringify({model:'deepseek-chat',max_tokens:2000,messages:[{role:'system',content:sys||SYS_PROMPT},...msgs]})
       });
       const d=await r.json();
-      if(!r.ok){const m=d.error?.message||d.error?.code||(typeof d.error==='string'?d.error:'')||r.statusText;throw new Error('Grok: '+m+(d.error?.code?' ('+d.error?.code+')':''));}
+      if(!r.ok){const m=d.error?.message||d.error?.code||(typeof d.error==='string'?d.error:'')||r.statusText;throw new Error('DeepSeek: '+m+(d.error?.code?' ('+d.error?.code+')':''));}
       return d.choices?.[0]?.message?.content||'';
     }
   },
@@ -951,7 +951,7 @@ function openKeyModal(){
   f.innerHTML=Object.entries(PROVIDERS).filter(([,v])=>v.keyNeeded).map(([k,v])=>`
     <div>
       <div style="color:${v.color};font-weight:700;font-size:13px;margin-bottom:5px;">${v.icon} ${v.name}</div>
-      <div style="color:var(--text3);font-size:11px;margin-bottom:6px;">${v.desc} · <a href="${k==='grok'?'https://console.x.ai':k==='gemini'?'https://aistudio.google.com/apikey':'https://dashscope.aliyuncs.com'}" target="_blank" style="color:var(--cyan);">Obter chave ↗</a></div>
+      <div style="color:var(--text3);font-size:11px;margin-bottom:6px;">${v.desc} · <a href="${k==='deepseek'?'https://platform.deepseek.com/api_keys':k==='gemini'?'https://aistudio.google.com/apikey':'https://dashscope.aliyuncs.com'}" target="_blank" style="color:var(--cyan);">Obter chave ↗</a></div>
       <div style="display:flex;gap:6px;">
         <input type="text" id="key-${k}" placeholder="Cole sua API Key aqui..." value="${KEYS[k]||''}" style="flex:1;" autocomplete="off"/>
         <button class="btn-ghost btn-sm" onclick="pasteKey('${k}')" title="Colar">📋</button>
@@ -960,7 +960,7 @@ function openKeyModal(){
   f.innerHTML+=`<div style="background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--r);padding:12px;margin-top:4px;">
     <div style="color:var(--text3);font-size:12px;">
       <strong style="color:var(--text2);">📌 Onde obter as chaves grátis:</strong><br>
-      • <strong style="color:#29b6f6;">Grok:</strong> console.x.ai (xAI)<br>
+      • <strong style="color:#4fc3f7;">DeepSeek:</strong> platform.deepseek.com/api_keys<br>
       • <strong style="color:#4fc3f7;">Gemini:</strong> aistudio.google.com/apikey<br>
       • <strong style="color:#ffca28;">Qwen:</strong> dashscope.aliyuncs.com
     </div>

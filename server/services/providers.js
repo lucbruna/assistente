@@ -1,5 +1,5 @@
 const keys = {
-  grok: process.env.GROK_API_KEY,
+  deepseek: process.env.DEEPSEEK_API_KEY,
   gemini: process.env.GEMINI_API_KEY,
   qwen: process.env.QWEN_API_KEY,
   openai: process.env.OPENAI_API_KEY,
@@ -8,7 +8,7 @@ const keys = {
 export async function callAI(provider, messages, systemPrompt) {
   const sys = systemPrompt || 'Você é ARIA, assistente administrativa brasileira especialista.';
   switch(provider) {
-    case 'grok': return callGrok(messages, sys);
+    case 'deepseek': return callDeepSeek(messages, sys);
     case 'gemini': return callGemini(messages, sys);
     case 'qwen': return callQwen(messages, sys);
     case 'openai': return callOpenAI(messages, sys);
@@ -16,15 +16,15 @@ export async function callAI(provider, messages, systemPrompt) {
   }
 }
 
-async function callGrok(messages, sys) {
-  if (!keys.grok) throw new Error('Grok não configurado no servidor');
-  const r = await fetch('https://api.x.ai/v1/chat/completions', {
+async function callDeepSeek(messages, sys) {
+  if (!keys.deepseek) throw new Error('DeepSeek não configurado no servidor');
+  const r = await fetch('https://api.deepseek.com/v1/chat/completions', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + keys.grok },
-    body: JSON.stringify({ model: 'grok-4.3', max_tokens: 2000, messages: [{ role: 'system', content: sys }, ...messages] })
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + keys.deepseek },
+    body: JSON.stringify({ model: 'deepseek-chat', max_tokens: 2000, messages: [{ role: 'system', content: sys }, ...messages] })
   });
   const d = await r.json();
-  if (!r.ok) throw new Error(d.error?.message || 'Erro Grok');
+  if (!r.ok) throw new Error(d.error?.message || 'Erro DeepSeek');
   return d.choices?.[0]?.message?.content || '';
 }
 

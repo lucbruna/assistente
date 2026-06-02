@@ -74,11 +74,11 @@ async function callAI(provider, messages, systemPrompt, env) {
   const sys = systemPrompt || 'Você é ARIA, assistente administrativa brasileira especialista.';
   let key, url, body;
   switch (provider) {
-    case 'grok':
-      key = env.GROK_API_KEY;
-      if (!key) throw new Error('Grok não configurado');
-      url = 'https://api.x.ai/v1/chat/completions';
-      body = { model: 'grok-4.3', max_tokens: 2000, messages: [{ role: 'system', content: sys }, ...messages] };
+    case 'deepseek':
+      key = env.DEEPSEEK_API_KEY;
+      if (!key) throw new Error('DeepSeek não configurado');
+      url = 'https://api.deepseek.com/v1/chat/completions';
+      body = { model: 'deepseek-chat', max_tokens: 2000, messages: [{ role: 'system', content: sys }, ...messages] };
       break;
     case 'gemini':
       key = env.GEMINI_API_KEY;
