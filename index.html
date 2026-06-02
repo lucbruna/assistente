@@ -3096,9 +3096,8 @@ async function sendAgentMsg(){
   _agentLoading=true;render();
   const agent=AGENTS.find(a=>a.id===_activeAgent);
   const sysPrompt=agent?agent.prompt:'Você é um assistente especialista.';
-  const fullPrompt=sysPrompt+'\n\n Pergunta: '+msg;
   try{
-    const resp=await ai(fullPrompt,true);
+    const resp=await ai([{role:'user',content:msg}], sysPrompt);
     _agentChatHistory.push({role:'assistant',content:resp||'❌ Sem resposta.'});
   }catch(e){_agentChatHistory.push({role:'assistant',content:'❌ Erro: '+e.message});}
   _agentLoading=false;render();
