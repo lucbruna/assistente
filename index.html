@@ -902,9 +902,6 @@ async function ai(messages,systemOverride){
   // Fallback: chama direto (suas chaves do ⚙️)
   return PROVIDERS[S.provider].call(messages,systemOverride);
 }
-  }
-  return PROVIDERS[S.provider].call(messages,systemOverride);
-}
 
 // ─── CLOCK ───────────────────────────────────────────────
 function tickClock(){
