@@ -16,5 +16,8 @@ export function addCORS(response) {
   for (const [key, val] of Object.entries(corsHeaders)) {
     headers.set(key, val);
   }
-  return new Response(response.body, { status: response.status, headers });
+  if (response.body) {
+    return new Response(response.body, { status: response.status, headers });
+  }
+  return new Response(null, { status: response.status, headers });
 }

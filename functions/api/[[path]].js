@@ -1,6 +1,5 @@
-import { sign, verify } from './helpers/jwt.js';
 import { handleCORS, addCORS } from './helpers/cors.js';
-import bcrypt from 'bcryptjs';
+import { createToken, verifyToken, hashPassword, verifyPassword } from './helpers/crypto.js';
 
 const users = new Map();
 const db = new Map();
@@ -15,11 +14,11 @@ function getToken(request) {
   return request.headers.get('Authorization')?.replace('Bearer ', '') || '';
 }
 
-function authUser(request, env) {
+async function authUser(request, env) {
   const token = getToken(request);
   if (!token) return null;
   try {
-    return verify(token, env.JWT_SECRET);
+    return await verifyToken(token, env.JWT_SECRET);
   } catch { return null; }
 }
 
@@ -37,28 +36,28 @@ async function handleStream(request, env) {
   });
   const { readable, writable } = new TransformStream();
   const writer = writable.getWriter();
-  const encoder = new TextEncoder();
+  const encoder2 = new TextEncoder();
   (async () => {
     const reader = r.body.getReader();
-    const decoder = new TextDecoder();
+    const decoder2 = new TextDecoder();
     try {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        const lines = decoder.decode(value).split('\n').filter(l => l.startsWith('data: '));
+        const lines = decoder2.decode(value).split('\n').filter(l => l.startsWith('data: '));
         for (const line of lines) {
           const data = line.replace('data: ', '');
           if (data === '[DONE]') { writer.close(); return; }
           try {
-            const json = JSON.parse(data);
-            const content = json.choices?.[0]?.delta?.content;
-            if (content) await writer.write(encoder.encode('data: ' + JSON.stringify({ chunk: content }) + '\n\n'));
+            const parsed = JSON.parse(data);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) await writer.write(encoder2.encode('data: ' + JSON.stringify({ chunk: content }) + '\n\n'));
           } catch {}
         }
       }
       await writer.close();
     } catch (e) {
-      await writer.write(encoder.encode('data: ' + JSON.stringify({ error: e.message }) + '\n\n'));
+      await writer.write(encoder2.encode('data: ' + JSON.stringify({ error: e.message }) + '\n\n'));
       await writer.close();
     }
   })();
@@ -137,8 +136,6 @@ export async function onRequest(context) {
   if (cors) return cors;
 
   try {
-    let result;
-
     // Health
     if (path === '/health') {
       return addCORS(json({ status: 'ok', version: '4.0' }));
@@ -163,9 +160,9 @@ export async function onRequest(context) {
       const { email, password, name } = await request.json();
       if (!email || !password) return addCORS(json({ error: 'Dados incompletos' }, 400));
       if (users.has(email)) return addCORS(json({ error: 'Usuário já existe' }, 409));
-      const hashed = await bcrypt.hash(password, 10);
+      const hashed = await hashPassword(password);
       users.set(email, { email, name, password: hashed, createdAt: new Date().toISOString() });
-      const token = sign({ email, name }, env.JWT_SECRET);
+      const token = await createToken({ email, name }, env.JWT_SECRET);
       return addCORS(json({ success: true, token, user: { email, name } }));
     }
 
@@ -174,15 +171,15 @@ export async function onRequest(context) {
       const { email, password } = await request.json();
       const user = users.get(email);
       if (!user) return addCORS(json({ error: 'Usuário não encontrado' }, 404));
-      const ok = await bcrypt.compare(password, user.password);
+      const ok = await verifyPassword(password, user.password);
       if (!ok) return addCORS(json({ error: 'Senha incorreta' }, 401));
-      const token = sign({ email, name: user.name }, env.JWT_SECRET);
+      const token = await createToken({ email, name: user.name }, env.JWT_SECRET);
       return addCORS(json({ success: true, token, user: { email, name: user.name } }));
     }
 
     // GET /api/auth/me
     if (path === '/api/auth/me' && request.method === 'GET') {
-      const user = authUser(request, env);
+      const user = await authUser(request, env);
       if (!user) return addCORS(json({ error: 'Token inválido' }, 401));
       return addCORS(json({ user }));
     }
@@ -261,7 +258,7 @@ export async function onRequest(context) {
 
     // GET /api/storage/all
     if (path === '/api/storage/all' && request.method === 'GET') {
-      const user = authUser(request, env);
+      const user = await authUser(request, env);
       if (!user) return addCORS(json({ error: 'Não autenticado' }, 401));
       const data = db.get(user.email) || { files: [], events: [], notes: [] };
       return addCORS(json({ success: true, data }));
@@ -269,7 +266,7 @@ export async function onRequest(context) {
 
     // POST /api/storage/save
     if (path === '/api/storage/save' && request.method === 'POST') {
-      const user = authUser(request, env);
+      const user = await authUser(request, env);
       if (!user) return addCORS(json({ error: 'Não autenticado' }, 401));
       const { type, payload } = await request.json();
       const userData = db.get(user.email) || { files: [], events: [], notes: [] };
@@ -283,7 +280,7 @@ export async function onRequest(context) {
 
     // DELETE /api/storage/all
     if (path === '/api/storage/all' && request.method === 'DELETE') {
-      const user = authUser(request, env);
+      const user = await authUser(request, env);
       if (!user) return addCORS(json({ error: 'Não autenticado' }, 401));
       db.delete(user.email);
       return addCORS(json({ success: true }));
