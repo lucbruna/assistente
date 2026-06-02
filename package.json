@@ -3,7 +3,6 @@
   "version": "4.0.0",
   "type": "module",
   "scripts": {
-    "start": "node server/server.js",
     "dev": "node server/server.js",
     "build": "echo 'Static site ready'"
   },
