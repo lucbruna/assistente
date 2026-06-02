@@ -2556,7 +2556,7 @@ document.addEventListener('keydown',e=>{
   if(ctrl&&e.key==='f'){e.preventDefault();S.tab='fusion';switchTab('fusion');}
   if(ctrl&&e.key==='t'){e.preventDefault();S.tab='translator';switchTab('translator');}
   if(ctrl&&e.key==='r'){e.preventDefault();S.tab='summarizer';switchTab('summarizer');}
-  if(ctrl&&e.key==='c'){e.preventDefault();S.tab='currency';switchTab('currency');}
+  if(ctrl&&e.key==='c'&&!window.getSelection().toString()){e.preventDefault();S.tab='currency';switchTab('currency');}
   if(ctrl&&e.key==='w'){e.preventDefault();S.tab='validator';switchTab('validator');}
   if(ctrl&&e.key==='p'){e.preventDefault();S.tab='pomodoro';switchTab('pomodoro');}
   if(ctrl&&e.key==='q'){e.preventDefault();S.tab='qrcode';switchTab('qrcode');}
