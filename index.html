@@ -701,7 +701,7 @@ const PROVIDERS = {
       const key=KEYS.grok; if(!key) throw new Error('Configure sua chave Grok em ⚙️');
       const r=await fetch('https://api.x.ai/v1/chat/completions',{
         method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-        body:JSON.stringify({model:'grok-2-20241218',max_tokens:2000,messages:[{role:'system',content:sys||SYS_PROMPT},...msgs]})
+        body:JSON.stringify({model:'grok-4.3',max_tokens:2000,messages:[{role:'system',content:sys||SYS_PROMPT},...msgs]})
       });
       const d=await r.json();
       if(!r.ok){const m=d.error?.message||d.error?.code||(typeof d.error==='string'?d.error:'')||r.statusText;throw new Error('Grok: '+m+(d.error?.code?' ('+d.error?.code+')':''));}

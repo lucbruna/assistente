@@ -78,7 +78,7 @@ async function callAI(provider, messages, systemPrompt, env) {
       key = env.GROK_API_KEY;
       if (!key) throw new Error('Grok não configurado');
       url = 'https://api.x.ai/v1/chat/completions';
-      body = { model: 'grok-2-20241218', max_tokens: 2000, messages: [{ role: 'system', content: sys }, ...messages] };
+      body = { model: 'grok-4.3', max_tokens: 2000, messages: [{ role: 'system', content: sys }, ...messages] };
       break;
     case 'gemini':
       key = env.GEMINI_API_KEY;

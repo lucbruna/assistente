@@ -21,7 +21,7 @@ async function callGrok(messages, sys) {
   const r = await fetch('https://api.x.ai/v1/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + keys.grok },
-    body: JSON.stringify({ model: 'grok-2-20241218', max_tokens: 2000, messages: [{ role: 'system', content: sys }, ...messages] })
+    body: JSON.stringify({ model: 'grok-4.3', max_tokens: 2000, messages: [{ role: 'system', content: sys }, ...messages] })
   });
   const d = await r.json();
   if (!r.ok) throw new Error(d.error?.message || 'Erro Grok');
